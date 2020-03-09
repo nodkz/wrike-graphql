@@ -1,0 +1,31 @@
+{
+  "name": "wrike-graphql",
+  "private": true,
+  "version": "0.0.0-development",
+  "description": "Demo of wrapping REST API by GraphQL",
+  "repository": "https://github.com/nodkz/wrike-graphql",
+  "devDependencies": {
+    "@types/jest": "24.0.24",
+    "@types/node": "12.12.21",
+    "@typescript-eslint/eslint-plugin": "2.12.0",
+    "@typescript-eslint/parser": "2.12.0",
+    "cross-env": "^6.0.3",
+    "eslint": "6.7.2",
+    "eslint-config-prettier": "6.7.0",
+    "eslint-plugin-prettier": "3.1.2",
+    "jest": "^24.9.0",
+    "prettier": "1.19.1",
+    "ts-jest": "^24.2.0",
+    "typescript": "^3.7.3"
+  },
+  "scripts": {
+    "eslint": "eslint --ext .ts ./src",
+    "watch": "DEBUG=axios:* jest --env node --watch",
+    "test": "jest --env node"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "debug": "^4.1.1",
+    "nodemon": "^2.0.2"
+  }
+}
