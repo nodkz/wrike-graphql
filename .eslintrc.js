@@ -11,7 +11,7 @@ module.exports = {
   parserOptions: {
     sourceType: 'module',
     useJSXTextNode: true,
-    project: [path.resolve(__dirname, 'tsconfig.test.json')],
+    project: [path.resolve(__dirname, 'tsconfig.json')],
   },
   rules: {
     'no-underscore-dangle': 0,

@@ -39,7 +39,7 @@ client.interceptors.response.use((res) => {
 
   if (res.status !== 200) {
     if (res?.data?.errorDescription) {
-      throw new Error(`WrikeError: ${res?.data?.errorDescription}`);
+      throw new Error(`WrikeServerError: ${res?.data?.errorDescription}`);
     }
     if (res?.data?.error) {
       throw new Error(res?.data?.error);

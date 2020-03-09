@@ -1,4 +1,4 @@
-import client from '../client';
+import client from './client';
 
 describe('client', () => {
   it('should get all tasks', async () => {

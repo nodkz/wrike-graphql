@@ -22,9 +22,9 @@ describe('task/findMany', () => {
 
   it('should support projections', async () => {
     const res = await findMany({
-      // limit: 2,
-      pageSize: 2,
-      nextPageToken: 'AB3DMIAAAAAAOAAAAABAAAAABEAAAAAEX7CSR6R4BLDH2',
+      limit: 2,
+      // pageSize: 2,
+      // nextPageToken: '',
       projection: {
         authorIds: true,
         hasAttachments: true,
