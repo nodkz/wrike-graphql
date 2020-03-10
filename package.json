@@ -21,7 +21,7 @@
     "typescript": "^3.7.3"
   },
   "scripts": {
-    "dev": "DEBUG=axios:request ts-node-dev --no-notify --respawn --watch src/schema src/server.ts",
+    "dev": "DEBUG=axios:* ts-node-dev --no-notify --respawn --watch src/schema src/server.ts",
     "eslint": "eslint --ext .ts ./src",
     "watch": "DEBUG=axios:* jest --env node --watch",
     "test": "jest --env node"

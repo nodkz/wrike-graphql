@@ -40,3 +40,48 @@
   - `yarn add graphql-compose-json`
 - Добавляем в схему поле `taskByIds.ts`
 - Добавляем в схему поле `taskFindMany.ts`
+
+### Заводим в схеме поле findByIds
+
+- Проблема дат в разных форматах
+  - ❌ startDate={"start":"2020-03-06T14:47:49.000Z"}
+  - ❌ startDate={"start":"2020-03-06T14:47:49Z"}
+  - ✅ startDate={"start":"2020-03-06T14:47:49"}
+  - ✅ startDate={"start":"2020-03-06"}
+  - ❌ createdDate={"start":"2020-03-06"}
+  - ✅ createdDate={"start":"2020-03-06T14:47:49Z"}
+  - ❌ createdDate={"start":"2020-03-06T14:47:49.000Z"}
+  - Не информативные ошибки
+    - "errorDescription": "Parameter 'createdDate' value is invalid",
+- Проблема с курсорной пагинацией `pageSize=2`, если задан текстовый поиск `title="TaskList"` – не возвращается курсор и кол-во элементов
+
+GraphQL запрос:
+
+```graphql
+{
+  taskFindMany(
+    filter: { title: "TaskList", createdDate: { start: "2020-03-06T14:47:49Z" } },
+    limit: 3,
+    sort: CREATED_DATE_DESC
+  ) {
+    id
+    createdDate
+    title
+    sharedIds
+    hasAttachments
+    authorIds
+  }
+}
+```
+
+трансформируется в
+
+```bash
+  axios:request ✅ 200 get /tasks
+  axios:request     title="TaskList"
+  axios:request     createdDate={"start":"2020-03-06T14:47:49Z"}
+  axios:request     limit=3
+  axios:request     sortField="CreatedDate"
+  axios:request     sortOrder="Desc"
+  axios:request     fields="[\"hasAttachments\",\"sharedIds\"]"
+```

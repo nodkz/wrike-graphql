@@ -38,25 +38,27 @@ interface TaskFilter {
   metadata: Record<string, string>;
 }
 
-type TaskProjection = {
-  authorIds?: boolean;
-  hasAttachments?: boolean;
-  attachmentCount?: boolean;
-  parentIds?: boolean;
-  superParentIds?: boolean;
-  sharedIds?: boolean;
-  responsibleIds?: boolean;
-  description?: boolean;
-  briefDescription?: boolean;
-  recurrent?: boolean;
-  superTaskIds?: boolean;
-  subTaskIds?: boolean;
-  dependencyIds?: boolean;
-  metadata?: boolean;
-  customFields?: boolean;
-  // effortAllocation?: boolean; // For some Paid accounts
-  // billingType?: boolean; // For some Paid accounts
-};
+export const projectionFields = [
+  'authorIds',
+  'hasAttachments',
+  'attachmentCount',
+  'parentIds',
+  'superParentIds',
+  'sharedIds',
+  'responsibleIds',
+  'description',
+  'briefDescription',
+  'recurrent',
+  'superTaskIds',
+  'subTaskIds',
+  'dependencyIds',
+  'metadata',
+  'customFields',
+  // 'effortAllocation', // For some Paid accounts
+  // 'billingType', // For some Paid accounts
+] as const;
+
+type TaskProjection = typeof projectionFields[number][];
 
 // https://developers.wrike.com/documentation/api/methods/query-tasks
 export async function findMany(opts?: {
@@ -70,8 +72,17 @@ export async function findMany(opts?: {
   subTasks?: boolean; // Adds subtasks to search scope
   descendants?: boolean; // Adds all descendant folders to search scope
 }) {
-  const { filter, limit, pageSize, nextPageToken, sortField, sortOrder, subTasks, projection } =
-    opts || {};
+  const {
+    filter,
+    limit,
+    pageSize,
+    nextPageToken,
+    sortField,
+    sortOrder,
+    subTasks,
+    descendants,
+    projection,
+  } = opts || {};
 
   let params: Record<string, any> = {};
 
@@ -103,9 +114,12 @@ export async function findMany(opts?: {
     params.subTasks = subTasks;
   }
 
+  if (descendants) {
+    params.descendants = descendants;
+  }
+
   if (projection) {
-    const p = Object.keys(projection).filter((n) => projection[n]);
-    if (p.length > 0) params.fields = JSON.stringify(p);
+    if (projection.length > 0) params.fields = JSON.stringify(projection);
   }
 
   const res = await client.get('/tasks', {
