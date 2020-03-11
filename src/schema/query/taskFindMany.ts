@@ -1,6 +1,5 @@
-import { TaskTC } from 'app/entities/task/TaskTC';
-import { findMany, projectionFields } from 'app/entities/task/findMany';
-import { getFlatProjectionFromAST } from 'graphql-compose';
+import { findMany } from 'app/vendor/task/findMany';
+import { TaskTC } from '../entities/TaskTC';
 
 TaskTC.schemaComposer.createEnumTC(`
   enum TaskStatus { Active Completed Deferred Cancelled }
@@ -40,6 +39,8 @@ export default {
     filter: TaskTC.schemaComposer.createInputTC({
       name: 'TaskFindManyFilter',
       fields: {
+        folderId: 'String',
+        spaceId: 'String',
         title: 'String',
         status: 'TaskStatus',
         importance: 'TaskImportance',
@@ -134,14 +135,12 @@ export default {
     },
   },
   resolve: (_, args, context, info) => {
-    const requestedFields = Object.keys(getFlatProjectionFromAST(info));
-    const projection = projectionFields.filter((n) => requestedFields.includes(n));
     return findMany({
+      info,
       filter: args.filter,
       limit: args.limit,
       pageSize: args.pageSize,
       nextPageToken: args.nextPageToken,
-      projection,
       subTasks: args.subTasks,
       descendants: args.descendants,
       ...args.sort,

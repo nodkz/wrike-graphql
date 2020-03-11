@@ -1,36 +1,47 @@
 import axios from 'axios';
 import debug from 'debug';
+import qs from 'qs';
+import { isObject } from 'util';
 
 const loggerRequest = debug('axios:request');
 const loggerData = debug('axios:data');
 
 export const client = axios.create({
-  baseURL: 'https://www.wrike.com/api/v4/',
+  baseURL: 'https://www.wrike.com/api/v4',
   timeout: 10000,
   headers: {
     Authorization:
       'Bearer eyJ0dCI6InAiLCJhbGciOiJIUzI1NiIsInR2IjoiMSJ9.eyJkIjoie1wiYVwiOjM1NjAxNTYsXCJpXCI6Njk0MTc4MixcImNcIjo0NjE3MTU5LFwidVwiOjc3NDcxMDQsXCJyXCI6XCJVU1wiLFwic1wiOltcIldcIixcIkZcIixcIklcIixcIlVcIixcIktcIixcIkNcIixcIkRcIixcIkFcIixcIkxcIl0sXCJ6XCI6W10sXCJ0XCI6MH0iLCJpYXQiOjE1ODM1MDYzNTZ9.ibFznZ-A5vEmQX8JyegCf_YoSwkDiHG_P5m2qx8HdKo',
   },
+  paramsSerializer: (params) => {
+    Object.keys(params).forEach((key) => {
+      if (Array.isArray(params[key]) || isObject(params[key])) {
+        params[key] = JSON.stringify(params[key]);
+      }
+    });
+    return qs.stringify(params);
+  },
   validateStatus: () => true,
 });
 
-// client.interceptors.request.use((request) => {
-//   console.log('[axios]', request.method, request.url);
-//   const paramNames = Object.keys(request.params);
-//   paramNames.forEach((paramName) => {
-//     console.log('      ', paramName, '=', request.params[paramName]);
-//   });
-//   return request;
-// });
+client.interceptors.request.use((request) => {
+  let msg = `⬜️  ${request.method} ${request.baseURL}${request.url}`;
+  if (request.params && request.paramsSerializer) {
+    msg += `?${request.paramsSerializer(request.params)}`;
+  }
+  loggerRequest(msg);
+  return request;
+});
+
 client.interceptors.response.use((res) => {
   const { status, config } = res;
   const { url, method, params } = config;
-  const colorStatus = status === 200 ? `✅ 200` : `❌ ${status}`;
+  const colorStatus = status === 200 ? `✅ ` : `❌ ${status}`;
   let msg = `${colorStatus} ${method} ${url}`;
   if (params) {
-    const paramNames = Object.keys(params);
-    paramNames.forEach((paramName) => {
-      msg += `\n    ${paramName}=${JSON.stringify(params[paramName])}`;
+    Object.keys(params).forEach((paramName) => {
+      const val = params[paramName];
+      msg += `\n    ${paramName}=${val}`;
     });
   }
 

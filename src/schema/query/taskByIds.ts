@@ -1,10 +1,10 @@
-import { TaskTC } from 'app/entities/task/TaskTC';
-import { findByIds } from 'app/entities/task/findByIds';
+import { findByIds } from 'app/vendor/task/findByIds';
+import { TaskTC } from '../entities/TaskTC';
 
 export default {
   args: { ids: '[String!]!' },
   type: [TaskTC],
   resolve: (_, args) => {
-    return findByIds({ ids: args.ids });
+    return findByIds(args);
   },
 };

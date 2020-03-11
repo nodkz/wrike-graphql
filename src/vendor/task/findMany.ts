@@ -1,4 +1,6 @@
-import client from '../../client';
+import { GraphQLResolveInfo } from 'graphql';
+import { getFlatProjectionFromAST } from 'graphql-compose';
+import client from '../client';
 
 export type TaskStatus = 'Active' | 'Completed' | 'Deferred' | 'Cancelled';
 export type TaskImportance = 'High' | 'Normal' | 'Low';
@@ -23,19 +25,21 @@ type DateRange = {
 type ContactID = string;
 
 interface TaskFilter {
-  title: string;
-  status: TaskStatus;
-  importance: TaskImportance;
-  startDate: DateRange;
-  dueDate: DateRange;
-  scheduledDate: DateRange;
-  createdDate: DateRange;
-  updatedDate: DateRange;
-  completedDate: DateRange;
-  authors: ContactID[];
-  responsibles: ContactID[];
-  type: TaskType;
-  metadata: Record<string, string>;
+  folderId?: string;
+  spaceId?: string;
+  title?: string;
+  status?: TaskStatus;
+  importance?: TaskImportance;
+  startDate?: DateRange;
+  dueDate?: DateRange;
+  scheduledDate?: DateRange;
+  createdDate?: DateRange;
+  updatedDate?: DateRange;
+  completedDate?: DateRange;
+  authors?: ContactID[];
+  responsibles?: ContactID[];
+  type?: TaskType;
+  metadata?: Record<string, string>;
 }
 
 export const projectionFields = [
@@ -60,8 +64,7 @@ export const projectionFields = [
 
 type TaskProjection = typeof projectionFields[number][];
 
-// https://developers.wrike.com/documentation/api/methods/query-tasks
-export async function findMany(opts?: {
+type FindManyOpts = {
   filter?: TaskFilter;
   limit?: number;
   pageSize?: number;
@@ -71,7 +74,10 @@ export async function findMany(opts?: {
   projection?: TaskProjection;
   subTasks?: boolean; // Adds subtasks to search scope
   descendants?: boolean; // Adds all descendant folders to search scope
-}) {
+};
+
+// https://developers.wrike.com/documentation/api/methods/query-tasks
+export async function _findMany(opts?: FindManyOpts) {
   const {
     filter,
     limit,
@@ -86,8 +92,10 @@ export async function findMany(opts?: {
 
   let params: Record<string, any> = {};
 
-  if (filter) {
-    params = { ...filter };
+  const { folderId, spaceId, ...restFilter } = filter || {};
+
+  if (restFilter) {
+    params = { ...restFilter };
   }
 
   if (limit) {
@@ -119,12 +127,23 @@ export async function findMany(opts?: {
   }
 
   if (projection) {
-    if (projection.length > 0) params.fields = JSON.stringify(projection);
+    if (projection.length > 0) params.fields = projection;
   }
 
-  const res = await client.get('/tasks', {
-    params,
-  });
+  let url = '/tasks';
+  if (folderId) {
+    url = `/folders/${folderId}/tasks`;
+  } else if (spaceId) {
+    url = `/spaces/${spaceId}/tasks`;
+  }
+
+  const res = await client.get(url, { params });
 
   return res?.data?.data;
+}
+
+export function findMany(opts: Exclude<FindManyOpts, 'projection'> & { info: GraphQLResolveInfo }) {
+  const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
+  const projection = projectionFields.filter((n) => requestedFields.includes(n));
+  return _findMany({ ...opts, projection });
 }

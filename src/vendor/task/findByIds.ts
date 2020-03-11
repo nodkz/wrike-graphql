@@ -1,11 +1,13 @@
-import client from '../../client';
+import client from '../client';
 
-type TaskProjection = {
-  attachmentCount?: boolean;
-  recurrent?: boolean;
-  // effortAllocation?: boolean; // For some Paid accounts
-  // billingType?: boolean; // For some Paid accounts
-};
+export const projectionFields = [
+  'attachmentCount',
+  'recurrent',
+  // 'effortAllocation', // For some Paid accounts
+  // 'billingType', // For some Paid accounts
+] as const;
+
+type TaskProjection = typeof projectionFields[number][];
 
 // https://developers.wrike.com/documentation/api/methods/query-tasks
 export async function findByIds(opts: { ids: string | string[]; projection?: TaskProjection }) {
@@ -27,8 +29,7 @@ export async function findByIds(opts: { ids: string | string[]; projection?: Tas
   const params: Record<string, any> = {};
 
   if (projection) {
-    const p = Object.keys(projection).filter((n) => projection[n]);
-    if (p.length > 0) params.fields = JSON.stringify(p);
+    if (projection.length > 0) params.fields = projection;
   }
 
   const res = await client.get(`/tasks/${preparedIds}`, {
