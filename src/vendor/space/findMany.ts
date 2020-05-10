@@ -5,7 +5,7 @@ interface SpaceFilter {
   userIsMember: boolean;
 }
 
-// https://developers.wrike.com/documentation/api/methods/get-spaces
+// https://developers.wrike.com/api/v4/spaces/
 export async function findMany(opts?: { filter?: SpaceFilter }) {
   const { filter } = opts || {};
   let params: Record<string, any> = {};

@@ -1,5 +1,6 @@
 import { findMany } from 'app/vendor/task/findMany';
 import { TaskTC } from '../entities/TaskTC';
+import { FieldConfig } from '../definitions';
 
 TaskTC.schemaComposer.createEnumTC(`
   enum TaskStatus { Active Completed Deferred Cancelled }
@@ -146,4 +147,4 @@ export default {
       ...args.sort,
     });
   },
-};
+} as FieldConfig;

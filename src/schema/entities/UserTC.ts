@@ -1,4 +1,4 @@
-import composeWithJson from 'graphql-compose-json';
+import { composeWithJson } from 'graphql-compose-json';
 import { TaskTC } from './TaskTC';
 import { findMany } from 'app/vendor/task/findMany';
 
