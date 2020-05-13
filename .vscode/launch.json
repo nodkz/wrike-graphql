@@ -25,6 +25,19 @@
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "disableOptimisticBPs": true
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "TS Debug",
+      "program": "${workspaceFolder}/src/server.ts",
+      "preLaunchTask": "npm: build",
+      "sourceMaps": true,
+      "smartStep": true,
+      "internalConsoleOptions": "openOnSessionStart",
+      "outFiles": [
+          "${workspaceFolder}/dist/**/*.js"
+      ]
     }
   ]
 }
