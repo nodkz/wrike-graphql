@@ -7,6 +7,6 @@ const server = new ApolloServer({
   schema,
 });
 
-server.listen().then(({ url }) => {
+server.listen(parseInt(process.env.PORT || '3000')).then(({ url }) => {
   console.log(`🚀 Server ready at ${url}`);
 });

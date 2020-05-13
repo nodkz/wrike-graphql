@@ -1,9 +1,11 @@
 import { composeWithJson } from 'graphql-compose-json';
 import { TaskTC } from './TaskTC';
 import { findMany } from 'app/vendor/task/findMany';
+import { SpaceID } from '../types/Scalars';
 
 const restApiResponse = {
-  id: 'IEADMUW4I4OE37IV',
+  // id: 'IEADMUW4I4OE37IV',
+  id: () => SpaceID,
   title: 'HolyJS Talk',
   avatarUrl: 'https://www.wrike.com/static/spaceicons/1/1-2600.png',
   accessType: () => `enum SpaceAccessType { Personal Private Public}`,

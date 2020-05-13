@@ -12,6 +12,10 @@ export const TaskID = schemaComposer.createScalarTC(`
   scalar TaskID
 `);
 
+export const SpaceID = schemaComposer.createScalarTC(`
+  scalar SpaceID
+`);
+
 export const CustomFieldID = schemaComposer.createScalarTC(`
   scalar CustomFieldID
 `);

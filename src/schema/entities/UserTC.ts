@@ -1,9 +1,11 @@
 import { composeWithJson } from 'graphql-compose-json';
 import { TaskTC } from './TaskTC';
 import { findMany } from 'app/vendor/task/findMany';
+import { ContactID } from '../types/Scalars';
 
 const restApiResponse = {
-  id: 'KUAHMNRA',
+  // id: 'KUAHMNRA',
+  id: () => ContactID,
   firstName: 'Pavel',
   lastName: 'Chertorogov',
   type: 'Person',

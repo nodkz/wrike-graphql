@@ -6,7 +6,7 @@ import { TaskID, ContactID, FolderID, CustomStatusID } from '../types/Scalars';
 
 const restApiResponse = {
   // id: 'IEADMUW4KQOE4AQG',
-  id: TaskID,
+  id: () => TaskID,
   accountId: 'IEADMUW4',
   title: 'Write GraphQL wrapper for TaskList',
   description: '',
