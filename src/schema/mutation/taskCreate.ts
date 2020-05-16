@@ -1,14 +1,14 @@
-import { TaskTC } from '../entities/TaskTC';
-import { FieldConfig } from '../definitions';
+import { TaskTC } from 'app/schema/entities/TaskTC';
+import { FieldConfig } from 'app/schema/definitions';
+import { FolderID } from 'app/schema/types/Scalars';
+import { TaskCreateInput } from 'app/schema/types/TaskInputs';
 import { create, TaskCreateArgs } from 'app/vendor/task/create';
-import { FolderID } from '../types/Scalars';
-import { TaskInput } from '../types/TaskInput';
 
 export default {
   type: TaskTC,
   args: {
-    folderId: FolderID.getTypeNonNull(),
-    task: TaskInput,
+    folderId: FolderID.NonNull,
+    task: TaskCreateInput.NonNull,
   },
   resolve: (_, args) => {
     return create(args);

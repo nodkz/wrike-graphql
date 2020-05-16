@@ -1,5 +1,5 @@
+import { UserTC } from 'app/schema/entities/UserTC';
 import { findById } from 'app/vendor/user/findById';
-import { UserTC } from '../entities/UserTC';
 
 export default {
   args: { id: 'String' },

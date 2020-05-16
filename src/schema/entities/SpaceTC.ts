@@ -1,7 +1,7 @@
 import { composeWithJson } from 'graphql-compose-json';
 import { TaskTC } from './TaskTC';
 import { findMany } from 'app/vendor/task/findMany';
-import { SpaceID } from '../types/Scalars';
+import { SpaceID } from 'app/schema/types/Scalars';
 
 const restApiResponse = {
   // id: 'IEADMUW4I4OE37IV',

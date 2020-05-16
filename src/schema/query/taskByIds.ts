@@ -1,6 +1,6 @@
+import { TaskTC } from 'app/schema/entities/TaskTC';
+import { FieldConfig } from 'app/schema/definitions';
 import { findByIds } from 'app/vendor/task/findByIds';
-import { TaskTC } from '../entities/TaskTC';
-import { FieldConfig } from '../definitions';
 
 export default {
   type: [TaskTC],

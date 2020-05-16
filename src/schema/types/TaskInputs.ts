@@ -4,8 +4,8 @@ import { ContactID, FolderID, TaskID, CustomStatusID } from './Scalars';
 import { KeyValueITC } from './KeyValueITC';
 import { CustomFieldValueITC } from './CustomFieldValueITC';
 
-export const TaskInput = schemaComposer.createInputTC({
-  name: 'TaskInput',
+export const TaskCreateInput = schemaComposer.createInputTC({
+  name: 'TaskCreateInput',
   fields: {
     title: 'String',
     description: 'String',
@@ -34,3 +34,10 @@ export const TaskInput = schemaComposer.createInputTC({
     customStatus: CustomStatusID,
   },
 });
+
+export const TaskUpdateInput = TaskCreateInput.clone('TaskUpdateInput').removeField([
+  'parents',
+  'shareds',
+  'responsibles',
+  'followers',
+]);

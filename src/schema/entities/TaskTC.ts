@@ -2,7 +2,7 @@ import { composeWithJson } from 'graphql-compose-json';
 import { findById } from 'app/vendor/user/findById';
 import { UserTC } from './UserTC';
 import { TaskStatusEnum, TaskImportanceEnum, TaskDatesTypeEnum } from '../types/TaskEnums';
-import { TaskID, ContactID, FolderID, CustomStatusID } from '../types/Scalars';
+import { TaskID, ContactID, FolderID, CustomStatusID } from 'app/schema/types/Scalars';
 
 const restApiResponse = {
   // id: 'IEADMUW4KQOE4AQG',

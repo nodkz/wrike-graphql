@@ -1,6 +1,6 @@
 import { findMany } from 'app/vendor/space/findMany';
-import { SpaceTC } from '../entities/SpaceTC';
-import { FieldConfig } from '../definitions';
+import { SpaceTC } from 'app/schema/entities/SpaceTC';
+import { FieldConfig } from 'app/schema/definitions';
 
 export default {
   type: [SpaceTC],
