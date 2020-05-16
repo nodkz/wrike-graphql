@@ -1,5 +1,5 @@
 import { schemaComposer } from 'graphql-compose';
-import { TaskStatusEnum, TaskImportanceEnum, TaskDatesTypeEnum } from './TaskEnums';
+import { TaskStatusEnum, TaskImportanceEnum, TaskDatesTypeEnum } from './Enums';
 import { ContactID, FolderID, TaskID, CustomStatusID } from './Scalars';
 import { KeyValueITC } from './KeyValueITC';
 import { CustomFieldValueITC } from './CustomFieldValueITC';

@@ -22,3 +22,17 @@ export const TaskDatesTypeEnum = `
     Planned
   }
 `;
+
+export const UserTypeEnum = `
+  enum UserTypeEnum {
+    Person
+    Group
+  }
+`;
+
+export const UserRoleEnum = `
+  enum UserRoleEnum {
+    User
+    Collaborator
+  }
+`;

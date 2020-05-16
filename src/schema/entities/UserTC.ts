@@ -1,7 +1,8 @@
 import { composeWithJson } from 'graphql-compose-json';
 import { TaskTC } from './TaskTC';
 import { findMany } from 'app/vendor/task/findMany';
-import { ContactID } from 'app/schema/types/Scalars';
+import { ContactID, AccountID } from 'app/schema/types/Scalars';
+import { UserRoleEnum } from '../types/Enums';
 
 const restApiResponse = {
   // id: 'KUAHMNRA',
@@ -11,9 +12,11 @@ const restApiResponse = {
   type: 'Person',
   profiles: [
     {
-      accountId: 'IEADMUW4',
+      // accountId: 'IEADMUW4',
+      accountId: () => AccountID,
       email: 'pavel.chertorogov@gmail.com',
-      role: 'User',
+      // role: 'User',
+      role: () => UserRoleEnum,
       external: false,
       admin: false,
       owner: true,

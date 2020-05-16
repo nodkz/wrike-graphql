@@ -23,3 +23,11 @@ export const CustomFieldID = schemaComposer.createScalarTC(`
 export const CustomStatusID = schemaComposer.createScalarTC(`
   scalar CustomStatusID
 `);
+
+export const WorkScheduleID = schemaComposer.createScalarTC(`
+  scalar WorkScheduleID
+`);
+
+export const AccountID = schemaComposer.createScalarTC(`
+  scalar AccountID
+`);

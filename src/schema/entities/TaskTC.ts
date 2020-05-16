@@ -1,7 +1,7 @@
 import { composeWithJson } from 'graphql-compose-json';
 import { findById } from 'app/vendor/user/findById';
 import { UserTC } from './UserTC';
-import { TaskStatusEnum, TaskImportanceEnum, TaskDatesTypeEnum } from '../types/TaskEnums';
+import { TaskStatusEnum, TaskImportanceEnum, TaskDatesTypeEnum } from '../types/Enums';
 import { TaskID, ContactID, FolderID, CustomStatusID } from 'app/schema/types/Scalars';
 
 const restApiResponse = {
