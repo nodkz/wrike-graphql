@@ -5,7 +5,7 @@ import { SpaceID } from 'app/schema/types/Scalars';
 
 const restApiResponse = {
   // id: 'IEADMUW4I4OE37IV',
-  id: () => SpaceID,
+  id: () => SpaceID.NonNull,
   title: 'HolyJS Talk',
   avatarUrl: 'https://www.wrike.com/static/spaceicons/1/1-2600.png',
   accessType: () => `enum SpaceAccessType { Personal Private Public}`,

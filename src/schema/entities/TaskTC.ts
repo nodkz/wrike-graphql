@@ -6,7 +6,7 @@ import { TaskID, ContactID, FolderID, CustomStatusID } from 'app/schema/types/Sc
 
 const restApiResponse = {
   // id: 'IEADMUW4KQOE4AQG',
-  id: () => TaskID,
+  id: () => TaskID.NonNull,
   accountId: 'IEADMUW4',
   title: 'Write GraphQL wrapper for TaskList',
   description: '',

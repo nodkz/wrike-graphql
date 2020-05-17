@@ -6,7 +6,7 @@ import { UserRoleEnum } from '../types/Enums';
 
 const restApiResponse = {
   // id: 'KUAHMNRA',
-  id: () => ContactID,
+  id: () => ContactID.NonNull,
   firstName: 'Pavel',
   lastName: 'Chertorogov',
   type: 'Person',

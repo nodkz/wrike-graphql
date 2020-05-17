@@ -5,7 +5,7 @@ import { KeyValueTC } from '../types/KeyValueTC';
 
 const restApiResponse = {
   // id: 'KUAHNM4I',
-  id: () => ContactID,
+  id: () => ContactID.NonNull,
   firstName: 'Ivan',
   lastName: 'Ivanov',
   // type: 'Person',

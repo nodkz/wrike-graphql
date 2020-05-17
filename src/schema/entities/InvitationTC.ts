@@ -3,8 +3,8 @@ import { InvitationID, AccountID, ContactID } from 'app/schema/types/Scalars';
 import { InvitationStatusEnum, UserRoleEnum } from '../types/Enums';
 
 const restApiResponse = {
-  id: () => InvitationID,
-  accountId: () => AccountID,
+  id: () => InvitationID.NonNull,
+  accountId: () => AccountID.NonNull,
   firstName: 'Wrike',
   lastName: 'Bot',
   email: 'robot3246automation@wrike-robot.com',

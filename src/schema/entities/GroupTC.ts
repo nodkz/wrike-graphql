@@ -3,8 +3,8 @@ import { GroupID, ContactID, AccountID } from 'app/schema/types/Scalars';
 import { KeyValueTC } from '../types/KeyValueTC';
 
 const restApiResponse = {
-  id: () => GroupID,
-  accountId: () => AccountID,
+  id: () => GroupID.NonNull,
+  accountId: () => AccountID.NonNull,
   title: 'New test group',
   memberIds: () => ContactID.List,
   childIds: () => ContactID.List,
