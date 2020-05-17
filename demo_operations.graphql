@@ -1,0 +1,185 @@
+query taskList {
+  taskFindMany(sort:UPDATED_DATE_DESC) {
+    id
+    title
+    parentIds
+  }
+}
+
+mutation taskRemove {
+  taskRemove(id:"IEADMUW4KQPBJ2AJ") {
+    id
+    title
+    description
+  }
+}
+
+mutation taskUpdate {
+  taskUpdate(id: "IEADMUW4KQOE33NJ", task: { title: "How-To Guide: Personal Space 123" }) {
+    id
+    title
+  }
+}
+
+mutation taskAddParents {
+  taskAddParents(id: "IEADMUW4KQOE33NJ", parents: "IEADMUW4I4OE37IV") {
+    id
+    title
+    parentIds
+  }
+}
+
+mutation taskRemoveParents {
+  taskRemoveParents(id: "IEADMUW4KQOE33NJ", parents: "IEADMUW4I4OE37IV") {
+    id
+    title
+    parentIds
+  }
+}
+
+query contacts {
+  #contactFindMany(filter: { metadata: { key: "a", value: "123" } }) {
+  contactFindMany {
+    id
+    firstName
+    lastName
+    metadata {
+      key
+      value
+    }
+    profiles {
+      accountId
+      email
+      role
+      external
+    }
+  }
+}
+
+query contacts2 {
+  contactByIds(ids: ["KX73NL7C", "KUAHNM4I"]) {
+    id
+    firstName
+    lastName
+    metadata {
+      key
+      value
+    }
+  }
+}
+
+mutation contactUpdate {
+  contactUpdate(id: "KX73NL7C", metadata: [{ key: "a", value:"123" }]) {
+    id
+    firstName
+    lastName
+    metadata {
+      key
+      value
+    }
+  }
+}
+
+mutation userUpdate {
+  userUpdate(id:"KUAHNM4I", profile: {
+    accountId: "IEADMUW4"
+    role: User
+    external: false
+  }) {
+    lastName
+    firstName
+    profiles {
+      email
+      external
+    }
+  }
+}
+
+query groupFindMany {
+  groupFindMany(filter: { metadata: { key: "a" }}) {
+    id
+    title
+    myTeam
+    metadata {
+      key
+      value
+    }
+  }
+}
+
+query groupById {
+  groupById(id: "KX73NL7C") {
+    id
+    title
+    myTeam
+    metadata {
+      key
+      value
+    }
+  }
+}
+
+mutation groupCreate {
+  groupCreate(group: {
+    title: "GraphQL group",
+    
+    metadata: [
+      { key: "a", value: "2345" },
+      { key: "b", value: "ok" }
+    ],
+  }) {
+    id
+    title
+    myTeam
+    metadata {
+      key
+      value
+    }
+  }
+}
+
+query getAccountData {
+  account {
+    id
+    name
+    dateFormat
+    firstDayOfWeek
+    workDays
+    rootFolderId
+    recycleBinId
+    createdDate
+    subscription {
+      type
+      suspended
+      paid
+      userLimit
+    }
+    metadata {
+      key
+      value
+    }
+    customFields {
+      id
+      accountId
+      title
+      type
+      sharedIds
+      settings
+    }
+    joinedDate
+  }
+}
+
+mutation setAccountMeta {
+  accountSetMetadata(metadata: [
+    { key: "aa", value: "111"},
+    { key: "bb", value: "222"}
+  ]) {
+    id
+    name
+    metadata {
+      key
+      value
+    }
+  }
+}
