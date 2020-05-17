@@ -31,3 +31,7 @@ export const WorkScheduleID = schemaComposer.createScalarTC(`
 export const AccountID = schemaComposer.createScalarTC(`
   scalar AccountID
 `);
+
+export const GroupID = schemaComposer.createScalarTC(`
+  scalar GroupID
+`);

@@ -6,7 +6,7 @@ import { TaskID } from 'app/schema/types/Scalars';
 export default {
   type: [TaskTC],
   args: { ids: TaskID.NonNull.List.NonNull },
-  resolve: (_, args) => {
-    return findByIds(args);
+  resolve: (_, args, context, info) => {
+    return findByIds({ ids: args.ids, info });
   },
 } as FieldConfig<{ ids: string[] }>;

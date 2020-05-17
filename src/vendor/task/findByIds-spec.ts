@@ -1,8 +1,8 @@
-import { findByIds } from './findByIds';
+import { _findByIds } from './findByIds';
 
 describe('task/findByIds', () => {
   it('should return array of tasks', async () => {
-    const res = await findByIds({
+    const res = await _findByIds({
       ids: 'IEADMUW4KQOFGGKJ',
       // IEADMUW4KQOE4AD6, IEADMUW4KQOE4AQG
     });
@@ -40,7 +40,7 @@ describe('task/findByIds', () => {
   });
 
   it('should return array of tasks', async () => {
-    const res = await findByIds({
+    const res = await _findByIds({
       ids: ['IEADMUW4KQOE4AD6', 'IEADMUW4KQOE4AQG'],
     });
     expect(Array.isArray(res)).toBeTruthy();

@@ -1,4 +1,6 @@
 import client from '../client';
+import { GraphQLResolveInfo } from 'graphql-compose/lib/graphql';
+import { getFlatProjectionFromAST } from 'graphql-compose';
 
 export const projectionFields = [
   'attachmentCount',
@@ -9,8 +11,13 @@ export const projectionFields = [
 
 type TaskProjection = typeof projectionFields[number][];
 
+type FindByIdsOpts = {
+  ids: string | string[];
+  projection?: TaskProjection;
+};
+
 // https://developers.wrike.com/documentation/api/methods/query-tasks
-export async function findByIds(opts: { ids: string | string[]; projection?: TaskProjection }) {
+export async function _findByIds(opts: FindByIdsOpts) {
   const { ids, projection } = opts || {};
 
   let preparedIds;
@@ -37,4 +44,12 @@ export async function findByIds(opts: { ids: string | string[]; projection?: Tas
   });
 
   return res?.data?.data;
+}
+
+export function findByIds(
+  opts: Exclude<FindByIdsOpts, 'projection'> & { info: GraphQLResolveInfo }
+) {
+  const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
+  const projection = projectionFields.filter((n) => requestedFields.includes(n));
+  return _findByIds({ ...opts, projection });
 }
