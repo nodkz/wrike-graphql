@@ -1,7 +1,7 @@
 import { schemaComposer } from 'graphql-compose';
-import { CustomFieldID } from './Scalars';
+import { CustomFieldID } from '../Scalars';
 
-export const CustomFieldValueITC = schemaComposer.createInputTC({
+export const CustomFieldValueInput = schemaComposer.createInputTC({
   name: 'CustomFieldValueInput',
   fields: {
     id: {

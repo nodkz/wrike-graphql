@@ -1,8 +1,8 @@
 import { schemaComposer } from 'graphql-compose';
-import { CustomFieldTypeEnum } from './Enums';
-import { CustomFieldID, AccountID, ContactID } from './Scalars';
+import { CustomFieldTypeEnum } from '../Enums';
+import { CustomFieldID, AccountID, ContactID } from '../Scalars';
 
-export const CustomFieldTC = schemaComposer.createObjectTC({
+export const CustomField = schemaComposer.createObjectTC({
   name: 'CustomField',
   fields: {
     id: CustomFieldID.NonNull,

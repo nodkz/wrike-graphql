@@ -1,7 +1,7 @@
 import { schemaComposer } from 'graphql-compose';
 
-export const KeyValueITC = schemaComposer.createInputTC({
-  name: 'KeyValueInput',
+export const KeyValue = schemaComposer.createObjectTC({
+  name: 'KeyValue',
   fields: {
     key: {
       type: 'String!',

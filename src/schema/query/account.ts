@@ -1,7 +1,7 @@
 import { findOne } from 'app/vendor/account/findOne';
 import { AccountTC } from 'app/schema/entities/AccountTC';
 import { FieldConfig } from 'app/schema/definitions';
-import { KeyValueITC } from '../types/KeyValueITC';
+import { KeyValueInput } from '../types/inputs/KeyValueInput';
 
 export default {
   type: AccountTC,
@@ -9,7 +9,7 @@ export default {
     filter: AccountTC.schemaComposer.createInputTC({
       name: 'AccountFilter',
       fields: {
-        metadata: KeyValueITC,
+        metadata: KeyValueInput,
       },
     }),
   },

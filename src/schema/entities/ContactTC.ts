@@ -1,7 +1,7 @@
 import { composeWithJson } from 'graphql-compose-json';
 import { UserTypeEnum, UserRoleEnum } from 'app/schema/types/Enums';
 import { ContactID, WorkScheduleID, AccountID } from 'app/schema/types/Scalars';
-import { KeyValueTC } from '../types/KeyValueTC';
+import { KeyValue } from '../types/outputs/KeyValue';
 
 const restApiResponse = {
   // id: 'KUAHNM4I',
@@ -28,7 +28,7 @@ const restApiResponse = {
   deleted: false,
   me: false,
   memberIds: () => ContactID.List,
-  metadata: () => KeyValueTC.List,
+  metadata: () => KeyValue.List,
   myTeam: false,
   title: 'bot',
   companyName: 'aaa',

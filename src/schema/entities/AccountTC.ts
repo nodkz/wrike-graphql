@@ -1,9 +1,9 @@
 import { FolderID, AccountID } from 'app/schema/types/Scalars';
 import { WeekDayEnum, FirstDayOfWeekEnum } from '../types/Enums';
 import { schemaComposer } from 'graphql-compose';
-import { KeyValueTC } from '../types/KeyValueTC';
-import { AccountSubscriptionTC } from '../types/AccountSubscriptionTC';
-import { CustomFieldTC } from '../types/CustomFieldTC';
+import { KeyValue } from '../types/outputs/KeyValue';
+import { AccountSubscription } from '../types/outputs/AccountSubscription';
+import { CustomField } from '../types/outputs/CustomField';
 
 export const AccountTC = schemaComposer.createObjectTC({
   name: 'Account',
@@ -37,16 +37,16 @@ export const AccountTC = schemaComposer.createObjectTC({
       description: 'Registration date',
     },
     subscription: {
-      type: AccountSubscriptionTC,
+      type: AccountSubscription,
       description: 'Account subscription',
     },
     metadata: {
-      type: KeyValueTC.NonNull.List,
+      type: KeyValue.NonNull.List,
       description:
         'List of account metadata entries. Entries could be read by all users of account and modified by admins only',
     },
     customFields: {
-      type: CustomFieldTC.NonNull.List,
+      type: CustomField.NonNull.List,
       description: 'List of custom fields accessible for requesting user in the account',
     },
     joinedDate: {

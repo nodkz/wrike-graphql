@@ -1,6 +1,9 @@
 import { TaskTC } from 'app/schema/entities/TaskTC';
 import { FieldConfig } from 'app/schema/definitions';
 import { findMany } from 'app/vendor/task/findMany';
+import { DateTimeRangeEqualInput } from '../types/inputs/DateTimeRangeEqualInput';
+import { DateRangeEqualInput } from '../types/inputs/DateRangeEqualInput';
+import { DateTimeRangeInput } from '../types/inputs/DateTimeRangeInput';
 
 TaskTC.schemaComposer.createEnumTC(`
   enum TaskStatus { Active Completed Deferred Cancelled }
@@ -13,13 +16,6 @@ TaskTC.schemaComposer.createEnumTC(`
 `);
 TaskTC.schemaComposer.createScalarTC(`
   scalar ContactID
-`);
-TaskTC.schemaComposer.createInputTC(`
-  input DateRange {
-    start: String
-    end: String
-    equal: String
-  }
 `);
 
 export default {
@@ -45,12 +41,12 @@ export default {
         title: 'String',
         status: 'TaskStatus',
         importance: 'TaskImportance',
-        startDate: 'DateRange',
-        dueDate: 'DateRange',
-        scheduledDate: 'DateRange',
-        createdDate: 'DateRange',
-        updatedDate: 'DateRange',
-        completedDate: 'DateRange',
+        startDate: DateTimeRangeEqualInput,
+        dueDate: DateTimeRangeEqualInput,
+        scheduledDate: DateRangeEqualInput,
+        createdDate: DateTimeRangeInput,
+        updatedDate: DateTimeRangeInput,
+        completedDate: DateTimeRangeInput,
         authors: '[ContactID]',
         responsibles: '[ContactID]',
         type: 'TaskType',

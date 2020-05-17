@@ -1,7 +1,7 @@
 import { findMany } from 'app/vendor/contact/findMany';
 import { ContactTC } from 'app/schema/entities/ContactTC';
 import { FieldConfig } from 'app/schema/definitions';
-import { KeyValueITC } from '../types/KeyValueITC';
+import { KeyValueInput } from '../types/inputs/KeyValueInput';
 
 export default {
   type: ContactTC.List,
@@ -10,7 +10,7 @@ export default {
       name: 'ContactFindManyFilter',
       fields: {
         me: 'Boolean',
-        metadata: KeyValueITC,
+        metadata: KeyValueInput,
         deleted: 'Boolean',
       },
     }),

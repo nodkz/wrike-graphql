@@ -103,3 +103,131 @@ export const CustomFieldTypeEnum = schemaComposer.createEnumTC(`
     Multiple
   }
 `);
+
+export const ColorEnum = schemaComposer.createEnumTC(`
+  enum ColorEnum {
+    None
+    Person
+    Purple1
+    Purple2
+    Purple3
+    Purple4
+    Indigo1
+    Indigo2
+    Indigo3
+    Indigo4
+    DarkBlue1
+    DarkBlue2
+    DarkBlue3
+    DarkBlue4
+    Blue1
+    Blue2
+    Blue3
+    Blue4
+    Turquoise1
+    Turquoise2
+    Turquoise3
+    Turquoise4
+    DarkCyan1
+    DarkCyan2
+    DarkCyan3
+    DarkCyan4
+    Green1
+    Green2
+    Green3
+    Green4
+    YellowGreen1
+    YellowGreen2
+    YellowGreen3
+    YellowGreen4
+    Yellow1
+    Yellow2
+    Yellow3
+    Yellow4
+    Orange1
+    Orange2
+    Orange3
+    Orange4
+    Red1
+    Red2
+    Red3
+    Red4
+    Pink1
+    Pink2
+    Pink3
+    Pink4
+    Gray1
+    Gray2
+    Gray3
+  }
+`);
+
+export const TreeScopeEnum = schemaComposer.createEnumTC(`
+  enum TreeScopeEnum {
+    """Virtual root folder of account"""
+    WsRoot
+    """Virtual Recycle Bin folder of account"""
+    RbRoot
+    """Folder in account"""
+    WsFolder
+    """Folder is in Recycle Bin (deleted folder)"""
+    RbFolder
+    """Task in account"""
+    WsTask
+    """Task is in Recycle Bin (deleted task)"""
+    RbTask
+  }
+`);
+
+export const ProjectStatusEnum = schemaComposer.createEnumTC(`
+  enum ProjectStatusEnum {
+    Green
+    Yellow
+    Red
+    Completed
+    OnHold
+    Cancelled
+    Custom
+  }
+`);
+
+export const ContractTypeEnum = schemaComposer.createEnumTC(`
+  """Project Contract Type (Wrike Resource only)"""
+  enum ContractTypeEnum {
+    Billable
+    NonBillable
+  }
+`);
+
+export const CustomFieldComparatorEnum = schemaComposer.createEnumTC(`
+  enum CustomFieldComparatorEnum {
+    """For all field types"""
+    EqualTo
+    """For all field types"""
+    IsEmpty
+    """For all field types"""
+    IsNotEmpty
+    """For comparable field types"""
+    LessThan
+    """For comparable field types"""
+    LessOrEqualTo
+    """For comparable field types"""
+    GreaterThan
+    """For comparable field types"""
+    GreaterOrEqualTo
+    """For comparable field types"""
+    InRange
+    """For comparable field types"""
+    NotInRange
+    """For string field types"""
+    Contains
+    """For string field types"""
+    StartsWith
+    """For string field types"""
+    EndsWith
+    """For collection field types"""
+    ContainsAll
+    """For collection field types"""
+    ContainsAny
+  }
+`);

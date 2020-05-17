@@ -2,7 +2,7 @@ import { GroupTC } from 'app/schema/entities/GroupTC';
 import { FieldConfig } from 'app/schema/definitions';
 import { ContactID } from 'app/schema/types/Scalars';
 import { create, CreateArgs } from 'app/vendor/group/create';
-import { KeyValueITC } from '../types/KeyValueITC';
+import { KeyValueInput } from '../types/inputs/KeyValueInput';
 import { schemaComposer } from 'graphql-compose';
 
 export const GroupCreateInput = schemaComposer.createInputTC({
@@ -18,7 +18,7 @@ export const GroupCreateInput = schemaComposer.createInputTC({
       """Hex color code"""
       color: String!
     }`,
-    metadata: [KeyValueITC],
+    metadata: KeyValueInput.NonNull.List,
   },
 });
 

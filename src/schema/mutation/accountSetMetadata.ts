@@ -1,12 +1,12 @@
 import { AccountTC } from 'app/schema/entities/AccountTC';
 import { FieldConfig } from 'app/schema/definitions';
 import { update, UpdateArgs } from 'app/vendor/account/update';
-import { KeyValueITC } from '../types/KeyValueITC';
+import { KeyValueInput } from '../types/inputs/KeyValueInput';
 
 export default {
   type: AccountTC,
   args: {
-    metadata: KeyValueITC.NonNull.List.NonNull,
+    metadata: KeyValueInput.NonNull.List.NonNull,
   },
   resolve: (_, args) => {
     return update(args);
