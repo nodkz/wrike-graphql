@@ -35,3 +35,7 @@ export const AccountID = schemaComposer.createScalarTC(`
 export const GroupID = schemaComposer.createScalarTC(`
   scalar GroupID
 `);
+
+export const InvitationID = schemaComposer.createScalarTC(`
+  scalar InvitationID
+`);

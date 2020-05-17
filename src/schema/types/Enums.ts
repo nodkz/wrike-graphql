@@ -36,3 +36,12 @@ export const UserRoleEnum = `
     Collaborator
   }
 `;
+
+export const InvitationStatusEnum = `
+  enum InvitationStatusEnum {
+    Pending
+    Accepted
+    Declined
+    Cancelled
+  }
+`;

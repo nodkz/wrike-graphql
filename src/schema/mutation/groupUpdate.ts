@@ -4,7 +4,7 @@ import { GroupID } from 'app/schema/types/Scalars';
 import { update, UpdateArgs } from 'app/vendor/group/update';
 import { GroupCreateInput } from './groupCreate';
 
-export const GroupUpdateInput = GroupCreateInput.clone('TaskUpdateInput')
+export const GroupUpdateInput = GroupCreateInput.clone('GroupUpdateInput')
   .removeField('members')
   .makeFieldNullable('title');
 
