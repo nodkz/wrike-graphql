@@ -1,7 +1,7 @@
 import { TaskTC } from 'app/schema/entities/TaskTC';
 import { FieldConfig } from 'app/schema/definitions';
 import { TaskID, FolderID } from 'app/schema/types/Scalars';
-import { update } from 'app/vendor/task/update';
+import { taskUpdate } from 'app/vendor/task/taskUpdate';
 
 export default {
   type: TaskTC,
@@ -10,6 +10,6 @@ export default {
     parents: FolderID.NonNull.List.NonNull,
   },
   resolve: (_, args) => {
-    return update({ id: args.id, task: { removeParents: args.parents } });
+    return taskUpdate({ id: args.id, task: { removeParents: args.parents } });
   },
 } as FieldConfig;

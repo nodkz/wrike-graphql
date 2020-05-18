@@ -9,7 +9,7 @@ type TaskProjection = typeof projectionFields[number][];
 type FindByIdsOpts = { ids: string | string[]; projection?: TaskProjection };
 
 // https://developers.wrike.com/api/v4/contacts/#query-contacts
-export async function _findByIds(opts: FindByIdsOpts) {
+export async function _contactFindByIds(opts: FindByIdsOpts) {
   const { ids, projection } = opts || {};
 
   let preparedIds;
@@ -38,10 +38,10 @@ export async function _findByIds(opts: FindByIdsOpts) {
   return res?.data?.data;
 }
 
-export function findByIds(
+export function contactFindByIds(
   opts: Exclude<FindByIdsOpts, 'projection'> & { info: GraphQLResolveInfo }
 ) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _findByIds({ ...opts, projection });
+  return _contactFindByIds({ ...opts, projection });
 }

@@ -5,7 +5,7 @@ export interface RemoveArgs {
 }
 
 // https://developers.wrike.com/api/v4/invitations/#delete-invitation
-export async function remove(opts: RemoveArgs) {
+export async function invitationRemove(opts: RemoveArgs) {
   const { id } = opts || {};
   if (!id) throw new Error('You should provide `id`');
   const res = await client.delete(`/invitations/${id}`);

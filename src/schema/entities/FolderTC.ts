@@ -4,6 +4,7 @@ import { schemaComposer } from 'graphql-compose';
 import { ProjectDetails } from '../types/outputs/ProjectDetails';
 import { KeyValue } from '../types/outputs/KeyValue';
 import { CustomField } from '../types/outputs/CustomField';
+import { folderFindByIds } from 'app/vendor/folder/folderFindByIds';
 
 export const FolderTC = schemaComposer.createObjectTC({
   name: 'Folder',
@@ -20,6 +21,11 @@ export const FolderTC = schemaComposer.createObjectTC({
       description: 'Folder color',
     },
     childIds: FolderID.NonNull.List.NonNull,
+    childs: {
+      type: () => FolderTC.NonNull.List,
+      resolve: (s, _, __, info) => folderFindByIds({ ids: s.childIds, info }),
+      projection: { childIds: 1 },
+    },
     scope: {
       type: TreeScopeEnum.NonNull,
       description: 'Folder scope',
@@ -64,6 +70,11 @@ export const FolderTC = schemaComposer.createObjectTC({
       type: FolderID.NonNull.List,
       description:
         "List of super parent folder IDs (applicable to 'Selective Sharing' labs feature)",
+    },
+    superParents: {
+      type: () => FolderTC.NonNull.List,
+      resolve: (s, _, __, info) => folderFindByIds({ ids: s.superParentIds, info }),
+      projection: { superParentIds: 1 },
     },
     contractType: {
       type: ContractTypeEnum,

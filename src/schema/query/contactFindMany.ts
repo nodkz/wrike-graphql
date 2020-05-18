@@ -1,4 +1,4 @@
-import { findMany } from 'app/vendor/contact/findMany';
+import { contactFindMany } from 'app/vendor/contact/contactFindMany';
 import { ContactTC } from 'app/schema/entities/ContactTC';
 import { FieldConfig } from 'app/schema/definitions';
 import { KeyValueInput } from '../types/inputs/KeyValueInput';
@@ -16,6 +16,6 @@ export default {
     }),
   },
   resolve: (_, { filter }, context, info) => {
-    return findMany({ filter, info });
+    return contactFindMany({ filter, info });
   },
 } as FieldConfig;

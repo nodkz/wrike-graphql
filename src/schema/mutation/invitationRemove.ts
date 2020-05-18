@@ -1,6 +1,6 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { InvitationID } from 'app/schema/types/Scalars';
-import { remove } from 'app/vendor/invitation/remove';
+import { invitationRemove } from 'app/vendor/invitation/invitationRemove';
 import { InvitationTC } from 'app/schema/entities/InvitationTC';
 
 export default {
@@ -9,6 +9,6 @@ export default {
     id: InvitationID.NonNull,
   },
   resolve: (_, args) => {
-    return remove({ id: args.id });
+    return invitationRemove({ id: args.id });
   },
 } as FieldConfig;

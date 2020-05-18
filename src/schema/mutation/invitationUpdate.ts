@@ -1,6 +1,6 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { InvitationID } from 'app/schema/types/Scalars';
-import { update, UpdateArgs } from 'app/vendor/invitation/update';
+import { invitationUpdate, UpdateArgs } from 'app/vendor/invitation/invitationUpdate';
 import { InvitationCreateInput } from './invitationCreate';
 import { InvitationTC } from 'app/schema/entities/InvitationTC';
 
@@ -15,6 +15,6 @@ export default {
     invitation: InvitationUpdateInput.NonNull,
   },
   resolve: (_, args) => {
-    return update(args);
+    return invitationUpdate(args);
   },
 } as FieldConfig<UpdateArgs>;

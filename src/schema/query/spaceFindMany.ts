@@ -1,4 +1,4 @@
-import { findMany } from 'app/vendor/space/findMany';
+import { spaceFindMany } from 'app/vendor/space/spaceFindMany';
 import { SpaceTC } from 'app/schema/entities/SpaceTC';
 import { FieldConfig } from 'app/schema/definitions';
 
@@ -11,6 +11,6 @@ export default {
     }`,
   },
   resolve: (_, args) => {
-    return findMany(args);
+    return spaceFindMany(args);
   },
 } as FieldConfig;

@@ -28,5 +28,8 @@ app.use(
 );
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server ready at http://localhost:${PORT}`);
+  console.log(`🚀 Server ready! Working links:
+    http://localhost:${PORT}
+    http://localhost:${PORT}/voyager
+  `);
 });

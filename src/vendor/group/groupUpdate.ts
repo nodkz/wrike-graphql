@@ -6,7 +6,7 @@ export interface UpdateArgs {
 }
 
 // https://developers.wrike.com/api/v4/groups/#modify-groups
-export async function update(opts: UpdateArgs) {
+export async function groupUpdate(opts: UpdateArgs) {
   const { id, group } = opts || {};
 
   if (!id) throw new Error('You should provide `id`');

@@ -6,7 +6,7 @@ export interface ContactUpdateArgs {
 }
 
 // https://developers.wrike.com/api/v4/contacts/#modify-contact
-export async function update(opts: ContactUpdateArgs) {
+export async function contactUpdate(opts: ContactUpdateArgs) {
   const { id, metadata } = opts || {};
 
   if (!id) throw new Error('You should provide `id`');

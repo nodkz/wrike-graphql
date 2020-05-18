@@ -6,7 +6,7 @@ export interface UpdateArgs {
 }
 
 // https://developers.wrike.com/api/v4/invitations/#update-invitation
-export async function update(opts: UpdateArgs) {
+export async function invitationUpdate(opts: UpdateArgs) {
   const { id, invitation } = opts || {};
 
   if (!id) throw new Error('You should provide `id`');

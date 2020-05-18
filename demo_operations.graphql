@@ -1,3 +1,4 @@
+# Write your query or mutation here
 query taskList {
   taskFindMany(sort:UPDATED_DATE_DESC) {
     id
@@ -181,5 +182,46 @@ mutation setAccountMeta {
       key
       value
     }
+  }
+}
+
+query getFolders {
+  folderFindMany(filter: {
+    descendants: false
+    
+  }) {
+    id
+    title
+    color
+    childIds
+    scope
+    
+    project {
+      authorId
+      ownerIds
+      status
+      customStatusId
+      startDate
+      endDate
+      createdDate
+      completedDate
+      contractType
+    }
+    space
+    metadata {
+      key
+      value
+    }
+    hasAttachments
+    attachmentCount
+    description
+    briefDescription
+    customFields {
+      id
+      title
+    }
+    customColumnIds
+    superParentIds
+    # contractType
   }
 }

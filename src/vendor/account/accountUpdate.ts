@@ -5,7 +5,7 @@ export interface UpdateArgs {
 }
 
 // https://developers.wrike.com/api/v4/account/#modify-account
-export async function update(opts: UpdateArgs) {
+export async function accountUpdate(opts: UpdateArgs) {
   const { metadata } = opts || {};
 
   const res = await client.put(`/account`, { metadata });

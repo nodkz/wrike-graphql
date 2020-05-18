@@ -1,9 +1,10 @@
 import { TaskTC } from 'app/schema/entities/TaskTC';
 import { FieldConfig } from 'app/schema/definitions';
-import { findMany } from 'app/vendor/task/findMany';
+import { taskFindMany } from 'app/vendor/task/taskFindMany';
 import { DateTimeRangeEqualInput } from '../types/inputs/DateTimeRangeEqualInput';
 import { DateRangeEqualInput } from '../types/inputs/DateRangeEqualInput';
 import { DateTimeRangeInput } from '../types/inputs/DateTimeRangeInput';
+import { ContactID } from '../types/Scalars';
 
 TaskTC.schemaComposer.createEnumTC(`
   enum TaskStatus { Active Completed Deferred Cancelled }
@@ -47,8 +48,8 @@ export default {
         createdDate: DateTimeRangeInput,
         updatedDate: DateTimeRangeInput,
         completedDate: DateTimeRangeInput,
-        authors: '[ContactID]',
-        responsibles: '[ContactID]',
+        authors: ContactID.List,
+        responsibles: ContactID.List,
         type: 'TaskType',
         metadata: 'JSON',
       },
@@ -132,7 +133,7 @@ export default {
     },
   },
   resolve: (_, args, context, info) => {
-    return findMany({
+    return taskFindMany({
       info,
       filter: args.filter,
       limit: args.limit,

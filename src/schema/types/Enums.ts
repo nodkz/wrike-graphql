@@ -231,3 +231,11 @@ export const CustomFieldComparatorEnum = schemaComposer.createEnumTC(`
     ContainsAny
   }
 `);
+
+export const SpaceAccessTypeEnum = schemaComposer.createEnumTC(`
+  enum SpaceAccessTypeEnum { 
+    Personal
+    Private
+    Public
+  }
+`);

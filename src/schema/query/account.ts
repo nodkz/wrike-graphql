@@ -1,4 +1,4 @@
-import { findOne } from 'app/vendor/account/findOne';
+import { accountFindOne } from 'app/vendor/account/accountFindOne';
 import { AccountTC } from 'app/schema/entities/AccountTC';
 import { FieldConfig } from 'app/schema/definitions';
 import { KeyValueInput } from '../types/inputs/KeyValueInput';
@@ -14,6 +14,6 @@ export default {
     }),
   },
   resolve: (_, { filter }, context, info) => {
-    return findOne({ filter, info });
+    return accountFindOne({ filter, info });
   },
 } as FieldConfig;

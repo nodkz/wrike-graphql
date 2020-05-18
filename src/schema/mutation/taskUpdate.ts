@@ -1,7 +1,7 @@
 import { TaskTC } from 'app/schema/entities/TaskTC';
 import { FieldConfig } from 'app/schema/definitions';
 import { TaskID } from 'app/schema/types/Scalars';
-import { update, TaskUpdateArgs } from 'app/vendor/task/update';
+import { taskUpdate, TaskUpdateArgs } from 'app/vendor/task/taskUpdate';
 import { TaskCreateInput } from './taskCreate';
 
 export const TaskUpdateInput = TaskCreateInput.clone('TaskUpdateInput')
@@ -15,6 +15,6 @@ export default {
     task: TaskUpdateInput.NonNull,
   },
   resolve: (_, args) => {
-    return update(args);
+    return taskUpdate(args);
   },
 } as FieldConfig<TaskUpdateArgs>;

@@ -2,7 +2,7 @@ import { GraphQLResolveInfo } from 'graphql';
 import { getFlatProjectionFromAST } from 'graphql-compose';
 import client from '../client';
 
-export const projectionFields = ['metadata', 'subscription', 'customFields'] as const;
+export const projectionFields = ['metadata'] as const;
 
 type Projection = typeof projectionFields[number][];
 
@@ -13,8 +13,8 @@ type FindManyOpts = {
   projection?: Projection;
 };
 
-// https://developers.wrike.com/api/v4/account/#query-accounts
-export async function _findOne(opts?: FindManyOpts) {
+// https://developers.wrike.com/api/v4/groups/#query-groups
+export async function _groupFindMany(opts?: FindManyOpts) {
   const { filter, projection } = opts || {};
 
   const params: Record<string, any> = { ...filter };
@@ -23,13 +23,15 @@ export async function _findOne(opts?: FindManyOpts) {
     if (projection.length > 0) params.fields = projection;
   }
 
-  const res = await client.get('/account', { params });
+  const res = await client.get('/groups', { params });
 
-  return res?.data?.data?.[0];
+  return res?.data?.data;
 }
 
-export function findOne(opts: Exclude<FindManyOpts, 'projection'> & { info: GraphQLResolveInfo }) {
+export function groupFindMany(
+  opts: Exclude<FindManyOpts, 'projection'> & { info: GraphQLResolveInfo }
+) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _findOne({ ...opts, projection });
+  return _groupFindMany({ ...opts, projection });
 }

@@ -1,6 +1,6 @@
 import { InvitationTC } from 'app/schema/entities/InvitationTC';
 import { FieldConfig } from 'app/schema/definitions';
-import { create, CreateArgs } from 'app/vendor/group/create';
+import { groupCreate, CreateArgs } from 'app/vendor/group/groupCreate';
 import { schemaComposer } from 'graphql-compose';
 import { UserRoleEnum } from '../types/Enums';
 
@@ -31,6 +31,6 @@ export default {
     group: InvitationCreateInput.NonNull,
   },
   resolve: (_, args) => {
-    return create(args);
+    return groupCreate(args);
   },
 } as FieldConfig<CreateArgs>;

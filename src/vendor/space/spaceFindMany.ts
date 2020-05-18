@@ -6,7 +6,7 @@ interface SpaceFilter {
 }
 
 // https://developers.wrike.com/api/v4/spaces/
-export async function findMany(opts?: { filter?: SpaceFilter }) {
+export async function spaceFindMany(opts?: { filter?: SpaceFilter }) {
   const { filter } = opts || {};
   let params: Record<string, any> = {};
   if (filter) {

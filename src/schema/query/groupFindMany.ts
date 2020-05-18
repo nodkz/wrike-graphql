@@ -1,4 +1,4 @@
-import { findMany } from 'app/vendor/group/findMany';
+import { groupFindMany } from 'app/vendor/group/groupFindMany';
 import { GroupTC } from 'app/schema/entities/GroupTC';
 import { FieldConfig } from 'app/schema/definitions';
 import { KeyValueInput } from '../types/inputs/KeyValueInput';
@@ -14,6 +14,6 @@ export default {
     }),
   },
   resolve: (_, { filter }, context, info) => {
-    return findMany({ filter, info });
+    return groupFindMany({ filter, info });
   },
 } as FieldConfig;

@@ -1,8 +1,8 @@
-import { _findMany } from './findMany';
+import { _taskFindMany } from './taskFindMany';
 
-describe('task/findMany', () => {
+describe('task/taskFindMany', () => {
   it('should return array of tasks', async () => {
-    const res = await _findMany();
+    const res = await _taskFindMany();
     expect(Array.isArray(res)).toBeTruthy();
     expect(Object.keys(res[0])).toEqual([
       'id',
@@ -21,7 +21,7 @@ describe('task/findMany', () => {
   });
 
   it('should support projections', async () => {
-    const res = await _findMany({
+    const res = await _taskFindMany({
       limit: 2,
       // pageSize: 2,
       // nextPageToken: '',
@@ -70,7 +70,7 @@ describe('task/findMany', () => {
       'subTaskIds',
       'dependencyIds',
       'metadata',
-      'customFields',
+      // 'customFields',
     ]);
   });
 });

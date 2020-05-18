@@ -1,8 +1,8 @@
-import { findById } from './findById';
+import { userFindById } from './userFindById';
 
 describe('user/findById', () => {
   it('should return userData', async () => {
-    const res = await findById({ id: 'KUAHMNRA' });
+    const res = await userFindById({ id: 'KUAHMNRA' });
     expect(res.firstName).toBe('Pavel');
     expect(Object.keys(res)).toEqual([
       'id',

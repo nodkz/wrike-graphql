@@ -1,4 +1,4 @@
-import { findMany } from 'app/vendor/folder/findMany';
+import { folderFindMany } from 'app/vendor/folder/folderFindMany';
 import { FolderTC } from 'app/schema/entities/FolderTC';
 import { FieldConfig } from 'app/schema/definitions';
 import { KeyValueInput } from '../types/inputs/KeyValueInput';
@@ -53,6 +53,6 @@ export default {
     filter: FolderFilterInput,
   },
   resolve: (_, { filter }, context, info) => {
-    return findMany({ filter, info });
+    return folderFindMany({ filter, info });
   },
 } as FieldConfig;

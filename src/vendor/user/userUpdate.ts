@@ -6,7 +6,7 @@ export interface UserUpdateArgs {
 }
 
 // https://developers.wrike.com/api/v4/users/#modify-user
-export async function update(opts: UserUpdateArgs) {
+export async function userUpdate(opts: UserUpdateArgs) {
   const { id, profile } = opts || {};
 
   if (!id) throw new Error('You should provide `id`');

@@ -77,7 +77,7 @@ type FindManyOpts = {
 };
 
 // https://developers.wrike.com/documentation/api/methods/query-tasks
-export async function _findMany(opts?: FindManyOpts) {
+export async function _taskFindMany(opts?: FindManyOpts) {
   const {
     filter,
     limit,
@@ -142,8 +142,10 @@ export async function _findMany(opts?: FindManyOpts) {
   return res?.data?.data;
 }
 
-export function findMany(opts: Exclude<FindManyOpts, 'projection'> & { info: GraphQLResolveInfo }) {
+export function taskFindMany(
+  opts: Exclude<FindManyOpts, 'projection'> & { info: GraphQLResolveInfo }
+) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _findMany({ ...opts, projection });
+  return _taskFindMany({ ...opts, projection });
 }

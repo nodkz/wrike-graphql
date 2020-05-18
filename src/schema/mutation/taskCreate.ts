@@ -1,7 +1,7 @@
 import { TaskTC } from 'app/schema/entities/TaskTC';
 import { FieldConfig } from 'app/schema/definitions';
 import { FolderID, ContactID, TaskID, CustomStatusID } from 'app/schema/types/Scalars';
-import { create, TaskCreateArgs } from 'app/vendor/task/create';
+import { taskCreate, CreateArgs } from 'app/vendor/task/taskCreate';
 import { schemaComposer } from 'graphql-compose';
 import { TaskStatusEnum, TaskImportanceEnum, TaskDatesTypeEnum } from '../types/Enums';
 import { KeyValueInput } from '../types/inputs/KeyValueInput';
@@ -45,6 +45,6 @@ export default {
     task: TaskCreateInput.NonNull,
   },
   resolve: (_, args) => {
-    return create(args);
+    return taskCreate(args);
   },
-} as FieldConfig<TaskCreateArgs>;
+} as FieldConfig<CreateArgs>;

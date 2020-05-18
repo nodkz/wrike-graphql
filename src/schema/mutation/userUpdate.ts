@@ -1,7 +1,7 @@
 import { UserTC } from 'app/schema/entities/UserTC';
 import { FieldConfig } from 'app/schema/definitions';
 import { ContactID, AccountID } from 'app/schema/types/Scalars';
-import { update, UserUpdateArgs } from 'app/vendor/user/update';
+import { userUpdate, UserUpdateArgs } from 'app/vendor/user/userUpdate';
 import { UserRoleEnum } from '../types/Enums';
 
 export default {
@@ -18,6 +18,6 @@ export default {
     }),
   },
   resolve: (_, args) => {
-    return update(args);
+    return userUpdate(args);
   },
 } as FieldConfig<UserUpdateArgs>;

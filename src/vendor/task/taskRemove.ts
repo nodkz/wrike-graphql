@@ -1,11 +1,11 @@
 import client from '../client';
 
-export interface TaskRemoveArgs {
+export interface RemoveArgs {
   id: string;
 }
 
 // https://developers.wrike.com/api/v4/tasks/#delete-tasks
-export async function remove(opts: TaskRemoveArgs) {
+export async function taskRemove(opts: RemoveArgs) {
   const { id } = opts || {};
   if (!id) throw new Error('You should provide task `id`');
   const res = await client.delete(`/tasks/${id}`);

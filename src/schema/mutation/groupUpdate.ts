@@ -1,7 +1,7 @@
 import { GroupTC } from 'app/schema/entities/GroupTC';
 import { FieldConfig } from 'app/schema/definitions';
 import { GroupID } from 'app/schema/types/Scalars';
-import { update, UpdateArgs } from 'app/vendor/group/update';
+import { groupUpdate, UpdateArgs } from 'app/vendor/group/groupUpdate';
 import { GroupCreateInput } from './groupCreate';
 
 export const GroupUpdateInput = GroupCreateInput.clone('GroupUpdateInput')
@@ -15,6 +15,6 @@ export default {
     group: GroupUpdateInput.NonNull,
   },
   resolve: (_, args) => {
-    return update(args);
+    return groupUpdate(args);
   },
 } as FieldConfig<UpdateArgs>;

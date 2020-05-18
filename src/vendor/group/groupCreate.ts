@@ -5,7 +5,7 @@ export interface CreateArgs {
 }
 
 // https://developers.wrike.com/api/v4/groups/#create-groups
-export async function create(opts: CreateArgs) {
+export async function groupCreate(opts: CreateArgs) {
   const { group } = opts || {};
 
   if (!group?.title) throw new Error('You should provide `title`');

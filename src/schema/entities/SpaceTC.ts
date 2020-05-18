@@ -1,20 +1,21 @@
 import { composeWithJson } from 'graphql-compose-json';
 import { TaskTC } from './TaskTC';
-import { findMany } from 'app/vendor/task/findMany';
+import { taskFindMany } from 'app/vendor/task/taskFindMany';
 import { SpaceID } from 'app/schema/types/Scalars';
+import { SpaceAccessTypeEnum } from '../types/Enums';
 
 const restApiResponse = {
   // id: 'IEADMUW4I4OE37IV',
-  id: () => SpaceID.NonNull,
+  id: SpaceID.NonNull,
   title: 'HolyJS Talk',
   avatarUrl: 'https://www.wrike.com/static/spaceicons/1/1-2600.png',
-  accessType: () => `enum SpaceAccessType { Personal Private Public}`,
+  accessType: SpaceAccessTypeEnum,
   archived: false,
   // additional fields
   tasks: () => ({
-    type: [TaskTC],
+    type: () => TaskTC.NonNull.List,
     resolve: (s, _, __, info) => {
-      return findMany({ filter: { spaceId: s.id }, info });
+      return taskFindMany({ filter: { spaceId: s.id }, info });
     },
   }),
 };

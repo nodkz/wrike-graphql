@@ -1,6 +1,6 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { InvitationID } from 'app/schema/types/Scalars';
-import { update } from 'app/vendor/invitation/update';
+import { invitationUpdate } from 'app/vendor/invitation/invitationUpdate';
 import { InvitationTC } from 'app/schema/entities/InvitationTC';
 
 export default {
@@ -9,6 +9,6 @@ export default {
     id: InvitationID.NonNull,
   },
   resolve: (_, args) => {
-    return update({ id: args.id, invitation: { resend: true } });
+    return invitationUpdate({ id: args.id, invitation: { resend: true } });
   },
 } as FieldConfig;

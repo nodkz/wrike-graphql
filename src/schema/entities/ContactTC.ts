@@ -2,21 +2,33 @@ import { composeWithJson } from 'graphql-compose-json';
 import { UserTypeEnum, UserRoleEnum } from 'app/schema/types/Enums';
 import { ContactID, WorkScheduleID, AccountID } from 'app/schema/types/Scalars';
 import { KeyValue } from '../types/outputs/KeyValue';
+import { AccountTC } from './AccountTC';
+import { accountFindOne } from 'app/vendor/account/accountFindOne';
+import { UserTC } from './UserTC';
+import { userFindById } from 'app/vendor/user/userFindById';
 
 const restApiResponse = {
   // id: 'KUAHNM4I',
-  id: () => ContactID.NonNull,
+  id: ContactID.NonNull,
+  account: () => ({
+    type: () => AccountTC,
+    resolve: (s, _, __, info) => accountFindOne({ info }),
+  }),
   firstName: 'Ivan',
   lastName: 'Ivanov',
   // type: 'Person',
-  type: () => UserTypeEnum,
+  type: UserTypeEnum,
   profiles: [
     {
       // accountId: 'IEADMUW4',
-      accountId: () => AccountID,
+      accountId: AccountID,
+      account: () => ({
+        type: () => AccountTC,
+        resolve: (s, _, __, info) => accountFindOne({ info }),
+      }),
       email: 'nodkz@mail.ru',
       // role: 'User',
-      role: () => UserRoleEnum,
+      role: UserRoleEnum,
       external: true,
       admin: false,
       owner: false,
@@ -27,14 +39,19 @@ const restApiResponse = {
   locale: 'en',
   deleted: false,
   me: false,
-  memberIds: () => ContactID.List,
-  metadata: () => KeyValue.List,
+  memberIds: ContactID.NonNull.List,
+  members: () => ({
+    type: () => UserTC.NonNull.List,
+    resolve: (s) => Promise.all(s.memberIds.map((id) => userFindById({ id }))),
+    projection: { memberIds: 1 },
+  }),
+  metadata: KeyValue.NonNull.List,
   myTeam: false,
   title: 'bot',
   companyName: 'aaa',
   phone: '+77777',
   location: 'ALA',
-  workScheduleId: () => WorkScheduleID,
+  workScheduleId: WorkScheduleID,
 };
 
 export const ContactTC = composeWithJson('Contact', restApiResponse);

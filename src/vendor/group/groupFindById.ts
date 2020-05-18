@@ -12,7 +12,7 @@ type FindByIdOpts = {
 };
 
 // https://developers.wrike.com/api/v4/groups/#query-groups
-export async function _findById(opts: FindByIdOpts) {
+export async function _groupFindById(opts: FindByIdOpts) {
   const { id, projection } = opts || {};
 
   const params: Record<string, any> = {};
@@ -28,8 +28,10 @@ export async function _findById(opts: FindByIdOpts) {
   return res?.data?.data[0];
 }
 
-export function findById(opts: Exclude<FindByIdOpts, 'projection'> & { info: GraphQLResolveInfo }) {
+export function groupFindById(
+  opts: Exclude<FindByIdOpts, 'projection'> & { info: GraphQLResolveInfo }
+) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _findById({ ...opts, projection });
+  return _groupFindById({ ...opts, projection });
 }
