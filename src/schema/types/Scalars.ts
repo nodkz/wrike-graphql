@@ -48,7 +48,11 @@ export const AsyncJobID = schemaComposer.createScalarTC(`
   scalar AsyncJobID
 `);
 
+export const CommentID = schemaComposer.createScalarTC(`
+  scalar CommentID
+`);
+
 export const DateYMD = schemaComposer.createScalarTC(`
-"""Format: yyyy-MM-dd"""  
-scalar DateYMD
+  """Format: yyyy-MM-dd"""  
+  scalar DateYMD
 `);

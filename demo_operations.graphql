@@ -263,3 +263,60 @@ mutation deleteFolder {
     title
   }
 }
+
+query CommentList {
+  commentFindMany(filter: {
+    taskId: "IEADMUW4KQOE4AVG"
+  }) {
+    id
+    authorId
+    text
+    createdDate
+    taskId
+    folderId
+  }
+}
+
+query CommentByID {
+  commentByIds(ids: ["IEADMUW4IMBMTNBS"]) {
+    id
+    authorId
+    text
+    createdDate
+  }
+}
+
+mutation createComment {
+  commentCreateForTask(
+    taskId: "IEADMUW4KQOE4AVG"
+    comment: {
+      text: "Comment from <b>GraphQL</b>",
+    }
+  ) {
+    id
+    text
+    createdDate
+    authorId   
+  }
+}
+
+mutation updateComment {
+  commentUpdate(
+    id: "IEADMUW4IMBMTNGJ"
+    comment: {
+      text: "Comment from <b>GraphQL!!!!!</b>",
+    }
+  ) {
+    id
+    text
+    createdDate
+    authorId   
+  }
+}
+
+mutation removeComment {
+  commentRemove(id: "IEADMUW4IMBMTNKZ") {
+    id
+    title
+  }
+}

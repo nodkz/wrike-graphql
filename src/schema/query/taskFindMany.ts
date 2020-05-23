@@ -5,19 +5,7 @@ import { DateTimeRangeEqualInput } from '../types/inputs/DateTimeRangeEqualInput
 import { DateRangeEqualInput } from '../types/inputs/DateRangeEqualInput';
 import { DateTimeRangeInput } from '../types/inputs/DateTimeRangeInput';
 import { ContactID } from '../types/Scalars';
-
-TaskTC.schemaComposer.createEnumTC(`
-  enum TaskStatus { Active Completed Deferred Cancelled }
-`);
-TaskTC.schemaComposer.createEnumTC(`
-  enum TaskImportance { High Normal Low }
-`);
-TaskTC.schemaComposer.createEnumTC(`
-  enum TaskType { Backlog Milestone Planned }
-`);
-TaskTC.schemaComposer.createScalarTC(`
-  scalar ContactID
-`);
+import { TaskDatesTypeEnum, TaskStatusEnum, TaskImportanceEnum } from '../types/Enums';
 
 export default {
   type: [TaskTC],
@@ -40,8 +28,8 @@ export default {
         folderId: 'String',
         spaceId: 'String',
         title: 'String',
-        status: 'TaskStatus',
-        importance: 'TaskImportance',
+        status: TaskStatusEnum,
+        importance: TaskImportanceEnum,
         startDate: DateTimeRangeEqualInput,
         dueDate: DateTimeRangeEqualInput,
         scheduledDate: DateRangeEqualInput,
@@ -50,7 +38,7 @@ export default {
         completedDate: DateTimeRangeInput,
         authors: ContactID.List,
         responsibles: ContactID.List,
-        type: 'TaskType',
+        type: TaskDatesTypeEnum,
         metadata: 'JSON',
       },
     }),
