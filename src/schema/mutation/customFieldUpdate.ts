@@ -2,7 +2,7 @@ import { FieldConfig } from 'app/schema/definitions';
 import { CustomFieldInput } from '../types/inputs/CustomFieldInput';
 import { CustomFieldTC } from '../entities/CustomFieldTC';
 import { CustomFieldID } from '../types/Scalars';
-import { customFieldUpdate, UpdateArgs } from 'app/vendor/customfields/customFieldUpdate';
+import { customFieldUpdate, UpdateArgs } from 'app/vendor/customFields/customFieldUpdate';
 
 export default {
   type: CustomFieldTC,

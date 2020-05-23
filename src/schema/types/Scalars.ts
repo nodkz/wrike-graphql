@@ -43,3 +43,12 @@ export const InvitationID = schemaComposer.createScalarTC(`
 export const WorkflowID = schemaComposer.createScalarTC(`
   scalar WorkflowID
 `);
+
+export const AsyncJobID = schemaComposer.createScalarTC(`
+  scalar AsyncJobID
+`);
+
+export const DateYMD = schemaComposer.createScalarTC(`
+"""Format: yyyy-MM-dd"""  
+scalar DateYMD
+`);

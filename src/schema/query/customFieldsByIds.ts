@@ -1,7 +1,7 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { CustomFieldID } from 'app/schema/types/Scalars';
 import { CustomFieldTC } from '../entities/CustomFieldTC';
-import { customFieldFindByIds } from 'app/vendor/customfields/customFieldFindByIds';
+import { customFieldFindByIds } from 'app/vendor/customFields/customFieldFindByIds';
 
 export default {
   type: [CustomFieldTC],

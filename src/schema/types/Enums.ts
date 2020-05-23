@@ -321,3 +321,18 @@ export const CustomFieldAggregationEnum = schemaComposer.createEnumTC(`
     Average
   }
 `);
+
+export const AsyncJobStatusEnum = schemaComposer.createEnumTC(`
+  enum AsyncJobStatusEnum { 
+    InQueue
+    InProgress
+    Completed
+    Failed
+  }
+`);
+
+export const AsyncJobTypeEnum = schemaComposer.createEnumTC(`
+  enum AsyncJobTypeEnum { 
+    CopyFolder
+  }
+`);
