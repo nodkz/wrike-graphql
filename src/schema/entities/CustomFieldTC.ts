@@ -1,8 +1,9 @@
 import { schemaComposer } from 'graphql-compose';
-import { CustomFieldTypeEnum } from '../Enums';
-import { CustomFieldID, AccountID, ContactID } from '../Scalars';
+import { CustomFieldTypeEnum } from '../types/Enums';
+import { CustomFieldID, AccountID, ContactID } from '../types/Scalars';
+import { CustomFieldSettings } from '../types/outputs/CustomFieldSettings';
 
-export const CustomField = schemaComposer.createObjectTC({
+export const CustomFieldTC = schemaComposer.createObjectTC({
   name: 'CustomField',
   fields: {
     id: CustomFieldID.NonNull,
@@ -20,7 +21,7 @@ export const CustomField = schemaComposer.createObjectTC({
       description: 'List of user IDs, who share the custom field',
     },
     settings: {
-      type: 'JSON',
+      type: CustomFieldSettings,
       description: 'Custom field settings',
     },
   },

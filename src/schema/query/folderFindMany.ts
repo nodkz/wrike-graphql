@@ -4,7 +4,7 @@ import { FieldConfig } from 'app/schema/definitions';
 import { KeyValueInput } from '../types/inputs/KeyValueInput';
 import { DateTimeRangeInput } from '../types/inputs/DateTimeRangeInput';
 import { ContractTypeEnum } from '../types/Enums';
-import { CustomFieldInput } from '../types/inputs/CustomFieldInput';
+import { CustomFieldFilterInput } from '../types/inputs/CustomFieldFilterInput';
 
 const FolderFilterInput = FolderTC.schemaComposer.createInputTC({
   name: 'FolderFindManyFilter',
@@ -25,7 +25,7 @@ const FolderFilterInput = FolderTC.schemaComposer.createInputTC({
       description: 'Folders metadata filter',
     },
     customField: {
-      type: CustomFieldInput,
+      type: CustomFieldFilterInput,
       description: 'Custom field filter',
     },
     updatedDate: {

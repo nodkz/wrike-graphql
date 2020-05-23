@@ -1,7 +1,7 @@
 import { TaskTC } from 'app/schema/entities/TaskTC';
 import { FieldConfig } from 'app/schema/definitions';
 import { TaskID } from 'app/schema/types/Scalars';
-import { taskRemove, TaskRemoveArgs } from 'app/vendor/task/taskRemove';
+import { taskRemove, RemoveArgs } from 'app/vendor/task/taskRemove';
 
 export default {
   type: TaskTC,
@@ -11,4 +11,4 @@ export default {
   resolve: (_, args) => {
     return taskRemove(args);
   },
-} as FieldConfig<TaskRemoveArgs>;
+} as FieldConfig<RemoveArgs>;

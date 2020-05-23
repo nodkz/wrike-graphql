@@ -239,3 +239,85 @@ export const SpaceAccessTypeEnum = schemaComposer.createEnumTC(`
     Public
   }
 `);
+
+export const StatusColorEnum = schemaComposer.createEnumTC(`
+  enum StatusColorEnum { 
+    Brown
+    Red
+    Purple
+    Indigo
+    DarkBlue
+    Blue
+    Turquoise
+    DarkCyan
+    Green
+    YellowGreen
+    Yellow
+    Orange
+    Gray
+  }
+`);
+
+export const CustomFieldInheritanceEnum = schemaComposer.createEnumTC(`
+  enum CustomFieldInheritanceEnum { 
+    All
+    Folders
+    Projects
+  }
+`);
+
+export const CurrencyEnum = schemaComposer.createEnumTC(`
+  enum CurrencyEnum { 
+    USD
+    EUR
+    GBP
+    RUB
+    BRL
+    AED
+    ARS
+    BYR
+    CAD
+    CLP
+    COP
+    CZK
+    DKK
+    HKD
+    HUF
+    INR
+    IDR
+    ILS
+    JPY
+    KRW
+    MYR
+    MXN
+    NZD
+    NOK
+    PEN
+    PHP
+    PLN
+    QAR
+    RON
+    SAR
+    SGD
+    ZAR
+    SEK
+    CHF
+    TWD
+    THB
+    TRY
+    UAH
+    VND
+    CNY
+    AUD
+    AMD
+    BWP
+  }
+`);
+
+export const CustomFieldAggregationEnum = schemaComposer.createEnumTC(`
+  enum CustomFieldAggregationEnum { 
+    None
+    Sum
+    Average
+  }
+`);

@@ -39,3 +39,7 @@ export const GroupID = schemaComposer.createScalarTC(`
 export const InvitationID = schemaComposer.createScalarTC(`
   scalar InvitationID
 `);
+
+export const WorkflowID = schemaComposer.createScalarTC(`
+  scalar WorkflowID
+`);

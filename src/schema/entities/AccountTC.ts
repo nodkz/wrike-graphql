@@ -3,7 +3,7 @@ import { WeekDayEnum, FirstDayOfWeekEnum } from '../types/Enums';
 import { schemaComposer } from 'graphql-compose';
 import { KeyValue } from '../types/outputs/KeyValue';
 import { AccountSubscription } from '../types/outputs/AccountSubscription';
-import { CustomField } from '../types/outputs/CustomField';
+import { CustomFieldTC } from './CustomFieldTC';
 import { FolderTC } from './FolderTC';
 import { folderFindByIds } from 'app/vendor/folder/folderFindByIds';
 
@@ -58,7 +58,7 @@ export const AccountTC = schemaComposer.createObjectTC({
         'List of account metadata entries. Entries could be read by all users of account and modified by admins only',
     },
     customFields: {
-      type: CustomField.NonNull.List,
+      type: CustomFieldTC.NonNull.List,
       description: 'List of custom fields accessible for requesting user in the account',
     },
     joinedDate: {

@@ -1,4 +1,3 @@
-# Write your query or mutation here
 query taskList {
   taskFindMany(sort:UPDATED_DATE_DESC) {
     id
@@ -223,5 +222,44 @@ query getFolders {
     customColumnIds
     superParentIds
     # contractType
+  }
+}
+
+query FolderList {
+  folderFindMany {
+    id
+    title
+    superParentIds
+    
+  }
+}
+
+mutation createFolder {
+  folderCreate(
+    parentFolderId: "IEADMUW4I4OE37IV"
+    folder: {
+      title: "Test subfolder",
+      description: "Descrription",
+    }
+  ) {
+    id
+    title
+    description
+  }
+}
+
+mutation updateFolder {
+  folderUpdate(folderId: "IEADMUW4I4PGZ4WI", folder: {
+    title: "Test subfolder1234"
+  }) {
+    id
+    title
+  }
+}
+
+mutation deleteFolder {
+  folderRemove(id: "IEADMUW4I4PGZ4WI") {
+    id
+    title
   }
 }

@@ -29,7 +29,7 @@ export async function _folderFindByIds(opts: FindByIdsOpts) {
   let preparedIds;
 
   if (!ids) {
-    throw new Error('You should provide at least one id in `ids` argument');
+    return [];
   }
 
   if (typeof ids === 'string') preparedIds = ids;

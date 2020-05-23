@@ -1,30 +1,26 @@
 import { schemaComposer } from 'graphql-compose';
-import { CustomFieldComparatorEnum } from '../Enums';
-import { CustomFieldID } from '../Scalars';
+import { ContactID } from '../Scalars';
+import { CustomFieldTypeEnum } from '../Enums';
+import { CustomFieldSettingsInput } from './CustomFieldSettingsInput';
 
 export const CustomFieldInput = schemaComposer.createInputTC({
   name: 'CustomFieldInput',
   fields: {
-    id: CustomFieldID.NonNull,
-    comparator: {
-      type: CustomFieldComparatorEnum,
-      description: 'Custom field comparator',
+    title: {
+      type: 'String!',
+      description: 'Custom field title',
     },
-    value: {
-      type: 'String',
-      description: 'Custom field value',
+    type: {
+      type: CustomFieldTypeEnum,
+      description: 'Custom field type',
     },
-    minValue: {
-      type: 'String',
-      description: 'Custom field min value',
+    sharedIds: {
+      type: ContactID.NonNull.List,
+      description: 'List of user IDs, who share the custom field',
     },
-    maxValue: {
-      type: 'String',
-      description: 'Custom field max value',
-    },
-    values: {
-      type: '[String!]',
-      description: 'Custom field possible values',
+    settings: {
+      type: CustomFieldSettingsInput,
+      description: 'Custom field settings',
     },
   },
 });

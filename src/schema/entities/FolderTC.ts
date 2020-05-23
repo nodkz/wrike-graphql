@@ -3,7 +3,7 @@ import { ColorEnum, TreeScopeEnum, ContractTypeEnum } from '../types/Enums';
 import { schemaComposer } from 'graphql-compose';
 import { ProjectDetails } from '../types/outputs/ProjectDetails';
 import { KeyValue } from '../types/outputs/KeyValue';
-import { CustomField } from '../types/outputs/CustomField';
+import { CustomFieldTC } from './CustomFieldTC';
 import { folderFindByIds } from 'app/vendor/folder/folderFindByIds';
 
 export const FolderTC = schemaComposer.createObjectTC({
@@ -59,7 +59,7 @@ export const FolderTC = schemaComposer.createObjectTC({
       description: 'Brief description',
     },
     customFields: {
-      type: CustomField.NonNull.List,
+      type: CustomFieldTC.NonNull.List,
       description: 'Custom fields',
     },
     customColumnIds: {
@@ -75,6 +75,8 @@ export const FolderTC = schemaComposer.createObjectTC({
       type: () => FolderTC.NonNull.List,
       resolve: (s, _, __, info) => folderFindByIds({ ids: s.superParentIds, info }),
       projection: { superParentIds: 1 },
+      description:
+        "List of super parent folder IDs (applicable to 'Selective Sharing' labs feature)",
     },
     contractType: {
       type: ContractTypeEnum,
