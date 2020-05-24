@@ -6,7 +6,7 @@ import { commentFindMany, FindManyOpts } from 'app/vendor/comment/commentFindMan
 import { TaskID, FolderID } from '../types/Scalars';
 
 export default {
-  type: [CommentTC],
+  type: CommentTC.NonNull.List,
   args: {
     limit: {
       type: 'Int',

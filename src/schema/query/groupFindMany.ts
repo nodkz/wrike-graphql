@@ -4,7 +4,7 @@ import { FieldConfig } from 'app/schema/definitions';
 import { KeyValueInput } from '../types/inputs/KeyValueInput';
 
 export default {
-  type: GroupTC.List,
+  type: GroupTC.NonNull.List,
   args: {
     filter: GroupTC.schemaComposer.createInputTC({
       name: 'GroupFindManyFilter',

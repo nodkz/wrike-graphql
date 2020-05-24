@@ -1,5 +1,5 @@
 import { FolderID, CustomFieldID } from 'app/schema/types/Scalars';
-import { ColorEnum, TreeScopeEnum, ContractTypeEnum } from '../types/Enums';
+import { ColorEnum, TreeScopeEnum, ProjectContractTypeEnum } from '../types/Enums';
 import { schemaComposer } from 'graphql-compose';
 import { ProjectDetails } from '../types/outputs/ProjectDetails';
 import { KeyValue } from '../types/outputs/KeyValue';
@@ -79,7 +79,7 @@ export const FolderTC = schemaComposer.createObjectTC({
         "List of super parent folder IDs (applicable to 'Selective Sharing' labs feature)",
     },
     contractType: {
-      type: ContractTypeEnum,
+      type: ProjectContractTypeEnum,
       description: 'Contract type',
     },
   },

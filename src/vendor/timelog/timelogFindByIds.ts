@@ -2,11 +2,11 @@ import client from '../client';
 
 export type FindByIdsArgs = {
   ids: string[];
-  plainText: boolean;
+  plainText?: boolean;
 };
 
-// https://developers.wrike.com/api/v4/comments/#get-comments
-export async function commentFindByIds(opts: FindByIdsArgs) {
+// https://developers.wrike.com/api/v4/timelogs/#query-timelogs
+export async function timelogFindByIds(opts: FindByIdsArgs) {
   const { ids, plainText } = opts || {};
 
   if (!ids) {
@@ -16,7 +16,7 @@ export async function commentFindByIds(opts: FindByIdsArgs) {
   const params = {} as Record<string, any>;
   if (plainText) params.plainText = true;
 
-  const res = await client.get(`/comments/${ids.join(',')}`, { params });
+  const res = await client.get(`/timelogs/${ids.join(',')}`, { params });
 
   return res?.data?.data;
 }

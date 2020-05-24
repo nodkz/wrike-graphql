@@ -8,7 +8,7 @@ import { ContactID } from '../types/Scalars';
 import { TaskDatesTypeEnum, TaskStatusEnum, TaskImportanceEnum } from '../types/Enums';
 
 export default {
-  type: [TaskTC],
+  type: TaskTC.NonNull.List,
   args: {
     limit: {
       type: 'Int',

@@ -56,3 +56,15 @@ export const DateYMD = schemaComposer.createScalarTC(`
   """Format: yyyy-MM-dd"""  
   scalar DateYMD
 `);
+
+export const DependencyID = schemaComposer.createScalarTC(`
+  scalar DependencyID
+`);
+
+export const TimelogCategoryID = schemaComposer.createScalarTC(`
+  scalar TimelogCategoryID
+`);
+
+export const TimelogID = schemaComposer.createScalarTC(`
+  scalar TimelogID
+`);

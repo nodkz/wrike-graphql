@@ -191,9 +191,17 @@ export const ProjectStatusEnum = schemaComposer.createEnumTC(`
   }
 `);
 
-export const ContractTypeEnum = schemaComposer.createEnumTC(`
+export const ProjectContractTypeEnum = schemaComposer.createEnumTC(`
   """Project Contract Type (Wrike Resource only)"""
-  enum ContractTypeEnum {
+  enum ProjectContractTypeEnum {
+    Billable
+    NonBillable
+  }
+`);
+
+export const BillingTypeEnum = schemaComposer.createEnumTC(`
+  """Timelog billing type (Wrike Resource only)"""
+  enum BillingTypeEnum {
     Billable
     NonBillable
   }
@@ -334,5 +342,14 @@ export const AsyncJobStatusEnum = schemaComposer.createEnumTC(`
 export const AsyncJobTypeEnum = schemaComposer.createEnumTC(`
   enum AsyncJobTypeEnum { 
     CopyFolder
+  }
+`);
+
+export const DependencyRelationEnum = schemaComposer.createEnumTC(`
+  enum DependencyRelationEnum { 
+    StartToStart
+    StartToFinish
+    FinishToStart
+    FinishToFinish
   }
 `);

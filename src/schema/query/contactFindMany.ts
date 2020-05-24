@@ -4,7 +4,7 @@ import { FieldConfig } from 'app/schema/definitions';
 import { KeyValueInput } from '../types/inputs/KeyValueInput';
 
 export default {
-  type: ContactTC.List,
+  type: ContactTC.NonNull.List,
   args: {
     filter: ContactTC.schemaComposer.createInputTC({
       name: 'ContactFindManyFilter',

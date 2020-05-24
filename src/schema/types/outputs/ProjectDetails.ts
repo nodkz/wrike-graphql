@@ -1,5 +1,5 @@
 import { schemaComposer } from 'graphql-compose';
-import { ProjectStatusEnum, ContractTypeEnum } from '../Enums';
+import { ProjectStatusEnum, ProjectContractTypeEnum } from '../Enums';
 import { ContactID, CustomStatusID } from '../Scalars';
 
 export const ProjectDetails = schemaComposer.createObjectTC({
@@ -38,7 +38,7 @@ export const ProjectDetails = schemaComposer.createObjectTC({
       description: "Project completed date. Format: yyyy-MM-dd'T'HH:mm:ss'Z'",
     },
     contractType: {
-      type: ContractTypeEnum,
+      type: ProjectContractTypeEnum,
       description: 'Contract type (Wrike Resource only)',
     },
   },

@@ -4,8 +4,11 @@ import { commentFindByIds, FindByIdsArgs } from 'app/vendor/comment/commentFindB
 import { CommentTC } from '../entities/CommentTC';
 
 export default {
-  type: [CommentTC],
-  args: { ids: CommentID.NonNull.List.NonNull },
+  type: CommentTC.NonNull.List,
+  args: {
+    ids: CommentID.NonNull.List.NonNull,
+    plainText: 'Boolean',
+  },
   resolve: (_, args) => {
     return commentFindByIds(args);
   },

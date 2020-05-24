@@ -3,7 +3,7 @@ import { InvitationTC } from 'app/schema/entities/InvitationTC';
 import { FieldConfig } from 'app/schema/definitions';
 
 export default {
-  type: InvitationTC.List.NonNull,
+  type: InvitationTC.NonNull.List,
   resolve: () => {
     return invitationFindMany();
   },

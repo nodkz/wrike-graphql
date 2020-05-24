@@ -3,7 +3,7 @@ import { SpaceTC } from 'app/schema/entities/SpaceTC';
 import { FieldConfig } from 'app/schema/definitions';
 
 export default {
-  type: [SpaceTC],
+  type: SpaceTC.NonNull.List,
   args: {
     filter: `input SpaceFindManyFilter { 
       withArchived: Boolean

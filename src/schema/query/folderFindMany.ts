@@ -3,7 +3,7 @@ import { FolderTC } from 'app/schema/entities/FolderTC';
 import { FieldConfig } from 'app/schema/definitions';
 import { KeyValueInput } from '../types/inputs/KeyValueInput';
 import { DateTimeRangeInput } from '../types/inputs/DateTimeRangeInput';
-import { ContractTypeEnum } from '../types/Enums';
+import { ProjectContractTypeEnum } from '../types/Enums';
 import { CustomFieldFilterInput } from '../types/inputs/CustomFieldFilterInput';
 
 const FolderFilterInput = FolderTC.schemaComposer.createInputTC({
@@ -41,14 +41,14 @@ const FolderFilterInput = FolderTC.schemaComposer.createInputTC({
       description: 'Get folders from Root (false) / Recycle Bin (true)',
     },
     contractTypes: {
-      type: ContractTypeEnum,
+      type: ProjectContractTypeEnum,
       description: 'Contract type filter (Wrike Resource only)',
     },
   },
 });
 
 export default {
-  type: FolderTC.List,
+  type: FolderTC.NonNull.List,
   args: {
     filter: FolderFilterInput,
   },

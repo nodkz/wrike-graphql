@@ -4,8 +4,10 @@ import { CustomFieldTC } from '../entities/CustomFieldTC';
 import { customFieldFindByIds } from 'app/vendor/customFields/customFieldFindByIds';
 
 export default {
-  type: [CustomFieldTC],
-  args: { ids: CustomFieldID.NonNull.List.NonNull },
+  type: CustomFieldTC.NonNull.List,
+  args: {
+    ids: CustomFieldID.NonNull.List.NonNull,
+  },
   resolve: (_, args) => {
     return customFieldFindByIds({ ids: args.ids });
   },
