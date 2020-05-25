@@ -353,3 +353,28 @@ export const DependencyRelationEnum = schemaComposer.createEnumTC(`
     FinishToFinish
   }
 `);
+
+export const AttachmentTypeEnum = schemaComposer.createEnumTC(`
+  enum AttachmentTypeEnum { 
+    """Attachment file content stored in Wrike. When deleted, actual file is removed"""
+    Wrike
+    
+    """Google attachment. Attachment can be accessed only via URL, downloads are not supported by Wrike.When deleted, only stored link is removed"""
+    Google
+    
+    """DropBox attachment. When deleted, only stored link is removed"""
+    DropBox
+    
+    """Box attachment. Attachment can be accessed only via URL, downloads are not supported by Wrike.When deleted, only stored link is removed"""
+    Box
+    
+    """OneDrive attachment. When deleted, only stored link is removed"""
+    OneDrive
+    
+    """External attachment"""
+    External
+    
+    """Attachment from an external DAM system"""
+    DAM
+  }
+`);

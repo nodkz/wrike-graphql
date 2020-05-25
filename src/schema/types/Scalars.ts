@@ -68,3 +68,11 @@ export const TimelogCategoryID = schemaComposer.createScalarTC(`
 export const TimelogID = schemaComposer.createScalarTC(`
   scalar TimelogID
 `);
+
+export const AttachmentID = schemaComposer.createScalarTC(`
+  scalar AttachmentID
+`);
+
+export const ReviewID = schemaComposer.createScalarTC(`
+  scalar ReviewID
+`);
