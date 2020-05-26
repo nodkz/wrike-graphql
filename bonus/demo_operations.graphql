@@ -319,3 +319,37 @@ mutation removeComment {
     title
   }
 }
+
+query getData {
+  contactFindMany {
+    id
+    firstName
+    lastName
+  }
+  taskFindMany(limit: 100) {
+    id
+    title
+  }
+}
+
+mutation createApproval {
+  approvalCreateForTask(
+    taskId: "IEADMUW4KQOE4ATL",
+    approval: {
+      
+      description: "Test approval",
+      approvers: ["KUAHMNRA", "KUAHNM4I"],
+    }
+  ) {
+    id
+    authorId
+    title
+    description
+    decisions {
+      approverId
+      comment
+      status
+      updatedDate
+    }
+  }
+}

@@ -1,12 +1,12 @@
-import { FolderTC } from 'app/schema/entities/FolderTC';
 import { FieldConfig } from 'app/schema/definitions';
-import { FolderID } from 'app/schema/types/Scalars';
+import { CommentID } from 'app/schema/types/Scalars';
 import { commentRemove, RemoveArgs } from 'app/vendor/comment/commentRemove';
+import { CommentTC } from '../entities/CommentTC';
 
 export default {
-  type: FolderTC,
+  type: CommentTC,
   args: {
-    id: FolderID.NonNull,
+    id: CommentID.NonNull,
   },
   resolve: (_, args) => {
     return commentRemove(args);

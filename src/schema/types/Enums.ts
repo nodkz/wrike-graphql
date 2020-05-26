@@ -388,3 +388,40 @@ export const DataExportStatusEnum = schemaComposer.createEnumTC(`
     Failed
   }
 `);
+
+export const AuditLogOperationEnum = schemaComposer.createEnumTC(
+  `enum AuditLogOperationEnum { 
+    UserLoggedIn, UserFailLogin, UserLogout, AdminLoggedInAsUser, UserRoleChanged, UserAdminPermissionsChanged, UserGrantAdmin, UserRevokeAdmin, UserDeactivated, UserActivated, UsersAndGroupsExported, InvitationSend, InvitationAccepted, AttachUploaded, AttachDeleted, GroupCreated, GroupMemberAdded, GroupMemberRemoved, GroupRenamed, GroupDeleted, GroupParentAdded, GroupParentRemoved, TaskParentAdded, TaskParentRemoved, TaskShared, TaskUnshared, TaskAssigned, TaskUnassigned, TaskDeleted, TaskErased, TaskCommentChanged, TaskCommentDeleted, RecycleBinErased, TaskStatusChanged, TaskDuplication, UserDeleted, UserRestored, ApproverAdded, ApproverRemoved, ApprovalDescriptionChanged, ApprovalDueDateChanged, ApprovalCreated, ApprovalFinished, ApprovalCanceled, ApprovalDecisionMade, CustomFieldCreated, CustomFieldModified, CustomFieldRemoved, CustomFieldRestored, CustomFieldAddedToFolder, CustomFieldRemovedFromFolder, SecondFactorEnabled, SecondFactorDisabled, SecondFactorUsageReportCreated, AuditReportCreated, AccountBackupCreated, AccountModified, AccountDeleted, Oauth2AccessGranted, Oauth2AccessRevoked, FeedCreated, ExcelExportCreated, AccessAuditReportCsvExport, UserProfileUpdated, PasswordChanged, PasswordPolicyModified, ApprovedIpRangesOrSubnetsChanged, InvitationPolicyChanged, RequestFormCreated, RequestFormModified, RequestFormDeleted, AccessRoleCreated, AccessRoleModified, AccessRoleDeleted, WorkflowCreated, WorkflowDeleted, WorkflowModified, CalendarExternalLinksDeactivated, CalendarExternalLinksActivated, CalendarExternalLinkCreated, CalendarExternalLinkDeleted, GuestReviewerInvited, GuestReviewerChanged, GuestReviewerRevoked, GuestReviewAccepted, GuestReviewRejected, GuestReviewAccountSettingsChanged, GanttSnapshotCreated, GanttSnapshotDeleted, UserTaskGroupRolesChanged, AccountDataExportRequested, AccountDataExportGenerated, SamlSSOEnabled, SamlSSODisabled, SamlSSOSettingsChanged, SamlSSOMetadataChanged, SamlClearPasswordForSamlUsers, AccessCodeGenerated, AccessCodeAccepted, AccessCodeDeclined, ApprovedDomainsChanged, SpaceCreated, SpaceDeleted, SpaceArchivedUnarchived, UserJoinedSpace, UserLeftSpace
+  }`.replace(/,/gi, '')
+);
+
+export const AuditLogObjectTypeEnum = schemaComposer.createEnumTC(
+  `enum AuditLogObjectTypeEnum { 
+    User, Account, Task, Folder, Project, Comment, Attachment, Invitation, Group, CustomField, Oauth2Client, RequestForm, Workflow, CalendarExternalLink, WorkspaceSnapshot, DataExport, AccessRole, Space
+  }`.replace(/,/gi, '')
+);
+
+export const ApprovalFinalStatusEnum = schemaComposer.createEnumTC(`
+  enum ApprovalFinalStatusEnum {
+    Pending
+    Approved
+    Rejected
+    Cancelled
+    Draft
+  }
+`);
+
+export const ApprovalDecisionStatusEnum = schemaComposer.createEnumTC(`
+  enum ApprovalDecisionStatusEnum  { 
+    Pending
+    Approved
+    Rejected
+  }
+`);
+
+export const ApprovalTypeEnum = schemaComposer.createEnumTC(`
+  enum ApprovalTypeEnum {
+    Regular
+    FilesOnly
+  }
+`);

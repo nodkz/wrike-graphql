@@ -1,0 +1,15 @@
+import { FieldConfig } from 'app/schema/definitions';
+import { ApprovalID, AttachmentID } from 'app/schema/types/Scalars';
+import { ApprovalTC } from '../entities/ApprovalTC';
+import { approvalUpdate } from 'app/vendor/approval/approvalUpdate';
+
+export default {
+  type: ApprovalTC,
+  args: {
+    id: ApprovalID.NonNull,
+    attachments: AttachmentID.NonNull.List.NonNull,
+  },
+  resolve: (_, args) => {
+    return approvalUpdate({ id: args.id, approval: { removeAttachments: args.attachments } });
+  },
+} as FieldConfig;

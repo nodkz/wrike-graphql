@@ -80,3 +80,11 @@ export const ReviewID = schemaComposer.createScalarTC(`
 export const DataExportID = schemaComposer.createScalarTC(`
   scalar DataExportID
 `);
+
+export const AuditLogID = schemaComposer.createScalarTC(`
+  scalar AuditLogID
+`);
+
+export const ApprovalID = schemaComposer.createScalarTC(`
+  scalar ApprovalID
+`);
