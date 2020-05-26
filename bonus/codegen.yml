@@ -1,0 +1,8 @@
+schema: ./bonus/schema.graphql
+documents: './bonus/demo_operations.graphql'
+generates:
+  ./bonus/wrikeSdk.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-graphql-request

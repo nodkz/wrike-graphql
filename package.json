@@ -5,6 +5,9 @@
   "description": "Demo of wrapping REST API by GraphQL",
   "repository": "https://github.com/nodkz/wrike-graphql",
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.14.0",
+    "@graphql-codegen/typescript-graphql-request": "^1.14.0",
+    "@graphql-codegen/typescript-operations": "^1.14.0",
     "@types/debug": "^4.1.5",
     "@types/jest": "25.2.2",
     "@types/node": "14.0.1",
@@ -26,7 +29,8 @@
     "eslint": "eslint --ext .ts ./src",
     "watch": "DEBUG=axios:* jest --env node --watch",
     "test": "jest --env node",
-    "build": "tsc -p ./tsconfig.build.json"
+    "build": "tsc -p ./tsconfig.build.json",
+    "gen-sdk": "ts-node ./bonus/generateSchema && yarn graphql-codegen -c ./bonus/codegen.yml"
   },
   "dependencies": {
     "apollo-server-express": "^2.13.1",

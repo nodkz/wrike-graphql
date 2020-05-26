@@ -164,7 +164,6 @@ query getAccountData {
       title
       type
       sharedIds
-      settings
     }
     joinedDate
   }
