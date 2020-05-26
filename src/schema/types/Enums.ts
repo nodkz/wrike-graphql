@@ -378,3 +378,13 @@ export const AttachmentTypeEnum = schemaComposer.createEnumTC(`
     DAM
   }
 `);
+
+export const DataExportStatusEnum = schemaComposer.createEnumTC(`
+  enum DataExportStatusEnum  { 
+    Scheduled
+    InProgress
+    Completed
+    Cancelled
+    Failed
+  }
+`);

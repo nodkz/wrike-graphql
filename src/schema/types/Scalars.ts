@@ -76,3 +76,7 @@ export const AttachmentID = schemaComposer.createScalarTC(`
 export const ReviewID = schemaComposer.createScalarTC(`
   scalar ReviewID
 `);
+
+export const DataExportID = schemaComposer.createScalarTC(`
+  scalar DataExportID
+`);
