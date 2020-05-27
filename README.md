@@ -232,6 +232,10 @@ GraphQL запрос:
 - Обновление workweek разнес на 3 мутации – update, addUsers, removeUsers
 - Не удалось протестировать методы, т.к. ограничения по аккаунту
 
+## Добавляем Work Schedule exceptions
+
+- Странно но endpoint называется `exclusions`. Чревато опечатками.
+
 # Добавки
 
 - Прикрутить DataLoader TODO:

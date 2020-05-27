@@ -1,4 +1,4 @@
-import { FolderID, CommentID, ContactID, TaskID, WorkScheduleID } from 'app/schema/types/Scalars';
+import { ContactID, WorkScheduleID } from 'app/schema/types/Scalars';
 import { schemaComposer } from 'graphql-compose';
 import { WorkScheduleTypeEnum } from '../types/Enums';
 

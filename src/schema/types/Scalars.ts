@@ -28,6 +28,14 @@ export const WorkScheduleID = schemaComposer.createScalarTC(`
   scalar WorkScheduleID
 `);
 
+export const WorkScheduleExclusionID = schemaComposer.createScalarTC(`
+  scalar WorkScheduleExclusionID
+`);
+
+export const UserScheduleExclusionID = schemaComposer.createScalarTC(`
+  scalar UserScheduleExclusionID
+`);
+
 export const AccountID = schemaComposer.createScalarTC(`
   scalar AccountID
 `);

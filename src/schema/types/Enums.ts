@@ -435,3 +435,29 @@ export const WorkScheduleTypeEnum = schemaComposer.createEnumTC(`
     Custom
   }
 `);
+
+export const WorkScheduleExclusionEnum = schemaComposer.createEnumTC(`
+  enum WorkScheduleExclusionEnum {
+    """Additional working days, i.e. during weekends"""
+    AdditionalWorkDays
+
+    """Non-working days because of public holidays"""
+    PublicHolidays
+    
+    """Non-working days because of some company or private event"""
+    OtherEvent
+  }
+`);
+
+export const UserScheduleExclusionEnum = schemaComposer.createEnumTC(`
+  enum UserScheduleExclusionEnum {
+    """Additional working days"""
+    Overtime
+
+    """Paid vacations"""
+    VacationPTO
+
+    """Other non-working days"""
+    OtherNonWorking
+  }
+`);
