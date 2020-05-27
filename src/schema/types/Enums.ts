@@ -425,3 +425,13 @@ export const ApprovalTypeEnum = schemaComposer.createEnumTC(`
     FilesOnly
   }
 `);
+
+export const WorkScheduleTypeEnum = schemaComposer.createEnumTC(`
+  enum WorkScheduleTypeEnum {
+    """Default schedule is created along with account and used for all users not explicitly assigned to custom schedule"""
+    Default
+    
+    """Custom schedule is used when some account users have schedules which is different to default"""
+    Custom
+  }
+`);
