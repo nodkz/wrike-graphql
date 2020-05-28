@@ -84,3 +84,7 @@ export const AttachmentTC = schemaComposer.createObjectTC({
     },
   },
 });
+
+if (!process.env.DISABLE_HAIRS) {
+  AttachmentTC.addFields({});
+}

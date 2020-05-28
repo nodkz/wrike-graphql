@@ -32,3 +32,7 @@ export const DataExportTC = schemaComposer.createObjectTC({
     },
   },
 });
+
+if (!process.env.DISABLE_HAIRS) {
+  DataExportTC.addFields({});
+}

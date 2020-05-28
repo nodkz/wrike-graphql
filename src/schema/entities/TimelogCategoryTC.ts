@@ -19,3 +19,7 @@ export const TimelogCategoryTC = schemaComposer.createObjectTC({
     },
   },
 });
+
+if (!process.env.DISABLE_HAIRS) {
+  TimelogCategoryTC.addFields({});
+}

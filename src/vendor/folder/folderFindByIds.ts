@@ -1,6 +1,7 @@
 import client from '../client';
 import { GraphQLResolveInfo } from 'graphql-compose/lib/graphql';
 import { getFlatProjectionFromAST } from 'graphql-compose';
+import { splitRequestBy100 } from '../_helpers/splitRequestBy100';
 
 export const projectionFields = [
   'metadata',
@@ -18,7 +19,7 @@ export const projectionFields = [
 type Projection = typeof projectionFields[number][];
 
 type FindByIdsOpts = {
-  ids: string | string[];
+  ids: ReadonlyArray<string>;
   projection?: Projection;
 };
 
@@ -26,30 +27,15 @@ type FindByIdsOpts = {
 export async function _folderFindByIds(opts: FindByIdsOpts) {
   const { ids, projection } = opts || {};
 
-  let preparedIds;
-
-  if (!ids) {
-    return [];
-  }
-
-  if (typeof ids === 'string') preparedIds = ids;
-  else if (Array.isArray(ids)) preparedIds = ids.join(',');
-
-  if (!preparedIds) {
-    throw new Error('You provide incorrect ids argument!');
-  }
-
   const params: Record<string, any> = {};
-
   if (projection) {
     if (projection.length > 0) params.fields = projection;
   }
 
-  const res = await client.get(`/folders/${preparedIds}`, {
-    params,
+  return splitRequestBy100(ids, async (preparedIds) => {
+    const res = await client.get(`/folders/${preparedIds}`, { params });
+    return res?.data?.data;
   });
-
-  return res?.data?.data;
 }
 
 export function folderFindByIds(

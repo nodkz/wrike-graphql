@@ -11,13 +11,17 @@ const restApiResponse = {
   avatarUrl: 'https://www.wrike.com/static/spaceicons/1/1-2600.png',
   accessType: SpaceAccessTypeEnum,
   archived: false,
-  // additional fields
-  tasks: () => ({
-    type: () => TaskTC.NonNull.List,
-    resolve: (s, _, __, info) => {
-      return taskFindMany({ filter: { spaceId: s.id }, info });
-    },
-  }),
 };
 
 export const SpaceTC = composeWithJson('Space', restApiResponse);
+
+if (!process.env.DISABLE_HAIRS) {
+  SpaceTC.addFields({
+    tasks: {
+      type: () => TaskTC.NonNull.List,
+      resolve: (s, _, __, info) => {
+        return taskFindMany({ filter: { spaceId: s.id }, info });
+      },
+    },
+  });
+}

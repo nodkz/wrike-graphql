@@ -29,21 +29,11 @@ export const AccountTC = schemaComposer.createObjectTC({
       description:
         "Virtual folder, denotes the root folder of the account. Different users can have different elements in the root, according to their sharing scope. Can be used in queries to get all folders/tasks in the account, or to create folders/tasks in the user's account root",
     },
-    rootFolder: () => ({
-      type: () => FolderTC.NonNull.List,
-      resolve: (s, _, __, info) => folderFindByIds({ ids: s.rootFolderId, info }),
-      projection: { rootFolderId: 1 },
-    }),
     recycleBinId: {
       type: FolderID.NonNull,
       description:
         'Virtual folder, denotes the root for deleted folders and tasks. Can be used in queries to get all folders/tasks in the Recycle Bin. Cannot be used in modification queries.',
     },
-    recycleBin: () => ({
-      type: () => FolderTC.NonNull.List,
-      resolve: (s, _, __, info) => folderFindByIds({ ids: s.recycleBinId, info }),
-      projection: { recycleBinId: 1 },
-    }),
     createdDate: {
       type: 'Date!',
       description: 'Registration date',
@@ -67,3 +57,18 @@ export const AccountTC = schemaComposer.createObjectTC({
     },
   },
 });
+
+if (!process.env.DISABLE_HAIRS) {
+  AccountTC.addFields({
+    rootFolder: {
+      type: () => FolderTC.NonNull.List,
+      resolve: (s, _, __, info) => folderFindByIds({ ids: s.rootFolderId, info }),
+      projection: { rootFolderId: 1 },
+    },
+    recycleBin: {
+      type: () => FolderTC.NonNull.List,
+      resolve: (s, _, __, info) => folderFindByIds({ ids: s.recycleBinId, info }),
+      projection: { recycleBinId: 1 },
+    },
+  });
+}

@@ -28,7 +28,8 @@ app.use(
 );
 
 app.listen(PORT, () => {
-  console.log(`🚀 Server ready! Working links:
+  console.log(`🚀 Server ready! Pid: ${process.pid}
+  Working links:
     http://localhost:${PORT}
     http://localhost:${PORT}/voyager
   `);

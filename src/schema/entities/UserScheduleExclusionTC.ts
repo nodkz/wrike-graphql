@@ -28,3 +28,7 @@ export const UserScheduleExclusionTC = schemaComposer.createObjectTC({
     },
   },
 });
+
+if (!process.env.DISABLE_HAIRS) {
+  UserScheduleExclusionTC.addFields({});
+}

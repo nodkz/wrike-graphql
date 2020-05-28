@@ -44,3 +44,7 @@ export const TimelogTC = schemaComposer.createObjectTC({
     },
   },
 });
+
+if (!process.env.DISABLE_HAIRS) {
+  TimelogTC.addFields({});
+}

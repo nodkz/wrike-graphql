@@ -18,3 +18,7 @@ export const WorkflowTC = schemaComposer.createObjectTC({
     },
   },
 });
+
+if (!process.env.DISABLE_HAIRS) {
+  WorkflowTC.addFields({});
+}

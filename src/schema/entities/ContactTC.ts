@@ -10,10 +10,6 @@ import { userFindById } from 'app/vendor/user/userFindById';
 const restApiResponse = {
   // id: 'KUAHNM4I',
   id: ContactID.NonNull,
-  account: () => ({
-    type: () => AccountTC,
-    resolve: (s, _, __, info) => accountFindOne({ info }),
-  }),
   firstName: 'Ivan',
   lastName: 'Ivanov',
   // type: 'Person',
@@ -22,10 +18,6 @@ const restApiResponse = {
     {
       // accountId: 'IEADMUW4',
       accountId: AccountID,
-      account: () => ({
-        type: () => AccountTC,
-        resolve: (s, _, __, info) => accountFindOne({ info }),
-      }),
       email: 'nodkz@mail.ru',
       // role: 'User',
       role: UserRoleEnum,
@@ -40,11 +32,6 @@ const restApiResponse = {
   deleted: false,
   me: false,
   memberIds: ContactID.NonNull.List,
-  members: () => ({
-    type: () => UserTC.NonNull.List,
-    resolve: (s) => Promise.all(s.memberIds.map((id) => userFindById({ id }))),
-    projection: { memberIds: 1 },
-  }),
   metadata: KeyValue.NonNull.List,
   myTeam: false,
   title: 'bot',
@@ -55,3 +42,21 @@ const restApiResponse = {
 };
 
 export const ContactTC = composeWithJson('Contact', restApiResponse);
+
+if (!process.env.DISABLE_HAIRS) {
+  ContactTC.addNestedFields({
+    account: {
+      type: () => AccountTC,
+      resolve: (s, _, __, info) => accountFindOne({ info }),
+    },
+    'profiles.account': {
+      type: () => AccountTC,
+      resolve: (s, _, __, info) => accountFindOne({ info }),
+    },
+    members: {
+      type: () => UserTC.NonNull.List,
+      resolve: (s) => Promise.all(s.memberIds.map((id) => userFindById({ id }))),
+      projection: { memberIds: 1 },
+    },
+  });
+}

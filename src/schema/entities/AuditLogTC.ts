@@ -1,11 +1,6 @@
-import { AsyncJobID, AuditLogID, ContactID } from 'app/schema/types/Scalars';
+import { AuditLogID, ContactID } from 'app/schema/types/Scalars';
 import { schemaComposer } from 'graphql-compose';
-import {
-  AsyncJobStatusEnum,
-  AsyncJobTypeEnum,
-  AuditLogOperationEnum,
-  AuditLogObjectTypeEnum,
-} from '../types/Enums';
+import { AuditLogOperationEnum, AuditLogObjectTypeEnum } from '../types/Enums';
 
 export const AuditLogTC = schemaComposer.createObjectTC({
   name: 'AuditLog',
@@ -49,3 +44,7 @@ export const AuditLogTC = schemaComposer.createObjectTC({
     },
   },
 });
+
+if (!process.env.DISABLE_HAIRS) {
+  AuditLogTC.addFields({});
+}

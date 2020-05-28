@@ -16,10 +16,6 @@ const restApiResponse = {
     {
       // accountId: 'IEADMUW4',
       accountId: AccountID,
-      account: () => ({
-        type: () => AccountTC,
-        resolve: (s, _, __, info) => accountFindOne({ info }),
-      }),
       email: 'pavel.chertorogov@gmail.com',
       // role: 'User',
       role: UserRoleEnum,
@@ -35,23 +31,36 @@ const restApiResponse = {
   me: true,
   title: 'IT',
   companyName: 'Test',
-  // additional fields
-  tasksAuthored: () => ({
-    type: () => TaskTC.NonNull.List,
-    args: {
-      limit: { type: 'Int', defaultValue: 10 },
-    },
-    resolve: (s, args, __, info) =>
-      taskFindMany({ filter: { authors: [s.id] }, limit: args.limit, info }),
-  }),
-  tasksResponsible: () => ({
-    type: () => TaskTC.NonNull.List,
-    args: {
-      limit: { type: 'Int', defaultValue: 10 },
-    },
-    resolve: (s, args, __, info) =>
-      taskFindMany({ filter: { responsibles: [s.id] }, limit: args.limit, info }),
-  }),
 };
 
 export const UserTC = composeWithJson('User', restApiResponse);
+
+if (!process.env.DISABLE_HAIRS) {
+  // ------- DIRECT LINKS --------
+  UserTC.addNestedFields({
+    'profiles.account': {
+      type: () => AccountTC,
+      resolve: (s, _, __, info) => accountFindOne({ info }),
+    },
+  });
+
+  // ------- BACK LINKS --------
+  UserTC.addFields({
+    tasksAuthored: {
+      type: () => TaskTC.NonNull.List,
+      args: {
+        limit: { type: 'Int', defaultValue: 10 },
+      },
+      resolve: (s, args, __, info) =>
+        taskFindMany({ filter: { authors: [s.id] }, limit: args.limit, info }),
+    },
+    tasksResponsible: {
+      type: () => TaskTC.NonNull.List,
+      args: {
+        limit: { type: 'Int', defaultValue: 10 },
+      },
+      resolve: (s, args, __, info) =>
+        taskFindMany({ filter: { responsibles: [s.id] }, limit: args.limit, info }),
+    },
+  });
+}

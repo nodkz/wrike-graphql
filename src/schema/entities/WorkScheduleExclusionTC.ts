@@ -24,3 +24,7 @@ export const WorkScheduleExclusionTC = schemaComposer.createObjectTC({
     },
   },
 });
+
+if (!process.env.DISABLE_HAIRS) {
+  WorkScheduleExclusionTC.addFields({});
+}

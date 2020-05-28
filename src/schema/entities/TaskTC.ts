@@ -9,45 +9,22 @@ import { FolderTC } from './FolderTC';
 import { AccountTC } from './AccountTC';
 import { contactFindByIds } from 'app/vendor/contact/contactFindByIds';
 import { ContactTC } from './ContactTC';
+import { dataLoaderLoadMany, resolveManyViaDL } from '../dataLoaders';
 
 const restApiResponse = {
   // id: 'IEADMUW4KQOE4AQG',
   id: TaskID.NonNull,
   accountId: 'IEADMUW4',
-  account: () => ({
-    type: () => AccountTC,
-    resolve: (s, _, __, info) => accountFindOne({ info }),
-  }),
   title: 'Write GraphQL wrapper for TaskList',
   description: '',
   briefDescription: '',
   // parentIds: ['IEADMUW4I4OE374R'],
   parentIds: FolderID.NonNull.List,
-  parents: () => ({
-    type: () => FolderTC.NonNull.List,
-    resolve: (s, _, __, info) => folderFindByIds({ ids: s.parentIds, info }),
-    projection: { parentIds: 1 },
-  }),
   superParentIds: FolderID.NonNull.List,
-  superParents: () => ({
-    type: () => FolderTC.NonNull.List,
-    resolve: (s, _, __, info) => folderFindByIds({ ids: s.superParentIds, info }),
-    projection: { superParentIds: 1 },
-  }),
   // sharedIds: ['KUAHMNRA', 'KX73NL7C'],
   sharedIds: ContactID.NonNull.List,
-  shareds: () => ({
-    type: () => ContactTC.NonNull.List,
-    resolve: (s, _, __, info) => contactFindByIds({ ids: s.sharedIds, info }),
-    prjection: { sharedIds: 1 },
-  }),
   // responsibleIds: ['KUAHMNRA'],
   responsibleIds: ContactID.NonNull.List,
-  responsibles: () => ({
-    type: () => UserTC.NonNull.List,
-    resolve: (s) => Promise.all(s.responsibleIds.map((id) => userFindById({ id }))),
-    projection: { responsibleIds: 1 },
-  }),
   // status: 'Active',
   status: TaskStatusEnum,
   // importance: 'Normal',
@@ -60,11 +37,6 @@ const restApiResponse = {
   scope: 'WsTask',
   // authorIds: ['KUAHMNRA'],
   authorIds: ContactID.NonNull.List,
-  authors: () => ({
-    type: () => UserTC.NonNull.List,
-    resolve: (s) => Promise.all(s.authorIds.map((id) => userFindById({ id }))),
-    projection: { authorIds: 1 },
-  }),
   // customStatusId: 'IEADMUW4JMAAAAAA',
   customStatusId: CustomStatusID,
   hasAttachments: false,
@@ -73,11 +45,6 @@ const restApiResponse = {
   followedByMe: true,
   // followerIds: ['KUAHMNRA'],
   followerIds: ContactID.NonNull.List,
-  followers: () => ({
-    type: () => UserTC.NonNull.List,
-    resolve: (s) => Promise.all(s.followerIds.map((id) => userFindById({ id }))),
-    projection: { followerIds: 1 },
-  }),
   superTaskIds: [],
   subTaskIds: [],
   dependencyIds: [],
@@ -86,3 +53,54 @@ const restApiResponse = {
 };
 
 export const TaskTC = composeWithJson('Task', restApiResponse);
+
+if (!process.env.DISABLE_HAIRS) {
+  TaskTC.addFields({
+    account: {
+      type: () => AccountTC,
+      resolve: (s, _, __, info) => accountFindOne({ info }),
+    },
+    parents: {
+      type: () => FolderTC.NonNull.List,
+      resolve: process.env.DISABLE_DATALOADER
+        ? (s, _, __, info) => folderFindByIds({ ids: s.parentIds, info })
+        : resolveManyViaDL('FolderID', (s) => s.parentIds),
+      projection: { parentIds: 1 },
+    },
+    superParents: {
+      type: () => FolderTC.NonNull.List,
+      resolve: process.env.DISABLE_DATALOADER
+        ? (s, _, __, info) => folderFindByIds({ ids: s.superParentIds, info })
+        : resolveManyViaDL('FolderID', (s) => s.superParentIds),
+      projection: { superParentIds: 1 },
+    },
+    shareds: {
+      type: () => ContactTC.NonNull.List,
+      resolve: process.env.DISABLE_DATALOADER
+        ? (s, _, __, info) => contactFindByIds({ ids: s.sharedIds, info })
+        : resolveManyViaDL('ContactID', (s) => s.sharedIds),
+      prjection: { sharedIds: 1 },
+    },
+    responsibles: {
+      type: () => UserTC.NonNull.List,
+      resolve: process.env.DISABLE_DATALOADER
+        ? (s) => Promise.all(s.responsibleIds.map((id) => userFindById({ id })))
+        : resolveManyViaDL('ContactID', (s) => s.responsibleIds),
+      projection: { responsibleIds: 1 },
+    },
+    authors: {
+      type: () => UserTC.NonNull.List,
+      resolve: process.env.DISABLE_DATALOADER
+        ? (s) => Promise.all(s.authorIds.map((id) => userFindById({ id })))
+        : resolveManyViaDL('ContactID', (s) => s.authorIds),
+      projection: { authorIds: 1 },
+    },
+    followers: {
+      type: () => UserTC.NonNull.List,
+      resolve: process.env.DISABLE_DATALOADER
+        ? (s) => Promise.all(s.followerIds.map((id) => userFindById({ id })))
+        : resolveManyViaDL('ContactID', (s) => s.followerIds),
+      projection: { followerIds: 1 },
+    },
+  });
+}

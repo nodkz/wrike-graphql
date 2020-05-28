@@ -24,3 +24,7 @@ export const WorkScheduleTC = schemaComposer.createObjectTC({
     },
   },
 });
+
+if (!process.env.DISABLE_HAIRS) {
+  WorkScheduleTC.addFields({});
+}

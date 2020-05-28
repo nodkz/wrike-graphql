@@ -20,3 +20,7 @@ export const DependencyTC = schemaComposer.createObjectTC({
     },
   },
 });
+
+if (!process.env.DISABLE_HAIRS) {
+  DependencyTC.addFields({});
+}

@@ -1,18 +1,15 @@
 import client from '../client';
+import { splitRequestBy100 } from '../_helpers/splitRequestBy100';
 
 export type FindByIdsArgs = {
-  ids: string[];
+  ids: ReadonlyArray<string>;
 };
 
 // https://developers.wrike.com/api/v4/dependencies/#query-dependencies
 export async function dependencyFindByIds(opts: FindByIdsArgs) {
   const { ids } = opts || {};
-
-  if (!ids) {
-    throw new Error('You should provide at least one id in `ids` argument');
-  }
-
-  const res = await client.get(`/dependencies/${ids.join(',')}`);
-
-  return res?.data?.data;
+  return splitRequestBy100(ids, async (preparedIds) => {
+    const res = await client.get(`/dependencies/${preparedIds}`);
+    return res?.data?.data;
+  });
 }

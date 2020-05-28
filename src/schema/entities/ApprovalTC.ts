@@ -72,3 +72,7 @@ export const ApprovalTC = schemaComposer.createObjectTC({
     },
   },
 });
+
+if (!process.env.DISABLE_HAIRS) {
+  ApprovalTC.addFields({});
+}

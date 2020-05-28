@@ -21,11 +21,6 @@ export const FolderTC = schemaComposer.createObjectTC({
       description: 'Folder color',
     },
     childIds: FolderID.NonNull.List.NonNull,
-    childs: {
-      type: () => FolderTC.NonNull.List,
-      resolve: (s, _, __, info) => folderFindByIds({ ids: s.childIds, info }),
-      projection: { childIds: 1 },
-    },
     scope: {
       type: TreeScopeEnum.NonNull,
       description: 'Folder scope',
@@ -71,6 +66,20 @@ export const FolderTC = schemaComposer.createObjectTC({
       description:
         "List of super parent folder IDs (applicable to 'Selective Sharing' labs feature)",
     },
+    contractType: {
+      type: ProjectContractTypeEnum,
+      description: 'Contract type',
+    },
+  },
+});
+
+if (!process.env.DISABLE_HAIRS) {
+  FolderTC.addFields({
+    childs: {
+      type: () => FolderTC.NonNull.List,
+      resolve: (s, _, __, info) => folderFindByIds({ ids: s.childIds, info }),
+      projection: { childIds: 1 },
+    },
     superParents: {
       type: () => FolderTC.NonNull.List,
       resolve: (s, _, __, info) => folderFindByIds({ ids: s.superParentIds, info }),
@@ -78,9 +87,5 @@ export const FolderTC = schemaComposer.createObjectTC({
       description:
         "List of super parent folder IDs (applicable to 'Selective Sharing' labs feature)",
     },
-    contractType: {
-      type: ProjectContractTypeEnum,
-      description: 'Contract type',
-    },
-  },
-});
+  });
+}

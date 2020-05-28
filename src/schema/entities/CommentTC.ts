@@ -27,3 +27,7 @@ export const CommentTC = schemaComposer.createObjectTC({
     },
   },
 });
+
+if (!process.env.DISABLE_HAIRS) {
+  CommentTC.addFields({});
+}
