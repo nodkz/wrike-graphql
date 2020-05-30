@@ -4,7 +4,7 @@ import { schemaComposer } from 'graphql-compose';
 import { ProjectDetails } from '../types/outputs/ProjectDetails';
 import { KeyValue } from '../types/outputs/KeyValue';
 import { CustomFieldTC } from './CustomFieldTC';
-import { folderFindByIds } from 'app/vendor/folder/folderFindByIds';
+import { getRelationFolderIds } from '../resolvers/folder';
 
 export const FolderTC = schemaComposer.createObjectTC({
   name: 'Folder',
@@ -20,7 +20,7 @@ export const FolderTC = schemaComposer.createObjectTC({
       type: ColorEnum,
       description: 'Folder color',
     },
-    childIds: FolderID.NonNull.List.NonNull,
+    childIds: FolderID.NonNull.List,
     scope: {
       type: TreeScopeEnum.NonNull,
       description: 'Folder scope',
@@ -75,17 +75,7 @@ export const FolderTC = schemaComposer.createObjectTC({
 
 if (!process.env.DISABLE_RELATIONS) {
   FolderTC.addFields({
-    childs: {
-      type: () => FolderTC.NonNull.List,
-      resolve: (s, _, __, info) => folderFindByIds({ ids: s.childIds, info }),
-      projection: { childIds: 1 },
-    },
-    superParents: {
-      type: () => FolderTC.NonNull.List,
-      resolve: (s, _, __, info) => folderFindByIds({ ids: s.superParentIds, info }),
-      projection: { superParentIds: 1 },
-      description:
-        "List of super parent folder IDs (applicable to 'Selective Sharing' labs feature)",
-    },
+    childs: () => getRelationFolderIds('childIds'),
+    superParents: () => getRelationFolderIds('superParentIds'),
   });
 }

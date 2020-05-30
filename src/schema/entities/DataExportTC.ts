@@ -32,7 +32,3 @@ export const DataExportTC = schemaComposer.createObjectTC({
     },
   },
 });
-
-if (!process.env.DISABLE_RELATIONS) {
-  DataExportTC.addFields({});
-}

@@ -1,6 +1,7 @@
 import { schemaComposer } from 'graphql-compose';
 import { CustomFieldInheritanceEnum, CurrencyEnum, CustomFieldAggregationEnum } from '../Enums';
 import { ContactID } from '../Scalars';
+import { getRelationContactIds } from 'app/schema/resolvers/contact';
 
 export const CustomFieldSettings = schemaComposer.createObjectTC({
   name: 'CustomFieldSettings',
@@ -40,3 +41,9 @@ export const CustomFieldSettings = schemaComposer.createObjectTC({
     },
   },
 });
+
+if (!process.env.DISABLE_RELATIONS) {
+  CustomFieldSettings.addFields({
+    contacts: getRelationContactIds('contacts'),
+  });
+}

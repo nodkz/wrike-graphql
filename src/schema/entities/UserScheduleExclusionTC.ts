@@ -1,6 +1,7 @@
 import { DateYMD, UserScheduleExclusionID, ContactID } from 'app/schema/types/Scalars';
 import { schemaComposer } from 'graphql-compose';
 import { UserScheduleExclusionEnum } from '../types/Enums';
+import { getRelationContactId } from '../resolvers/contact';
 
 export const UserScheduleExclusionTC = schemaComposer.createObjectTC({
   name: 'UserScheduleExclusion',
@@ -30,5 +31,7 @@ export const UserScheduleExclusionTC = schemaComposer.createObjectTC({
 });
 
 if (!process.env.DISABLE_RELATIONS) {
-  UserScheduleExclusionTC.addFields({});
+  UserScheduleExclusionTC.addFields({
+    user: getRelationContactId('userId'),
+  });
 }

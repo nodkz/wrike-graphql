@@ -1,10 +1,8 @@
 import { composeWithJson } from 'graphql-compose-json';
 import { GroupID, ContactID, AccountID } from 'app/schema/types/Scalars';
 import { KeyValue } from '../types/outputs/KeyValue';
-import { AccountTC } from './AccountTC';
-import { accountFindOne } from 'app/vendor/account/accountFindOne';
-import { contactFindByIds } from 'app/vendor/contact/contactFindByIds';
-import { ContactTC } from './ContactTC';
+import { getRelationAccountId } from '../resolvers/account';
+import { getRelationContactIds } from '../resolvers/contact';
 
 const restApiResponse = {
   id: GroupID.NonNull,
@@ -22,24 +20,9 @@ export const GroupTC = composeWithJson('Group', restApiResponse);
 
 if (!process.env.DISABLE_RELATIONS) {
   GroupTC.addFields({
-    account: {
-      type: () => AccountTC,
-      resolve: (s, _, __, info) => accountFindOne({ info }),
-    },
-    members: {
-      type: () => ContactTC.List,
-      resolve: (s, _, __, info) => contactFindByIds({ ids: s.memberIds, info }),
-      prjection: { memberIds: 1 },
-    },
-    childs: {
-      type: () => ContactTC.List,
-      resolve: (s, _, __, info) => contactFindByIds({ ids: s.childIds, info }),
-      prjection: { childIds: 1 },
-    },
-    parents: {
-      type: () => ContactTC.NonNull.List,
-      resolve: (s, _, __, info) => contactFindByIds({ ids: s.parentIds, info }),
-      prjection: { parentIds: 1 },
-    },
+    account: getRelationAccountId('accountId'),
+    members: getRelationContactIds('memberIds'),
+    childs: getRelationContactIds('childIds'),
+    parents: getRelationContactIds('parentIds'),
   });
 }

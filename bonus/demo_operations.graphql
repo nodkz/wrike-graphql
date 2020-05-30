@@ -353,3 +353,25 @@ mutation createApproval {
     }
   }
 }
+
+query getTasks {
+  taskFindMany(limit: 2) {
+    id
+    title
+    account {
+      dateFormat
+      customFields {
+        title
+      }
+    }
+    authors {
+      firstName
+      lastName
+      workSchedule {
+        workweek
+        scheduleType
+        title
+      }
+    }
+  }
+}

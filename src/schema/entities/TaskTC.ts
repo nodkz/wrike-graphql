@@ -1,15 +1,9 @@
 import { composeWithJson } from 'graphql-compose-json';
-import { userFindById } from 'app/vendor/user/userFindById';
-import { folderFindByIds } from 'app/vendor/folder/folderFindByIds';
-import { accountFindOne } from 'app/vendor/account/accountFindOne';
-import { UserTC } from './UserTC';
 import { TaskStatusEnum, TaskImportanceEnum, TaskDatesTypeEnum } from '../types/Enums';
 import { TaskID, ContactID, FolderID, CustomStatusID } from 'app/schema/types/Scalars';
-import { FolderTC } from './FolderTC';
-import { AccountTC } from './AccountTC';
-import { contactFindByIds } from 'app/vendor/contact/contactFindByIds';
-import { ContactTC } from './ContactTC';
-import { resolveManyViaDL } from '../dataLoaders';
+import { getRelationFolderIds } from '../resolvers/folder';
+import { getRelationContactIds } from '../resolvers/contact';
+import { getRelationAccountId } from '../resolvers/account';
 
 const restApiResponse = {
   // id: 'IEADMUW4KQOE4AQG',
@@ -56,51 +50,12 @@ export const TaskTC = composeWithJson('Task', restApiResponse);
 
 if (!process.env.DISABLE_RELATIONS) {
   TaskTC.addFields({
-    account: {
-      type: () => AccountTC,
-      resolve: (s, _, __, info) => accountFindOne({ info }),
-    },
-    parents: {
-      type: () => FolderTC.NonNull.List,
-      resolve: process.env.DISABLE_DATALOADERS
-        ? (s, _, __, info) => folderFindByIds({ ids: s.parentIds, info })
-        : resolveManyViaDL('FolderID', (s) => s.parentIds),
-      projection: { parentIds: 1 },
-    },
-    superParents: {
-      type: () => FolderTC.NonNull.List,
-      resolve: process.env.DISABLE_DATALOADERS
-        ? (s, _, __, info) => folderFindByIds({ ids: s.superParentIds, info })
-        : resolveManyViaDL('FolderID', (s) => s.superParentIds),
-      projection: { superParentIds: 1 },
-    },
-    shareds: {
-      type: () => ContactTC.NonNull.List,
-      resolve: process.env.DISABLE_DATALOADERS
-        ? (s, _, __, info) => contactFindByIds({ ids: s.sharedIds, info })
-        : resolveManyViaDL('ContactID', (s) => s.sharedIds),
-      prjection: { sharedIds: 1 },
-    },
-    responsibles: {
-      type: () => UserTC.NonNull.List,
-      resolve: process.env.DISABLE_DATALOADERS
-        ? (s) => Promise.all(s.responsibleIds.map((id) => userFindById({ id })))
-        : resolveManyViaDL('ContactID', (s) => s.responsibleIds),
-      projection: { responsibleIds: 1 },
-    },
-    authors: {
-      type: () => UserTC.NonNull.List,
-      resolve: process.env.DISABLE_DATALOADERS
-        ? (s) => Promise.all(s.authorIds.map((id) => userFindById({ id })))
-        : resolveManyViaDL('ContactID', (s) => s.authorIds),
-      projection: { authorIds: 1 },
-    },
-    followers: {
-      type: () => UserTC.NonNull.List,
-      resolve: process.env.DISABLE_DATALOADERS
-        ? (s) => Promise.all(s.followerIds.map((id) => userFindById({ id })))
-        : resolveManyViaDL('ContactID', (s) => s.followerIds),
-      projection: { followerIds: 1 },
-    },
+    account: getRelationAccountId('accountId'),
+    parents: getRelationFolderIds('parentIds'),
+    superParents: getRelationFolderIds('superParentIds'),
+    shareds: getRelationContactIds('sharedIds'),
+    responsibles: getRelationContactIds('responsibleIds'),
+    authors: getRelationContactIds('authorIds'),
+    followers: getRelationContactIds('followerIds'),
   });
 }

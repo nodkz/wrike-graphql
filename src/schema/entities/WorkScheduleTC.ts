@@ -1,6 +1,7 @@
 import { ContactID, WorkScheduleID } from 'app/schema/types/Scalars';
 import { schemaComposer } from 'graphql-compose';
 import { WorkScheduleTypeEnum } from '../types/Enums';
+import { getRelationContactIds } from '../resolvers/contact';
 
 export const WorkScheduleTC = schemaComposer.createObjectTC({
   name: 'WorkSchedule',
@@ -26,5 +27,7 @@ export const WorkScheduleTC = schemaComposer.createObjectTC({
 });
 
 if (!process.env.DISABLE_RELATIONS) {
-  WorkScheduleTC.addFields({});
+  WorkScheduleTC.addFields({
+    users: () => getRelationContactIds('userIds'),
+  });
 }

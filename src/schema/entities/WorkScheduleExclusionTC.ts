@@ -24,7 +24,3 @@ export const WorkScheduleExclusionTC = schemaComposer.createObjectTC({
     },
   },
 });
-
-if (!process.env.DISABLE_RELATIONS) {
-  WorkScheduleExclusionTC.addFields({});
-}

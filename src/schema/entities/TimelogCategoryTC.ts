@@ -20,6 +20,7 @@ export const TimelogCategoryTC = schemaComposer.createObjectTC({
   },
 });
 
-if (!process.env.DISABLE_RELATIONS) {
-  TimelogCategoryTC.addFields({});
-}
+// TODO: add `timelogs`
+// if (!process.env.DISABLE_BACK_RELATIONS) {
+//   TimelogCategoryTC.addFields({});
+// }

@@ -1,6 +1,7 @@
 import { AuditLogID, ContactID } from 'app/schema/types/Scalars';
 import { schemaComposer } from 'graphql-compose';
 import { AuditLogOperationEnum, AuditLogObjectTypeEnum } from '../types/Enums';
+import { getRelationContactId } from '../resolvers/contact';
 
 export const AuditLogTC = schemaComposer.createObjectTC({
   name: 'AuditLog',
@@ -46,5 +47,7 @@ export const AuditLogTC = schemaComposer.createObjectTC({
 });
 
 if (!process.env.DISABLE_RELATIONS) {
-  AuditLogTC.addFields({});
+  AuditLogTC.addFields({
+    user: getRelationContactId('userId'),
+  });
 }

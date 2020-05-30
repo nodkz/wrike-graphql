@@ -1,10 +1,8 @@
 import { composeWithJson } from 'graphql-compose-json';
-import { TaskTC } from './TaskTC';
-import { taskFindMany } from 'app/vendor/task/taskFindMany';
-import { ContactID, AccountID } from 'app/schema/types/Scalars';
+import { ContactID, AccountID, WorkScheduleID } from 'app/schema/types/Scalars';
 import { UserRoleEnum } from '../types/Enums';
-import { accountFindOne } from 'app/vendor/account/accountFindOne';
-import { AccountTC } from './AccountTC';
+import { getRelationAccountId } from '../resolvers/account';
+import { getRelationWorkScheduleId } from '../resolvers/workSchedule';
 
 const restApiResponse = {
   // id: 'KUAHMNRA',
@@ -29,38 +27,39 @@ const restApiResponse = {
   locale: 'en',
   deleted: false,
   me: true,
+  myTeam: false,
   title: 'IT',
   companyName: 'Test',
+  phone: '+77777',
+  location: 'ALA',
+  workScheduleId: WorkScheduleID,
 };
 
 export const UserTC = composeWithJson('User', restApiResponse);
 
 if (!process.env.DISABLE_RELATIONS) {
-  // ------- DIRECT LINKS --------
   UserTC.addNestedFields({
-    'profiles.account': {
-      type: () => AccountTC,
-      resolve: (s, _, __, info) => accountFindOne({ info }),
-    },
-  });
-
-  // ------- BACK LINKS --------
-  UserTC.addFields({
-    tasksAuthored: {
-      type: () => TaskTC.NonNull.List,
-      args: {
-        limit: { type: 'Int', defaultValue: 10 },
-      },
-      resolve: (s, args, __, info) =>
-        taskFindMany({ filter: { authors: [s.id] }, limit: args.limit, info }),
-    },
-    tasksResponsible: {
-      type: () => TaskTC.NonNull.List,
-      args: {
-        limit: { type: 'Int', defaultValue: 10 },
-      },
-      resolve: (s, args, __, info) =>
-        taskFindMany({ filter: { responsibles: [s.id] }, limit: args.limit, info }),
-    },
+    'profiles.account': getRelationAccountId('accountId'),
+    workSchedule: getRelationWorkScheduleId('workScheduleId'),
   });
 }
+
+// TODO: ------- BACK LINKS --------
+// UserTC.addFields({
+//   tasksAuthored: {
+//     type: () => TaskTC.NonNull.List,
+//     args: {
+//       limit: { type: 'Int', defaultValue: 10 },
+//     },
+//     resolve: (s, args, __, info) =>
+//       taskFindMany({ filter: { authors: [s.id] }, limit: args.limit, info }),
+//   },
+//   tasksResponsible: {
+//     type: () => TaskTC.NonNull.List,
+//     args: {
+//       limit: { type: 'Int', defaultValue: 10 },
+//     },
+//     resolve: (s, args, __, info) =>
+//       taskFindMany({ filter: { responsibles: [s.id] }, limit: args.limit, info }),
+//   },
+// });

@@ -18,7 +18,3 @@ export const WorkflowTC = schemaComposer.createObjectTC({
     },
   },
 });
-
-if (!process.env.DISABLE_RELATIONS) {
-  WorkflowTC.addFields({});
-}

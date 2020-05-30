@@ -40,6 +40,7 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 0,
     '@typescript-eslint/no-use-before-define': 0,
     '@typescript-eslint/no-empty-function': 0,
+    '@typescript-eslint/explicit-module-boundary-types': 0,
   },
   env: {
     jasmine: true,

@@ -1,6 +1,7 @@
 import { schemaComposer } from 'graphql-compose';
 import { ProjectStatusEnum, ProjectContractTypeEnum } from '../Enums';
 import { ContactID, CustomStatusID } from '../Scalars';
+import { getRelationContactIds, getRelationContactId } from 'app/schema/resolvers/contact';
 
 export const ProjectDetails = schemaComposer.createObjectTC({
   name: 'ProjectDetails',
@@ -10,7 +11,7 @@ export const ProjectDetails = schemaComposer.createObjectTC({
       description: 'ID of user who created project',
     },
     ownerIds: {
-      type: ContactID.NonNull.List.NonNull,
+      type: ContactID.NonNull.List,
       description: 'List of project owner IDs',
     },
     status: {
@@ -43,3 +44,10 @@ export const ProjectDetails = schemaComposer.createObjectTC({
     },
   },
 });
+
+if (!process.env.DISABLE_RELATIONS) {
+  ProjectDetails.addFields({
+    author: getRelationContactId('authorId'),
+    owners: getRelationContactIds('ownerIds'),
+  });
+}

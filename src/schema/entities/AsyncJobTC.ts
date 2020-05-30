@@ -36,7 +36,3 @@ export const AsyncJobTC = schemaComposer.createObjectTC({
     },
   },
 });
-
-if (!process.env.DISABLE_RELATIONS) {
-  AsyncJobTC.addFields({});
-}

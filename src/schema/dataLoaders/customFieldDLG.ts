@@ -4,6 +4,8 @@ import { customFieldFindByIds } from 'app/vendor/customFields/customFieldFindByI
 export function customFieldDLG() {
   return new DataLoader<string, any>(async (ids) => {
     const results = await customFieldFindByIds({ ids });
-    return ids.map((id) => results.find((x) => x.id === id) || new Error(`No result for ${id}`));
+    return ids.map(
+      (id) => results.find((x) => x.id === id) || new Error(`CustomField: no result for ${id}`)
+    );
   });
 }

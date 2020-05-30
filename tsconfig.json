@@ -17,5 +17,5 @@
     },
     "types": ["node", "jest"]
   },
-  "include": ["src/**/*", "bonus/**/*"]
+  "include": ["src/**/*"]
 }

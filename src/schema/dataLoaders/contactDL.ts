@@ -5,6 +5,8 @@ import { GraphQLResolveInfo } from 'graphql';
 export function contactDL(info: GraphQLResolveInfo) {
   return new DataLoader<string, any>(async (ids) => {
     const results = await contactFindByIds({ ids, info });
-    return ids.map((id) => results.find((x) => x.id === id) || new Error(`No result for ${id}`));
+    return ids.map(
+      (id) => results.find((x) => x.id === id) || new Error(`Contact: no result for ${id}`)
+    );
   });
 }

@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import DataLoader from 'dataloader';
+import { GraphQLResolveInfo, GraphQLFieldResolver } from 'graphql';
 import { approvalDLG } from './approvalDLG';
 import { attachmentDLG } from './attachmentDLG';
 import { commentDLG } from './commentDLG';
@@ -7,8 +10,9 @@ import { dependencyDLG } from './dependencyDLG';
 import { folderDL } from './folderDL';
 import { taskDL } from './taskDL';
 import { timelogDLG } from './timelogDLG';
-import { GraphQLResolveInfo } from 'graphql';
-import DataLoader from 'dataloader';
+import { accountDL } from './accountDL';
+import { timelogCategoryDLG } from './timelogCategoryDLG';
+import { workScheduleDLG } from './workScheduleDLG';
 
 enum DataLoaderKind {
   OperationGlobal,
@@ -27,7 +31,10 @@ const DataLoadersCfg = {
   DependencyID: { init: dependencyDLG, kind: DataLoaderKind.OperationGlobal } as DLCfg,
   CustomFieldID: { init: customFieldDLG, kind: DataLoaderKind.OperationGlobal } as DLCfg,
   TimelogID: { init: timelogDLG, kind: DataLoaderKind.OperationGlobal } as DLCfg,
+  TimelogCategoryID: { init: timelogCategoryDLG, kind: DataLoaderKind.OperationGlobal } as DLCfg,
+  WorkScheduleID: { init: workScheduleDLG, kind: DataLoaderKind.OperationGlobal } as DLCfg,
   // FieldNodes specific loaders
+  AccountID: { init: accountDL, kind: DataLoaderKind.FieldNode } as DLCfg,
   ContactID: { init: contactDL, kind: DataLoaderKind.FieldNode } as DLCfg,
   FolderID: { init: folderDL, kind: DataLoaderKind.FieldNode } as DLCfg,
   TaskID: { init: taskDL, kind: DataLoaderKind.FieldNode } as DLCfg,
@@ -69,12 +76,12 @@ function getDataLoader(
 /**
  * Create resolve method which loads many ids records via DataLoader
  * @example
- *   resolve: resolveManyViaDL('ContactID', (s) => s.authorIds)
+ *   resolve: resolveOneViaDL('ContactID', (s) => s.authorId)
  */
 export function resolveOneViaDL(
   entityName: DataLoaderEntityNames,
   idGetter: (s, a, c, i) => string
-) {
+): GraphQLFieldResolver<any, any> {
   return (source, args, context, info) => {
     const id = idGetter(source, args, context, info);
     if (!id) return null;
@@ -90,7 +97,7 @@ export function resolveOneViaDL(
 export function resolveManyViaDL(
   entityName: DataLoaderEntityNames,
   idsGetter: (s, a, c, i) => string[]
-) {
+): GraphQLFieldResolver<any, any> {
   return (source, args, context, info) => {
     let ids = idsGetter(source, args, context, info);
     if (!ids) return [];
@@ -99,13 +106,12 @@ export function resolveManyViaDL(
   };
 }
 
-// Read more https://github.com/nodkz/conf-talks/tree/master/articles/graphql/dataloader
 export function dataLoaderLoadById(
   id: string,
   entityName: DataLoaderEntityNames,
   context: Record<string, any>,
   info: GraphQLResolveInfo
-) {
+): Promise<any[]> {
   return getDataLoader(entityName, context, info).load(id);
 }
 
@@ -120,6 +126,6 @@ export function dataLoaderLoadMany(
   entityName: DataLoaderEntityNames,
   context: Record<string, any>,
   info: GraphQLResolveInfo
-) {
+): Promise<any[]> {
   return getDataLoader(entityName, context, info).loadMany(ids);
 }

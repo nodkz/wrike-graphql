@@ -1,8 +1,7 @@
 import { composeWithJson } from 'graphql-compose-json';
-import { TaskTC } from './TaskTC';
-import { taskFindMany } from 'app/vendor/task/taskFindMany';
 import { SpaceID } from 'app/schema/types/Scalars';
 import { SpaceAccessTypeEnum } from '../types/Enums';
+import { getRelationTasksBySpaceId } from '../resolvers/task';
 
 const restApiResponse = {
   // id: 'IEADMUW4I4OE37IV',
@@ -17,11 +16,6 @@ export const SpaceTC = composeWithJson('Space', restApiResponse);
 
 if (!process.env.DISABLE_RELATIONS) {
   SpaceTC.addFields({
-    tasks: {
-      type: () => TaskTC.NonNull.List,
-      resolve: (s, _, __, info) => {
-        return taskFindMany({ filter: { spaceId: s.id }, info });
-      },
-    },
+    tasks: getRelationTasksBySpaceId('id'),
   });
 }

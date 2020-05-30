@@ -4,6 +4,8 @@ import { commentFindByIds } from 'app/vendor/comment/commentFindByIds';
 export function commentDLG() {
   return new DataLoader<string, any>(async (ids) => {
     const results = await commentFindByIds({ ids });
-    return ids.map((id) => results.find((x) => x.id === id) || new Error(`No result for ${id}`));
+    return ids.map(
+      (id) => results.find((x) => x.id === id) || new Error(`Comment: no result for ${id}`)
+    );
   });
 }

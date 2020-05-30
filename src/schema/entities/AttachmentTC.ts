@@ -9,6 +9,10 @@ import {
 import { schemaComposer } from 'graphql-compose';
 import { AttachmentTypeEnum } from '../types/Enums';
 import { attachmentAccessUrl } from 'app/vendor/attachment/attachmentAccessUrl';
+import { getRelationContactId } from '../resolvers/contact';
+import { getRelationTaskId } from '../resolvers/task';
+import { getRelationFolderId } from '../resolvers/folder';
+import { getRelationCommentId } from '../resolvers/comment';
 
 export const AttachmentTC = schemaComposer.createObjectTC({
   name: 'Attachment',
@@ -86,5 +90,12 @@ export const AttachmentTC = schemaComposer.createObjectTC({
 });
 
 if (!process.env.DISABLE_RELATIONS) {
-  AttachmentTC.addFields({});
+  AttachmentTC.addFields({
+    author: getRelationContactId('authorId'),
+    task: getRelationTaskId('taskId'),
+    folder: getRelationFolderId('folderId'),
+    comment: getRelationCommentId('commentId'),
+    // it's strange but Wrike does not provide endpoint for:
+    //    reviewIds
+  });
 }
