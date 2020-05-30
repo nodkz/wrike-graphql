@@ -15,7 +15,7 @@ const restApiResponse = {
 
 export const SpaceTC = composeWithJson('Space', restApiResponse);
 
-if (!process.env.DISABLE_HAIRS) {
+if (!process.env.DISABLE_RELATIONS) {
   SpaceTC.addFields({
     tasks: {
       type: () => TaskTC.NonNull.List,

@@ -1,5 +1,23 @@
 type Query {
   account(filter: AccountFilter): Account
+  approvalByIds(ids: [ApprovalID!]!): [Approval!]
+  approvalFindMany(
+    # Limit on number of returned approvals
+    limit: Int
+
+    # Page size
+    pageSize: Int
+
+    # Next page token, overrides any other parameters in request
+    nextPageToken: String
+    filter: ApprovalFindManyFilter
+  ): [Approval!]
+
+  # Reads all approvals on folder/project.
+  approvalForFolder(folderId: FolderID!): [Approval!]
+
+  # Reads all approvals on task.
+  approvalForTask(taskId: TaskID!): [Approval!]
   asyncJob(id: AsyncJobID!): AsyncJob
   attachmentByIds(
     ids: [AttachmentID!]!
@@ -12,6 +30,17 @@ type Query {
     versions: Boolean
     filter: AttachmentFindManyFilter
   ): [Attachment!]
+
+  # Get Audit Log Reports, that contains audit trail for actions in the account. Available to Enterprise admins with "Create user activity reports" right.
+  auditLogFindMany(
+    # Page size
+    pageSize: Int
+
+    # Next page token, overrides any other parameters in request
+    nextPageToken: String
+    filter: AuditLogFilter
+  ): [AuditLog]
+  colors: [Color]
   commentByIds(ids: [CommentID!]!, plainText: Boolean): [Comment!]
   commentFindMany(
     # Maximum number of returned comments
@@ -25,6 +54,12 @@ type Query {
   contactFindMany(filter: ContactFindManyFilter): [Contact!]
   customFieldsByIds(ids: [CustomFieldID!]!): [CustomField!]
   customFieldsFindMany: [CustomField!]
+
+  # Get Data Export last one or specified by id.
+  dataExport(id: DataExportID): DataExport
+
+  # Documentation for Data Export schema and tables can be found [here](https://developers.wrike.com/export-data).
+  dataExportSchema(version: DataSchemaVersion): DataExportSchema
   dependenciesByIds(ids: [DependencyID!]!): [Dependency!]
   folderFindMany(filter: FolderFindManyFilter): [Folder!]
   groupById(id: GroupID!): Group
@@ -61,6 +96,13 @@ type Query {
     plainText: Boolean! = false
   ): [Timelog!]
   userById(id: ContactID!): User
+  userScheduleExclusionFindById(id: UserScheduleExclusionID!): UserScheduleExclusion
+  userScheduleExclusionFindMany(filter: UserScheduleExclusionFilter): [UserScheduleExclusion!]
+  version: Version
+  workScheduleExclusionFindById(id: WorkScheduleExclusionID!): WorkScheduleExclusion
+  workScheduleExclusionFindMany(filter: WorkScheduleExclusionFilter, workScheduleId: WorkScheduleID!): [WorkScheduleExclusion!]
+  workScheduleFindById(id: WorkScheduleID!): WorkSchedule
+  workScheduleFindMany: [WorkSchedule!]
   workflows: [Workflow!]
 }
 
@@ -79,11 +121,9 @@ type Account {
 
   # Virtual folder, denotes the root folder of the account. Different users can have different elements in the root, according to their sharing scope. Can be used in queries to get all folders/tasks in the account, or to create folders/tasks in the user's account root
   rootFolderId: FolderID!
-  rootFolder: [Folder!]
 
   # Virtual folder, denotes the root for deleted folders and tasks. Can be used in queries to get all folders/tasks in the Recycle Bin. Cannot be used in modification queries.
   recycleBinId: FolderID!
-  recycleBin: [Folder!]
 
   # Registration date
   createdDate: Date!
@@ -99,6 +139,8 @@ type Account {
 
   # List of custom fields accessible for requesting user in the account
   joinedDate: Date!
+  rootFolder: [Folder!]
+  recycleBin: [Folder!]
 }
 
 scalar AccountID
@@ -121,6 +163,173 @@ enum WeekDayEnum {
 
 scalar FolderID
 
+scalar Date
+
+type AccountSubscription {
+  type: SubscriptionTypeEnum!
+  suspended: Boolean!
+
+  # Subscription is paid (available only to account admins)
+  paid: Boolean!
+
+  # Limit of subscription users (available only to account admins)
+  userLimit: Int!
+}
+
+enum SubscriptionTypeEnum {
+  Free
+  Premium
+  Business
+  CreativeBusiness
+  Enterprise
+  CreativeEnterprise
+}
+
+type KeyValue {
+  # Key should be less than 50 symbols and match following regular expression ([A-Za-z0-9_-]+)
+  key: String!
+
+  # Value should be less than 1000 symbols, compatible with JSON string. Use JSON 'null' in order to remove metadata entry
+  value: String
+}
+
+type CustomField {
+  id: CustomFieldID!
+  accountId: AccountID!
+
+  # Custom field title
+  title: String!
+
+  # Custom field type
+  type: CustomFieldTypeEnum!
+
+  # List of user IDs, who share the custom field
+  sharedIds: [ContactID!]
+
+  # Custom field settings
+  settings: CustomFieldSettings
+}
+
+scalar CustomFieldID
+
+enum CustomFieldTypeEnum {
+  # String field, Comparable field
+  Text
+
+  # String field, Comparable field
+  DropDown
+
+  # Comparable field
+  Numeric
+
+  # Comparable field
+  Currency
+
+  # Comparable field
+  Percentage
+
+  # Comparable field
+  Date
+
+  # Comparable field
+  Duration
+
+  # Boolean field
+  Checkbox
+
+  # Collection field
+  Contacts
+
+  # Collection field
+  Multiple
+}
+
+scalar ContactID
+
+type CustomFieldSettings {
+  # Inheritance type.
+  inheritanceType: CustomFieldInheritanceEnum
+
+  # Decimal places (only for Numeric, Percentage and Currency types).
+  decimalPlaces: Int
+
+  # Use thousands separator (only for Numeric type).
+  useThousandsSeparator: Boolean
+
+  # Currency (only for Currency type)
+  currency: CurrencyEnum
+
+  # Aggregation type (only for Text, Numeric, Percentage, Currency, Duration, MultipleSelect and DropDown types)
+  aggregation: CustomFieldAggregationEnum
+
+  # Dropdown values (only for DropDown and MultipleSelect type)
+  values: [String!]
+
+  # Allow users to input other values (only for DropDown type).
+  allowOtherValues: Boolean
+
+  # Allowed users or invitations (only for Users type)
+  contacts: [ContactID!]
+}
+
+enum CustomFieldInheritanceEnum {
+  All
+  Folders
+  Projects
+}
+
+enum CurrencyEnum {
+  USD
+  EUR
+  GBP
+  RUB
+  BRL
+  AED
+  ARS
+  BYR
+  CAD
+  CLP
+  COP
+  CZK
+  DKK
+  HKD
+  HUF
+  INR
+  IDR
+  ILS
+  JPY
+  KRW
+  MYR
+  MXN
+  NZD
+  NOK
+  PEN
+  PHP
+  PLN
+  QAR
+  RON
+  SAR
+  SGD
+  ZAR
+  SEK
+  CHF
+  TWD
+  THB
+  TRY
+  UAH
+  VND
+  CNY
+  AUD
+  AMD
+  BWP
+}
+
+enum CustomFieldAggregationEnum {
+  None
+  Sum
+  Average
+}
+
 # Folders & projects are one of the main ways to organize, manage, and report on work within Wrike. They both show up in the folder tree in the left-hand Navigation panel of the Wrike Workspace. From the perspective of our data model, projects are essentially folders with additional properties (owners, start & end dates, and status). For instance, the Modify Tasks method allows you to include a task in a specified folder by passing the folder ID in the corresponding parameter. In the same way, you can pass a project ID to include a task in a project.In order to maintain data integrity, it is not possible to run more than one operations in parallel.
 type Folder {
   id: FolderID!
@@ -131,7 +340,6 @@ type Folder {
   # Folder color
   color: ColorEnum
   childIds: [FolderID!]!
-  childs: [Folder!]
 
   # Folder scope
   scope: TreeScopeEnum!
@@ -166,11 +374,12 @@ type Folder {
   # List of super parent folder IDs (applicable to 'Selective Sharing' labs feature)
   superParentIds: [FolderID!]
 
-  # List of super parent folder IDs (applicable to 'Selective Sharing' labs feature)
-  superParents: [Folder!]
-
   # Contract type
   contractType: ProjectContractTypeEnum
+  childs: [Folder!]
+
+  # List of super parent folder IDs (applicable to 'Selective Sharing' labs feature)
+  superParents: [Folder!]
 }
 
 enum ColorEnum {
@@ -278,8 +487,6 @@ type ProjectDetails {
   contractType: ProjectContractTypeEnum
 }
 
-scalar ContactID
-
 enum ProjectStatusEnum {
   Green
   Yellow
@@ -292,175 +499,10 @@ enum ProjectStatusEnum {
 
 scalar CustomStatusID
 
-scalar Date
-
 # Project Contract Type (Wrike Resource only)
 enum ProjectContractTypeEnum {
   Billable
   NonBillable
-}
-
-type KeyValue {
-  # Key should be less than 50 symbols and match following regular expression ([A-Za-z0-9_-]+)
-  key: String!
-
-  # Value should be less than 1000 symbols, compatible with JSON string. Use JSON 'null' in order to remove metadata entry
-  value: String
-}
-
-type CustomField {
-  id: CustomFieldID!
-  accountId: AccountID!
-
-  # Custom field title
-  title: String!
-
-  # Custom field type
-  type: CustomFieldTypeEnum!
-
-  # List of user IDs, who share the custom field
-  sharedIds: [ContactID!]
-
-  # Custom field settings
-  settings: CustomFieldSettings
-}
-
-scalar CustomFieldID
-
-enum CustomFieldTypeEnum {
-  # String field, Comparable field
-  Text
-
-  # String field, Comparable field
-  DropDown
-
-  # Comparable field
-  Numeric
-
-  # Comparable field
-  Currency
-
-  # Comparable field
-  Percentage
-
-  # Comparable field
-  Date
-
-  # Comparable field
-  Duration
-
-  # Boolean field
-  Checkbox
-
-  # Collection field
-  Contacts
-
-  # Collection field
-  Multiple
-}
-
-type CustomFieldSettings {
-  # Inheritance type.
-  inheritanceType: CustomFieldInheritanceEnum
-
-  # Decimal places (only for Numeric, Percentage and Currency types).
-  decimalPlaces: Int
-
-  # Use thousands separator (only for Numeric type).
-  useThousandsSeparator: Boolean
-
-  # Currency (only for Currency type)
-  currency: CurrencyEnum
-
-  # Aggregation type (only for Text, Numeric, Percentage, Currency, Duration, MultipleSelect and DropDown types)
-  aggregation: CustomFieldAggregationEnum
-
-  # Dropdown values (only for DropDown and MultipleSelect type)
-  values: [String!]
-
-  # Allow users to input other values (only for DropDown type).
-  allowOtherValues: Boolean
-
-  # Allowed users or invitations (only for Users type)
-  contacts: [ContactID!]
-}
-
-enum CustomFieldInheritanceEnum {
-  All
-  Folders
-  Projects
-}
-
-enum CurrencyEnum {
-  USD
-  EUR
-  GBP
-  RUB
-  BRL
-  AED
-  ARS
-  BYR
-  CAD
-  CLP
-  COP
-  CZK
-  DKK
-  HKD
-  HUF
-  INR
-  IDR
-  ILS
-  JPY
-  KRW
-  MYR
-  MXN
-  NZD
-  NOK
-  PEN
-  PHP
-  PLN
-  QAR
-  RON
-  SAR
-  SGD
-  ZAR
-  SEK
-  CHF
-  TWD
-  THB
-  TRY
-  UAH
-  VND
-  CNY
-  AUD
-  AMD
-  BWP
-}
-
-enum CustomFieldAggregationEnum {
-  None
-  Sum
-  Average
-}
-
-type AccountSubscription {
-  type: SubscriptionTypeEnum!
-  suspended: Boolean!
-
-  # Subscription is paid (available only to account admins)
-  paid: Boolean!
-
-  # Limit of subscription users (available only to account admins)
-  userLimit: Int!
-}
-
-enum SubscriptionTypeEnum {
-  Free
-  Premium
-  Business
-  CreativeBusiness
-  Enterprise
-  CreativeEnterprise
 }
 
 input AccountFilter {
@@ -473,6 +515,108 @@ input KeyValueInput {
 
   # Value should be less than 1000 symbols, compatible with JSON string. Use JSON 'null' in order to remove metadata entry
   value: String
+}
+
+type Approval {
+  id: ApprovalID!
+
+  # ID of task. Only one of taskId/folderId fields is present
+  taskId: TaskID
+
+  # ID of folder/project. Only one of taskId/folderId fields is present
+  folderId: FolderID
+
+  # ID of user who created approval
+  authorId: ContactID!
+
+  # Title. Empty by default, set via workflow automation or by user on the portal
+  title: String!
+
+  # Description
+  description: String
+
+  # Update date
+  updatedDate: Date!
+
+  # Due date, if exists
+  dueDate: DateYMD
+
+  #
+  decisions: [ApprovalDecision!]
+
+  # ID of root attachments in review
+  attachmentIds: [AttachmentID!]
+
+  # Approval type
+  type: ApprovalTypeEnum!
+
+  # Is approval would be finished automatically on reaching Approved status
+  autoFinishOnApprove: Boolean!
+
+  # Is approval would be finished automatically on reaching Rejected status
+  autoFinishOnReject: Boolean!
+
+  # Is approval finished
+  finished: Boolean!
+
+  # ID of user who finished approval
+  finisherId: ContactID
+}
+
+scalar ApprovalID
+
+scalar TaskID
+
+# Format: yyyy-MM-dd
+scalar DateYMD
+
+type ApprovalDecision {
+  approverId: ContactID!
+
+  # Comment
+  comment: String!
+
+  # Status
+  status: ApprovalDecisionStatusEnum!
+
+  # Update date
+  updatedDate: Date!
+}
+
+enum ApprovalDecisionStatusEnum {
+  Pending
+  Approved
+  Rejected
+}
+
+scalar AttachmentID
+
+enum ApprovalTypeEnum {
+  Regular
+  FilesOnly
+}
+
+input ApprovalFindManyFilter {
+  statuses: ApprovalFinalStatusEnum
+  updatedDate: DateTimeRangeInput
+  approvers: [ContactID!]
+  pendingApprovers: [ContactID!]
+}
+
+enum ApprovalFinalStatusEnum {
+  Pending
+  Approved
+  Rejected
+  Cancelled
+  Draft
+}
+
+input DateTimeRangeInput {
+  # Range start. Format: yyyy-MM-dd'T'HH:mm:ss'Z'
+  start: Date
+
+  # Range end. Format: yyyy-MM-dd'T'HH:mm:ss'Z'
+  end: Date
 }
 
 type AsyncJob {
@@ -568,8 +712,6 @@ type Attachment {
   height: Int
 }
 
-scalar AttachmentID
-
 enum AttachmentTypeEnum {
   # Attachment file content stored in Wrike. When deleted, actual file is removed
   Wrike
@@ -593,8 +735,6 @@ enum AttachmentTypeEnum {
   DAM
 }
 
-scalar TaskID
-
 scalar CommentID
 
 scalar ReviewID
@@ -605,12 +745,177 @@ input AttachmentFindManyFilter {
   createdDate: DateTimeRangeInput
 }
 
-input DateTimeRangeInput {
-  # Range start. Format: yyyy-MM-dd'T'HH:mm:ss'Z'
-  start: Date
+type AuditLog {
+  id: AuditLogID!
 
-  # Range end. Format: yyyy-MM-dd'T'HH:mm:ss'Z'
-  end: Date
+  # Operation
+  operation: AuditLogOperationEnum!
+
+  # Operational user ID
+  userId: ContactID!
+
+  # Operational user e-mail
+  userEmail: String
+
+  # Date and time when operation was performed
+  eventDate: Date
+
+  # IP address from which an operation was performed
+  ipAddress: String
+
+  # Result
+  objectType: AuditLogObjectTypeEnum
+
+  # Object name
+  objectName: String
+
+  # Object ID
+  objectId: String
+
+  # Operation details
+  details: JSON
+}
+
+scalar AuditLogID
+
+enum AuditLogOperationEnum {
+  UserLoggedIn
+  UserFailLogin
+  UserLogout
+  AdminLoggedInAsUser
+  UserRoleChanged
+  UserAdminPermissionsChanged
+  UserGrantAdmin
+  UserRevokeAdmin
+  UserDeactivated
+  UserActivated
+  UsersAndGroupsExported
+  InvitationSend
+  InvitationAccepted
+  AttachUploaded
+  AttachDeleted
+  GroupCreated
+  GroupMemberAdded
+  GroupMemberRemoved
+  GroupRenamed
+  GroupDeleted
+  GroupParentAdded
+  GroupParentRemoved
+  TaskParentAdded
+  TaskParentRemoved
+  TaskShared
+  TaskUnshared
+  TaskAssigned
+  TaskUnassigned
+  TaskDeleted
+  TaskErased
+  TaskCommentChanged
+  TaskCommentDeleted
+  RecycleBinErased
+  TaskStatusChanged
+  TaskDuplication
+  UserDeleted
+  UserRestored
+  ApproverAdded
+  ApproverRemoved
+  ApprovalDescriptionChanged
+  ApprovalDueDateChanged
+  ApprovalCreated
+  ApprovalFinished
+  ApprovalCanceled
+  ApprovalDecisionMade
+  CustomFieldCreated
+  CustomFieldModified
+  CustomFieldRemoved
+  CustomFieldRestored
+  CustomFieldAddedToFolder
+  CustomFieldRemovedFromFolder
+  SecondFactorEnabled
+  SecondFactorDisabled
+  SecondFactorUsageReportCreated
+  AuditReportCreated
+  AccountBackupCreated
+  AccountModified
+  AccountDeleted
+  Oauth2AccessGranted
+  Oauth2AccessRevoked
+  FeedCreated
+  ExcelExportCreated
+  AccessAuditReportCsvExport
+  UserProfileUpdated
+  PasswordChanged
+  PasswordPolicyModified
+  ApprovedIpRangesOrSubnetsChanged
+  InvitationPolicyChanged
+  RequestFormCreated
+  RequestFormModified
+  RequestFormDeleted
+  AccessRoleCreated
+  AccessRoleModified
+  AccessRoleDeleted
+  WorkflowCreated
+  WorkflowDeleted
+  WorkflowModified
+  CalendarExternalLinksDeactivated
+  CalendarExternalLinksActivated
+  CalendarExternalLinkCreated
+  CalendarExternalLinkDeleted
+  GuestReviewerInvited
+  GuestReviewerChanged
+  GuestReviewerRevoked
+  GuestReviewAccepted
+  GuestReviewRejected
+  GuestReviewAccountSettingsChanged
+  GanttSnapshotCreated
+  GanttSnapshotDeleted
+  UserTaskGroupRolesChanged
+  AccountDataExportRequested
+  AccountDataExportGenerated
+  SamlSSOEnabled
+  SamlSSODisabled
+  SamlSSOSettingsChanged
+  SamlSSOMetadataChanged
+  SamlClearPasswordForSamlUsers
+  AccessCodeGenerated
+  AccessCodeAccepted
+  AccessCodeDeclined
+  ApprovedDomainsChanged
+  SpaceCreated
+  SpaceDeleted
+  SpaceArchivedUnarchived
+  UserJoinedSpace
+  UserLeftSpace
+}
+
+enum AuditLogObjectTypeEnum {
+  User
+  Account
+  Task
+  Folder
+  Project
+  Comment
+  Attachment
+  Invitation
+  Group
+  CustomField
+  Oauth2Client
+  RequestForm
+  Workflow
+  CalendarExternalLink
+  WorkspaceSnapshot
+  DataExport
+  AccessRole
+  Space
+}
+
+input AuditLogFilter {
+  eventDate: DateTimeRangeInput
+  operations: AuditLogOperationEnum
+}
+
+type Color {
+  name: String!
+  hex: String!
 }
 
 type Comment {
@@ -640,7 +945,6 @@ input CommentFindManyFilter {
 
 type Contact {
   id: ContactID!
-  account: Account
   firstName: String
   lastName: String
   type: UserTypeEnum
@@ -651,7 +955,6 @@ type Contact {
   deleted: Boolean
   me: Boolean
   memberIds: [ContactID!]
-  members: [User!]
   metadata: [KeyValue!]
   myTeam: Boolean
   title: String
@@ -659,6 +962,8 @@ type Contact {
   phone: String
   location: String
   workScheduleId: WorkScheduleID
+  account: Account
+  members: [User!]
 }
 
 enum UserTypeEnum {
@@ -668,18 +973,20 @@ enum UserTypeEnum {
 
 type Contact_Profiles {
   accountId: AccountID
-  account: Account
   email: String
   role: UserRoleEnum
   external: Boolean
   admin: Boolean
   owner: Boolean
+  account: Account
 }
 
 enum UserRoleEnum {
   User
   Collaborator
 }
+
+scalar WorkScheduleID
 
 type User {
   id: ContactID!
@@ -700,29 +1007,24 @@ type User {
 
 type User_Profiles {
   accountId: AccountID
-  account: Account
   email: String
   role: UserRoleEnum
   external: Boolean
   admin: Boolean
   owner: Boolean
+  account: Account
 }
 
 type Task {
   id: TaskID!
   accountId: String
-  account: Account
   title: String
   description: String
   briefDescription: String
   parentIds: [FolderID!]
-  parents: [Folder!]
   superParentIds: [FolderID!]
-  superParents: [Folder!]
   sharedIds: [ContactID!]
-  shareds: [Contact!]
   responsibleIds: [ContactID!]
-  responsibles: [User!]
   status: TaskStatusEnum
   importance: TaskImportanceEnum
   createdDate: String
@@ -730,19 +1032,24 @@ type Task {
   dates: Task_Dates
   scope: String
   authorIds: [ContactID!]
-  authors: [User!]
   customStatusId: CustomStatusID
   hasAttachments: Boolean
   permalink: String
   priority: String
   followedByMe: Boolean
   followerIds: [ContactID!]
-  followers: [User!]
   superTaskIds: [JSON]
   subTaskIds: [JSON]
   dependencyIds: [JSON]
   metadata: [JSON]
   customFields: [JSON]
+  account: Account
+  parents: [Folder!]
+  superParents: [Folder!]
+  shareds: [Contact!]
+  responsibles: [User!]
+  authors: [User!]
+  followers: [User!]
 }
 
 enum TaskStatusEnum {
@@ -768,12 +1075,64 @@ enum TaskDatesTypeEnum {
   Planned
 }
 
-scalar WorkScheduleID
-
 input ContactFindManyFilter {
   me: Boolean
   metadata: KeyValueInput
   deleted: Boolean
+}
+
+type DataExport {
+  id: DataExportID!
+
+  # The date when data export was finished
+  completedDate: Date
+
+  # Status
+  status: DataExportStatusEnum!
+
+  # List of exported resources
+  resources: [DataExportResource!]
+}
+
+scalar DataExportID
+
+enum DataExportStatusEnum {
+  Scheduled
+  InProgress
+  Completed
+  Cancelled
+  Failed
+}
+
+type DataExportResource {
+  # Name of exported resource
+  name: String!
+
+  # Name of exported resource
+  url: String!
+}
+
+type DataExportSchema {
+  # Table id
+  id: String!
+
+  # Table alias
+  alias: String!
+
+  # List of exported columns
+  columns: DataExportSchemaColumn
+}
+
+type DataExportSchemaColumn {
+  id: String
+  alias: String
+  dataType: String
+  foreignKey: JSON
+}
+
+enum DataSchemaVersion {
+  V0
+  V1
 }
 
 type Dependency {
@@ -891,17 +1250,17 @@ enum CustomFieldComparatorEnum {
 type Group {
   id: GroupID!
   accountId: AccountID!
-  account: Account
   title: String
   memberIds: [ContactID!]
-  members: [Contact]
   childIds: [ContactID!]
-  childs: [Contact]
   parentIds: [ContactID!]
-  parents: [Contact!]
   avatarUrl: String
   myTeam: Boolean
   metadata: [KeyValue!]
+  account: Account
+  members: [Contact]
+  childs: [Contact]
+  parents: [Contact!]
 }
 
 scalar GroupID
@@ -913,17 +1272,17 @@ input GroupFindManyFilter {
 type Invitation {
   id: InvitationID!
   accountId: AccountID!
-  account: Account
   firstName: String
   lastName: String
   email: String
   status: InvitationStatusEnum
   inviterUserId: ContactID
-  inviterUser: User
   invitationDate: String
   resolvedDate: String
   role: UserRoleEnum
   external: Boolean
+  account: Account
+  inviterUser: User
 }
 
 scalar InvitationID
@@ -1088,9 +1447,6 @@ enum BillingTypeEnum {
   NonBillable
 }
 
-# Format: yyyy-MM-dd
-scalar DateYMD
-
 type TimelogCategory {
   id: TimelogCategoryID!
 
@@ -1137,6 +1493,106 @@ input TimelogFindManyFilter {
 
   # Get timelog records for specified categories
   timelogCategories: [TimelogCategoryID!]
+}
+
+type UserScheduleExclusion {
+  id: UserScheduleExclusionID!
+
+  # Contact ID
+  userId: ContactID!
+
+  # Format: yyyy-MM-dd
+  fromDate: DateYMD!
+
+  # Format: yyyy-MM-dd
+  toDate: DateYMD!
+
+  # True if this exception is for working days
+  isWorkDays: Boolean!
+
+  #
+  exclusionType: UserScheduleExclusionEnum!
+}
+
+scalar UserScheduleExclusionID
+
+enum UserScheduleExclusionEnum {
+  # Additional working days
+  Overtime
+
+  # Paid vacations
+  VacationPTO
+
+  # Other non-working days
+  OtherNonWorking
+}
+
+input UserScheduleExclusionFilter {
+  dateRange: DateRangeEqualInput
+  userIds: [ContactID!]
+}
+
+type Version {
+  major: Int!
+  minor: Int!
+  full: String
+}
+
+type WorkScheduleExclusion {
+  id: WorkScheduleExclusionID!
+
+  # Format: yyyy-MM-dd
+  fromDate: DateYMD!
+
+  # Format: yyyy-MM-dd
+  toDate: DateYMD!
+
+  # True if this exception is for working days
+  isWorkDays: Boolean!
+
+  #
+  exclusionType: WorkScheduleExclusionEnum!
+}
+
+scalar WorkScheduleExclusionID
+
+enum WorkScheduleExclusionEnum {
+  # Additional working days, i.e. during weekends
+  AdditionalWorkDays
+
+  # Non-working days because of public holidays
+  PublicHolidays
+
+  # Non-working days because of some company or private event
+  OtherEvent
+}
+
+input WorkScheduleExclusionFilter {
+  dateRange: DateRangeEqualInput
+}
+
+type WorkSchedule {
+  id: WorkScheduleID!
+
+  #
+  scheduleType: WorkScheduleTypeEnum!
+
+  # Title
+  title: String
+
+  # Work week
+  workweek: JSON
+
+  # User ids assigned to schedule
+  userIds: [ContactID!]
+}
+
+enum WorkScheduleTypeEnum {
+  # Default schedule is created along with account and used for all users not explicitly assigned to custom schedule
+  Default
+
+  # Custom schedule is used when some account users have schedules which is different to default
+  Custom
 }
 
 type Workflow {
@@ -1193,13 +1649,24 @@ enum StatusColorEnum {
 
 type Mutation {
   accountSetMetadata(metadata: [KeyValueInput!]!): Account
+  approvalAddApprovers(id: ApprovalID!, approvers: [ContactID!]!): Approval
+  approvalAddAttachments(id: ApprovalID!, attachments: [AttachmentID!]!): Approval
+  approvalCancel(id: ApprovalID!): Approval
+  approvalCreateForFolder(folderId: FolderID!, approval: ApprovalCreateInput!): Approval
+  approvalCreateForTask(taskId: TaskID!, approval: ApprovalCreateInput!): Approval
+  approvalRemoveApprovers(id: ApprovalID!, approvers: [ContactID!]!): Approval
+  approvalRemoveAttachments(id: ApprovalID!, attachments: [AttachmentID!]!): Approval
+  approvalUpdate(id: ApprovalID!, approval: ApprovalUpdateInput!): Approval
   commentCreateForFolder(folderId: TaskID!, comment: CommentInput!): Comment
   commentCreateForTask(taskId: TaskID!, comment: CommentInput!): Comment
-  commentRemove(id: FolderID!): Folder
+  commentRemove(id: CommentID!): Comment
   commentUpdate(id: CommentID!, comment: CommentInput!): Comment
   contactUpdate(id: ContactID!, metadata: [KeyValueInput!]!): Contact
   customFieldCreate(customField: CustomFieldCreateInput!): CustomField
   customFieldUpdate(id: CustomFieldID, customField: CustomFieldInput!): CustomField
+
+  # Forces new data export generation (if it is not in progress already). 202 code is returned in case new export generation is started. Data export can be requested no sooner than 1 hour after last successful data export. If there is fresh data export already, 200 code and latest export in format similar to [GET] /data_export is returned.
+  dataExportRefresh: DataExport
   dependencyCreate(taskId: TaskID!, dependency: DependencyCreateInput!): Dependency
   dependencyRemove(id: DependencyID!): Dependency
   dependencyUpdate(id: DependencyID!, dependency: DependencyUpdateInput!): Dependency
@@ -1240,9 +1707,54 @@ type Mutation {
   timelogCreate(taskId: TaskID!, timelog: TimelogCreateInput!): Timelog
   timelogRemove(id: TimelogID!): Timelog
   timelogUpdate(id: TimelogID!, timelog: TimelogUpdateInput!): Timelog
+  userScheduleExclusionCreate(exclusion: UserScheduleExclusionCreateInput!): UserScheduleExclusion
+  userScheduleExclusionRemove(id: UserScheduleExclusionID!): UserScheduleExclusion
+  userScheduleExclusionUpdate(id: UserScheduleExclusionID!, exclusion: UserScheduleExclusionUpdateInput!): UserScheduleExclusion
   userUpdate(id: ContactID!, profile: UpdateUserProfileInput): User
+  workScheduleAddUsers(id: WorkScheduleID!, userIds: [ContactID!]!): WorkSchedule
+  workScheduleCreate(workschedule: WorkSchedulecreateInput!): WorkSchedule
+  workScheduleExclusionCreate(workScheduleId: WorkScheduleID!, exclusion: WorkScheduleExclusionCreateInput!): WorkScheduleExclusion
+  workScheduleExclusionRemove(id: WorkScheduleExclusionID!): WorkScheduleExclusion
+  workScheduleExclusionUpdate(id: WorkScheduleExclusionID!, exclusion: WorkScheduleExclusionUpdateInput!): WorkScheduleExclusion
+  workScheduleRemove(id: WorkScheduleID!): WorkSchedule
+  workScheduleRemoveUsers(id: WorkScheduleID!, userIds: [ContactID!]!): WorkSchedule
+  workScheduleUpdate(id: WorkScheduleID!, workschedule: WorkScheduleUpdateInput!): WorkSchedule
   workflowCreate(workflow: WorkflowCreateInput!): Workflow
   workflowUpdate(id: WorkflowID!, workflow: WorkflowUpdateInput!): Workflow
+}
+
+input ApprovalCreateInput {
+  # Description
+  description: String
+
+  # Due date, if exists
+  dueDate: DateYMD
+
+  # Assign approvers
+  approvers: [ContactID!]
+
+  # List of root attachments to set in approval
+  attachments: [AttachmentID!]
+
+  # Is approval would be finished automatically on reaching Approved status
+  autoFinishOnApprove: Boolean
+
+  # Is approval would be finished automatically on reaching Rejected status
+  autoFinishOnReject: Boolean
+}
+
+input ApprovalUpdateInput {
+  # Description
+  description: String
+
+  # Due date, if exists
+  dueDate: DateYMD
+
+  # Is approval would be finished automatically on reaching Approved status
+  autoFinishOnApprove: Boolean!
+
+  # Is approval would be finished automatically on reaching Rejected status
+  autoFinishOnReject: Boolean!
 }
 
 input CommentInput {
@@ -1564,10 +2076,84 @@ input TimelogUpdateInput {
   categoryId: TimelogCategoryID
 }
 
+input UserScheduleExclusionCreateInput {
+  # User id to add new exception
+  userId: ContactID!
+
+  # Exception from date. Format: yyyy-MM-dd
+  fromDate: DateYMD!
+
+  # Exception to date. Format: yyyy-MM-dd
+  toDate: DateYMD!
+
+  # Type of exclusion
+  exclusionType: [UserScheduleExclusionEnum!]!
+}
+
+input UserScheduleExclusionUpdateInput {
+  # Exception from date. Format: yyyy-MM-dd
+  fromDate: DateYMD!
+
+  # Exception to date. Format: yyyy-MM-dd
+  toDate: DateYMD!
+
+  # Type of exclusion
+  exclusionType: [UserScheduleExclusionEnum!]!
+}
+
 input UpdateUserProfileInput {
   accountId: AccountID
   role: UserRoleEnum
   external: Boolean
+}
+
+input WorkSchedulecreateInput {
+  # Name of work schedule
+  title: String
+
+  # Work week: working and non-working days
+  workweek: [WorkWeekInput!]
+
+  # User ids to assign to the schedule
+  addUsers: [ContactID!]
+}
+
+input WorkWeekInput {
+  # Day of week
+  dayOfWeek: WeekDayEnum!
+
+  # Is it working day
+  isWorkDay: Boolean!
+}
+
+input WorkScheduleExclusionCreateInput {
+  # Exception from date. Format: yyyy-MM-dd
+  fromDate: DateYMD!
+
+  # Exception to date. Format: yyyy-MM-dd
+  toDate: DateYMD!
+
+  # Type of exclusion
+  exclusionType: [WorkScheduleExclusionEnum!]!
+}
+
+input WorkScheduleExclusionUpdateInput {
+  # Exception from date. Format: yyyy-MM-dd
+  fromDate: DateYMD
+
+  # Exception to date. Format: yyyy-MM-dd
+  toDate: DateYMD
+
+  # Type of exclusion
+  exclusionType: [WorkScheduleExclusionEnum!]
+}
+
+input WorkScheduleUpdateInput {
+  # Name of work schedule
+  title: String
+
+  # Work week: working and non-working days
+  workweek: [WorkWeekInput!]
 }
 
 input WorkflowCreateInput {

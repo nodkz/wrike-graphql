@@ -45,6 +45,6 @@ export const AuditLogTC = schemaComposer.createObjectTC({
   },
 });
 
-if (!process.env.DISABLE_HAIRS) {
+if (!process.env.DISABLE_RELATIONS) {
   AuditLogTC.addFields({});
 }

@@ -20,7 +20,7 @@ const restApiResponse = {
 
 export const GroupTC = composeWithJson('Group', restApiResponse);
 
-if (!process.env.DISABLE_HAIRS) {
+if (!process.env.DISABLE_RELATIONS) {
   GroupTC.addFields({
     account: {
       type: () => AccountTC,

@@ -27,6 +27,6 @@ export const CustomFieldTC = schemaComposer.createObjectTC({
   },
 });
 
-if (!process.env.DISABLE_HAIRS) {
+if (!process.env.DISABLE_RELATIONS) {
   CustomFieldTC.addFields({});
 }

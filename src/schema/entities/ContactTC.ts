@@ -43,7 +43,7 @@ const restApiResponse = {
 
 export const ContactTC = composeWithJson('Contact', restApiResponse);
 
-if (!process.env.DISABLE_HAIRS) {
+if (!process.env.DISABLE_RELATIONS) {
   ContactTC.addNestedFields({
     account: {
       type: () => AccountTC,

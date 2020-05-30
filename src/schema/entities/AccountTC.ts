@@ -58,7 +58,7 @@ export const AccountTC = schemaComposer.createObjectTC({
   },
 });
 
-if (!process.env.DISABLE_HAIRS) {
+if (!process.env.DISABLE_RELATIONS) {
   AccountTC.addFields({
     rootFolder: {
       type: () => FolderTC.NonNull.List,

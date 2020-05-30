@@ -35,7 +35,7 @@ const restApiResponse = {
 
 export const UserTC = composeWithJson('User', restApiResponse);
 
-if (!process.env.DISABLE_HAIRS) {
+if (!process.env.DISABLE_RELATIONS) {
   // ------- DIRECT LINKS --------
   UserTC.addNestedFields({
     'profiles.account': {

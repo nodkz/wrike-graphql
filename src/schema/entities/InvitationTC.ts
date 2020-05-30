@@ -22,7 +22,7 @@ const restApiResponse = {
 
 export const InvitationTC = composeWithJson('Invitation', restApiResponse);
 
-if (!process.env.DISABLE_HAIRS) {
+if (!process.env.DISABLE_RELATIONS) {
   InvitationTC.addFields({
     account: {
       type: () => AccountTC,
