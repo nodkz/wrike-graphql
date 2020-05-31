@@ -2,6 +2,7 @@ import { resolveManyViaDL, resolveOneViaDL } from 'app/schema/dataLoaders';
 import { ObjectTypeComposerFieldConfigDefinition } from 'graphql-compose';
 import { AttachmentTC } from '../entities/AttachmentTC';
 import { attachmentFindByIds } from 'app/vendor/attachment/attachmentFindByIds';
+import { attachmentFindMany } from 'app/vendor/attachment/attachmentFindMany';
 
 export function getRelationAttachmentIds(
   sourceFieldName: string
@@ -26,6 +27,36 @@ export function getRelationAttachmentId(
           return records?.[0];
         }
       : resolveOneViaDL('AttachmentID', (s) => s[sourceFieldName]),
+    projection: { [sourceFieldName]: 1 },
+  };
+}
+
+export function getRelationAttachmentsByFolderId(
+  sourceFieldName: string
+): ObjectTypeComposerFieldConfigDefinition<any, any> {
+  return {
+    type: () => AttachmentTC.NonNull.List,
+    resolve: (source, _, __, info) => {
+      return attachmentFindMany({
+        filter: { folderId: source[sourceFieldName] },
+        info,
+      });
+    },
+    projection: { [sourceFieldName]: 1 },
+  };
+}
+
+export function getRelationAttachmentsByTaskId(
+  sourceFieldName: string
+): ObjectTypeComposerFieldConfigDefinition<any, any> {
+  return {
+    type: () => AttachmentTC.NonNull.List,
+    resolve: (source, _, __, info) => {
+      return attachmentFindMany({
+        filter: { taskId: source[sourceFieldName] },
+        info,
+      });
+    },
     projection: { [sourceFieldName]: 1 },
   };
 }

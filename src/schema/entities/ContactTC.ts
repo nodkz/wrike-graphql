@@ -5,6 +5,13 @@ import { KeyValue } from '../types/outputs/KeyValue';
 import { getRelationAccountId } from '../resolvers/account';
 import { getRelationContactIds } from '../resolvers/contact';
 import { getRelationWorkScheduleId } from '../resolvers/workSchedule';
+import { getRelationTasksByAuthorId, getRelationTasksByResponsibleId } from '../resolvers/task';
+import { getRelationTimelogsByContactId } from '../resolvers/timelog';
+import { getRelationUserScheduleExclusionByUserId } from '../resolvers/userScheduleExclusion';
+import {
+  getRelationApprovalsByApproverUserId,
+  getRelationApprovalsByPendingApproverUserId,
+} from '../resolvers/approval';
 
 const restApiResponse = {
   // id: 'KUAHNM4I',
@@ -50,4 +57,13 @@ if (!process.env.DISABLE_RELATIONS) {
   });
 }
 
-// TODO: copy backlinks from UserTC
+if (!process.env.DISABLE_BACK_RELATIONS) {
+  ContactTC.addFields({
+    tasksAuthored: getRelationTasksByAuthorId('id'),
+    tasksResponsible: getRelationTasksByResponsibleId('id'),
+    timelogs: getRelationTimelogsByContactId('id'),
+    scheduleExclusions: getRelationUserScheduleExclusionByUserId('id'),
+    approvals: getRelationApprovalsByApproverUserId('id'),
+    approvalsPending: getRelationApprovalsByPendingApproverUserId('id'),
+  });
+}

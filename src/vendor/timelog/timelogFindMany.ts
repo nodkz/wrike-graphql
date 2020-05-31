@@ -1,30 +1,30 @@
 import client from '../client';
 
 type CommentFindFilter = {
-  folderId: string;
-  taskId: string;
-  contactId: string;
-  timelogCategoryId: string;
-  createdDate: {
+  folderId?: string;
+  taskId?: string;
+  contactId?: string;
+  timelogCategoryId?: string;
+  createdDate?: {
     start: Date;
     end: Date;
   };
-  updatedDate: {
+  updatedDate?: {
     start: Date;
     end: Date;
   };
-  trackedDate: {
+  trackedDate?: {
     start: Date;
     end: Date;
   };
-  me: boolean;
-  descendants: boolean;
-  subTasks: boolean;
-  timelogCategories: string[];
+  me?: boolean;
+  descendants?: boolean;
+  subTasks?: boolean;
+  timelogCategories?: string[];
 };
 
 export type FindManyOpts = {
-  plainText: boolean;
+  plainText?: boolean;
   filter?: CommentFindFilter;
 };
 

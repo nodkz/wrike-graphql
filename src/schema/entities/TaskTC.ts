@@ -4,6 +4,11 @@ import { TaskID, ContactID, FolderID, CustomStatusID } from 'app/schema/types/Sc
 import { getRelationFolderIds } from '../resolvers/folder';
 import { getRelationContactIds } from '../resolvers/contact';
 import { getRelationAccountId } from '../resolvers/account';
+import { getRelationCommentsByTaskId } from '../resolvers/comment';
+import { getRelationDependenciesByTaskId } from '../resolvers/dependency';
+import { getRelationTimelogsByTaskId } from '../resolvers/timelog';
+import { getRelationAttachmentsByTaskId } from '../resolvers/attachment';
+import { getRelationApprovalsByTaskId } from '../resolvers/approval';
 
 const restApiResponse = {
   // id: 'IEADMUW4KQOE4AQG',
@@ -39,6 +44,7 @@ const restApiResponse = {
   followedByMe: true,
   // followerIds: ['KUAHMNRA'],
   followerIds: ContactID.NonNull.List,
+  // TODO: Починить следующие поля
   superTaskIds: [],
   subTaskIds: [],
   dependencyIds: [],
@@ -57,5 +63,15 @@ if (!process.env.DISABLE_RELATIONS) {
     responsibles: getRelationContactIds('responsibleIds'),
     authors: getRelationContactIds('authorIds'),
     followers: getRelationContactIds('followerIds'),
+  });
+}
+
+if (!process.env.DISABLE_BACK_RELATIONS) {
+  TaskTC.addFields({
+    comments: getRelationCommentsByTaskId('id'),
+    dependencies: getRelationDependenciesByTaskId('id'),
+    timelogs: getRelationTimelogsByTaskId('id'),
+    attachments: getRelationAttachmentsByTaskId('id'),
+    approvals: getRelationApprovalsByTaskId('id'),
   });
 }

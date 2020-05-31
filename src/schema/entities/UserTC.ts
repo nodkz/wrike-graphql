@@ -3,6 +3,12 @@ import { ContactID, AccountID, WorkScheduleID } from 'app/schema/types/Scalars';
 import { UserRoleEnum } from '../types/Enums';
 import { getRelationAccountId } from '../resolvers/account';
 import { getRelationWorkScheduleId } from '../resolvers/workSchedule';
+import { getRelationTasksByAuthorId, getRelationTasksByResponsibleId } from '../resolvers/task';
+import { getRelationUserScheduleExclusionByUserId } from '../resolvers/userScheduleExclusion';
+import {
+  getRelationApprovalsByApproverUserId,
+  getRelationApprovalsByPendingApproverUserId,
+} from '../resolvers/approval';
 
 const restApiResponse = {
   // id: 'KUAHMNRA',
@@ -44,22 +50,12 @@ if (!process.env.DISABLE_RELATIONS) {
   });
 }
 
-// TODO: ------- BACK LINKS --------
-// UserTC.addFields({
-//   tasksAuthored: {
-//     type: () => TaskTC.NonNull.List,
-//     args: {
-//       limit: { type: 'Int', defaultValue: 10 },
-//     },
-//     resolve: (s, args, __, info) =>
-//       taskFindMany({ filter: { authors: [s.id] }, limit: args.limit, info }),
-//   },
-//   tasksResponsible: {
-//     type: () => TaskTC.NonNull.List,
-//     args: {
-//       limit: { type: 'Int', defaultValue: 10 },
-//     },
-//     resolve: (s, args, __, info) =>
-//       taskFindMany({ filter: { responsibles: [s.id] }, limit: args.limit, info }),
-//   },
-// });
+if (!process.env.DISABLE_BACK_RELATIONS) {
+  UserTC.addFields({
+    tasksAuthored: getRelationTasksByAuthorId('id'),
+    tasksResponsible: getRelationTasksByResponsibleId('id'),
+    scheduleExclusions: getRelationUserScheduleExclusionByUserId('id'),
+    approvals: getRelationApprovalsByApproverUserId('id'),
+    approvalsPending: getRelationApprovalsByPendingApproverUserId('id'),
+  });
+}

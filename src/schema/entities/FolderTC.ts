@@ -5,6 +5,11 @@ import { ProjectDetails } from '../types/outputs/ProjectDetails';
 import { KeyValue } from '../types/outputs/KeyValue';
 import { CustomFieldTC } from './CustomFieldTC';
 import { getRelationFolderIds } from '../resolvers/folder';
+import { getRelationTasksByFolderId } from '../resolvers/task';
+import { getRelationCommentsByFolderId } from '../resolvers/comment';
+import { getRelationTimelogsByFolderId } from '../resolvers/timelog';
+import { getRelationAttachmentsByFolderId } from '../resolvers/attachment';
+import { getRelationApprovalsByFolderId } from '../resolvers/approval';
 
 export const FolderTC = schemaComposer.createObjectTC({
   name: 'Folder',
@@ -54,7 +59,7 @@ export const FolderTC = schemaComposer.createObjectTC({
       description: 'Brief description',
     },
     customFields: {
-      type: CustomFieldTC.NonNull.List,
+      type: () => CustomFieldTC.NonNull.List,
       description: 'Custom fields',
     },
     customColumnIds: {
@@ -77,5 +82,15 @@ if (!process.env.DISABLE_RELATIONS) {
   FolderTC.addFields({
     childs: () => getRelationFolderIds('childIds'),
     superParents: () => getRelationFolderIds('superParentIds'),
+  });
+}
+
+if (!process.env.DISABLE_BACK_RELATIONS) {
+  FolderTC.addFields({
+    tasks: () => getRelationTasksByFolderId('id'),
+    comments: () => getRelationCommentsByFolderId('id'),
+    timelogs: getRelationTimelogsByFolderId('id'),
+    attachments: getRelationAttachmentsByFolderId('id'),
+    approvals: getRelationApprovalsByFolderId('id'),
   });
 }

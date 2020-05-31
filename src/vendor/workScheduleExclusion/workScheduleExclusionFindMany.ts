@@ -1,7 +1,7 @@
 import client from '../client';
 
 export type FindManyOpts = {
-  filter: {
+  filter?: {
     dateRange: {
       start?: string;
       end?: string;

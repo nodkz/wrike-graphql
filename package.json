@@ -25,7 +25,7 @@
     "typescript": "3.9.3"
   },
   "scripts": {
-    "dev": "PORT=4444 DEBUG=axios:request ts-node-dev --no-notify --respawn --watch src/schema src/server.ts",
+    "dev": "DISABLE_BACK_RELATIONS=true DISABLE_RELATIONS=true PORT=4444 DEBUG=axios:request ts-node-dev --no-notify --respawn --watch src/schema src/server.ts",
     "eslint": "eslint --ext .ts ./src",
     "watch": "DEBUG=axios:* jest --env node --watch",
     "test": "jest --env node",

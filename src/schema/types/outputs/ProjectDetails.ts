@@ -47,7 +47,7 @@ export const ProjectDetails = schemaComposer.createObjectTC({
 
 if (!process.env.DISABLE_RELATIONS) {
   ProjectDetails.addFields({
-    author: getRelationContactId('authorId'),
-    owners: getRelationContactIds('ownerIds'),
+    author: () => getRelationContactId('authorId'),
+    owners: () => getRelationContactIds('ownerIds'),
   });
 }

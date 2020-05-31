@@ -2,6 +2,7 @@ import { composeWithJson } from 'graphql-compose-json';
 import { SpaceID } from 'app/schema/types/Scalars';
 import { SpaceAccessTypeEnum } from '../types/Enums';
 import { getRelationTasksBySpaceId } from '../resolvers/task';
+import { getRelationFoldersBySpaceId } from '../resolvers/folder';
 
 const restApiResponse = {
   // id: 'IEADMUW4I4OE37IV',
@@ -14,8 +15,9 @@ const restApiResponse = {
 
 export const SpaceTC = composeWithJson('Space', restApiResponse);
 
-if (!process.env.DISABLE_RELATIONS) {
+if (!process.env.DISABLE_BACK_RELATIONS) {
   SpaceTC.addFields({
     tasks: getRelationTasksBySpaceId('id'),
+    folders: getRelationFoldersBySpaceId('id'),
   });
 }

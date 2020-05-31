@@ -1,16 +1,16 @@
 import client from '../client';
 
 type CommentFindFilter = {
-  updatedDate: {
+  updatedDate?: {
     start: Date;
     end: Date;
   };
-  folderId: string;
-  taskId: string;
+  folderId?: string;
+  taskId?: string;
 };
 
 export type FindManyOpts = {
-  plainText: boolean;
+  plainText?: boolean;
   filter?: CommentFindFilter;
   limit?: number;
 };

@@ -1,13 +1,13 @@
 import client from '../client';
 
 interface Filter {
-  statuses: string;
-  updatedDate: {
+  statuses?: string;
+  updatedDate?: {
     start?: Date;
     end?: Date;
   };
-  approvers: string[];
-  pendingApprovers: string[];
+  approvers?: string[];
+  pendingApprovers?: string[];
 }
 
 export type FindManyOpts = {

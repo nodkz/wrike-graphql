@@ -36,8 +36,72 @@ export function getRelationTasksBySpaceId(
 ): ObjectTypeComposerFieldConfigDefinition<any, any> {
   return {
     type: () => TaskTC.NonNull.List,
-    resolve: (source, _, __, info) => {
-      return taskFindMany({ filter: { spaceId: source[sourceFieldName] }, info });
+    args: {
+      limit: { type: 'Int', defaultValue: 10 },
+    },
+    resolve: (source, args, __, info) => {
+      return taskFindMany({
+        filter: { spaceId: source[sourceFieldName] },
+        limit: args.limit,
+        info,
+      });
+    },
+    projection: { [sourceFieldName]: 1 },
+  };
+}
+
+export function getRelationTasksByFolderId(
+  sourceFieldName: string
+): ObjectTypeComposerFieldConfigDefinition<any, any> {
+  return {
+    type: () => TaskTC.NonNull.List,
+    args: {
+      limit: { type: 'Int', defaultValue: 10 },
+    },
+    resolve: (source, args, __, info) => {
+      return taskFindMany({
+        filter: { folderId: source[sourceFieldName] },
+        limit: args.limit,
+        info,
+      });
+    },
+    projection: { [sourceFieldName]: 1 },
+  };
+}
+
+export function getRelationTasksByAuthorId(
+  sourceFieldName: string
+): ObjectTypeComposerFieldConfigDefinition<any, any> {
+  return {
+    type: () => TaskTC.NonNull.List,
+    args: {
+      limit: { type: 'Int', defaultValue: 10 },
+    },
+    resolve: (source, args, __, info) => {
+      return taskFindMany({
+        filter: { authors: [source[sourceFieldName]] },
+        limit: args.limit,
+        info,
+      });
+    },
+    projection: { [sourceFieldName]: 1 },
+  };
+}
+
+export function getRelationTasksByResponsibleId(
+  sourceFieldName: string
+): ObjectTypeComposerFieldConfigDefinition<any, any> {
+  return {
+    type: () => TaskTC.NonNull.List,
+    args: {
+      limit: { type: 'Int', defaultValue: 10 },
+    },
+    resolve: (source, args, __, info) => {
+      return taskFindMany({
+        filter: { responsibles: [source[sourceFieldName]] },
+        limit: args.limit,
+        info,
+      });
     },
     projection: { [sourceFieldName]: 1 },
   };
