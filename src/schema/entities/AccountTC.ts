@@ -4,7 +4,7 @@ import { schemaComposer } from 'graphql-compose';
 import { KeyValue } from '../types/outputs/KeyValue';
 import { AccountSubscription } from '../types/outputs/AccountSubscription';
 import { CustomFieldTC } from './CustomFieldTC';
-import { getRelationFolderId } from '../resolvers/folder';
+import { getRelationFolderId } from '../relations/folder';
 
 export const AccountTC = schemaComposer.createObjectTC({
   name: 'Account',
@@ -59,7 +59,7 @@ export const AccountTC = schemaComposer.createObjectTC({
 
 if (!process.env.DISABLE_RELATIONS) {
   AccountTC.addFields({
-    rootFolder: getRelationFolderId('rootFolderId'),
-    recycleBin: getRelationFolderId('recycleBinId'),
+    rootFolder: () => getRelationFolderId('rootFolderId'),
+    recycleBin: () => getRelationFolderId('recycleBinId'),
   });
 }

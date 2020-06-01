@@ -1,0 +1,46 @@
+{
+  me {
+    tasksResponsible {
+      id
+      title
+      customFields {
+        id
+        value
+        entity {
+          title
+          type
+          settings {
+            inheritanceType
+            decimalPlaces
+          }
+          shareds {
+            firstName
+            lastName
+          }
+        }
+      }
+      subTasks {
+        id
+        title
+      }
+      superTasks {
+        id
+        title
+      }
+      comments {
+        text
+      }
+      dependencies {
+        id
+        predecessor {
+          id
+          title
+        }
+        successor {
+          id
+          title
+        }
+      }
+    }
+  }
+}

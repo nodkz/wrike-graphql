@@ -1,14 +1,14 @@
 import { composeWithJson } from 'graphql-compose-json';
 import { ContactID, AccountID, WorkScheduleID } from 'app/schema/types/Scalars';
 import { UserRoleEnum } from '../types/Enums';
-import { getRelationAccountId } from '../resolvers/account';
-import { getRelationWorkScheduleId } from '../resolvers/workSchedule';
-import { getRelationTasksByAuthorId, getRelationTasksByResponsibleId } from '../resolvers/task';
-import { getRelationUserScheduleExclusionByUserId } from '../resolvers/userScheduleExclusion';
+import { getRelationAccountId } from '../relations/account';
+import { getRelationWorkScheduleId } from '../relations/workSchedule';
+import { getRelationTasksByAuthorId, getRelationTasksByResponsibleId } from '../relations/task';
+import { getRelationUserScheduleExclusionByUserId } from '../relations/userScheduleExclusion';
 import {
   getRelationApprovalsByApproverUserId,
   getRelationApprovalsByPendingApproverUserId,
-} from '../resolvers/approval';
+} from '../relations/approval';
 
 const restApiResponse = {
   // id: 'KUAHMNRA',
@@ -45,17 +45,17 @@ export const UserTC = composeWithJson('User', restApiResponse);
 
 if (!process.env.DISABLE_RELATIONS) {
   UserTC.addNestedFields({
-    'profiles.account': getRelationAccountId('accountId'),
-    workSchedule: getRelationWorkScheduleId('workScheduleId'),
+    'profiles.account': () => getRelationAccountId('accountId'),
+    workSchedule: () => getRelationWorkScheduleId('workScheduleId'),
   });
 }
 
 if (!process.env.DISABLE_BACK_RELATIONS) {
   UserTC.addFields({
-    tasksAuthored: getRelationTasksByAuthorId('id'),
-    tasksResponsible: getRelationTasksByResponsibleId('id'),
-    scheduleExclusions: getRelationUserScheduleExclusionByUserId('id'),
-    approvals: getRelationApprovalsByApproverUserId('id'),
-    approvalsPending: getRelationApprovalsByPendingApproverUserId('id'),
+    tasksAuthored: () => getRelationTasksByAuthorId('id'),
+    tasksResponsible: () => getRelationTasksByResponsibleId('id'),
+    scheduleExclusions: () => getRelationUserScheduleExclusionByUserId('id'),
+    approvals: () => getRelationApprovalsByApproverUserId('id'),
+    approvalsPending: () => getRelationApprovalsByPendingApproverUserId('id'),
   });
 }

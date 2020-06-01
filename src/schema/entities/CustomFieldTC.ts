@@ -2,8 +2,8 @@ import { schemaComposer } from 'graphql-compose';
 import { CustomFieldTypeEnum } from '../types/Enums';
 import { CustomFieldID, AccountID, ContactID } from '../types/Scalars';
 import { CustomFieldSettings } from '../types/outputs/CustomFieldSettings';
-import { getRelationAccountId } from '../resolvers/account';
-import { getRelationContactIds } from '../resolvers/contact';
+import { getRelationAccountId } from '../relations/account';
+import { getRelationContactIds } from '../relations/contact';
 
 export const CustomFieldTC = schemaComposer.createObjectTC({
   name: 'CustomField',
@@ -31,7 +31,7 @@ export const CustomFieldTC = schemaComposer.createObjectTC({
 
 if (!process.env.DISABLE_RELATIONS) {
   CustomFieldTC.addFields({
-    account: getRelationAccountId('accountId'),
-    shareds: getRelationContactIds('sharedIds'),
+    account: () => getRelationAccountId('accountId'),
+    shareds: () => getRelationContactIds('sharedIds'),
   });
 }

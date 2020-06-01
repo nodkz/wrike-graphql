@@ -1,7 +1,7 @@
 import { DependencyID, TaskID } from 'app/schema/types/Scalars';
 import { schemaComposer } from 'graphql-compose';
 import { DependencyRelationEnum } from '../types/Enums';
-import { getRelationTaskId } from '../resolvers/task';
+import { getRelationTaskId } from '../relations/task';
 
 export const DependencyTC = schemaComposer.createObjectTC({
   name: 'Dependency',
@@ -24,7 +24,7 @@ export const DependencyTC = schemaComposer.createObjectTC({
 
 if (!process.env.DISABLE_RELATIONS) {
   DependencyTC.addFields({
-    predecessor: getRelationTaskId('predecessorId'),
-    successor: getRelationTaskId('successorId'),
+    predecessor: () => getRelationTaskId('predecessorId'),
+    successor: () => getRelationTaskId('successorId'),
   });
 }

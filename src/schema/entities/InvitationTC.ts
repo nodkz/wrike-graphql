@@ -1,8 +1,8 @@
 import { composeWithJson } from 'graphql-compose-json';
 import { InvitationID, AccountID, ContactID } from 'app/schema/types/Scalars';
 import { InvitationStatusEnum, UserRoleEnum } from '../types/Enums';
-import { getRelationAccountId } from '../resolvers/account';
-import { getRelationContactId } from '../resolvers/contact';
+import { getRelationAccountId } from '../relations/account';
+import { getRelationContactId } from '../relations/contact';
 
 const restApiResponse = {
   id: InvitationID.NonNull,
@@ -22,7 +22,7 @@ export const InvitationTC = composeWithJson('Invitation', restApiResponse);
 
 if (!process.env.DISABLE_RELATIONS) {
   InvitationTC.addFields({
-    account: getRelationAccountId('accountId'),
-    inviterUser: getRelationContactId('inviterUserId'),
+    account: () => getRelationAccountId('accountId'),
+    inviterUser: () => getRelationContactId('inviterUserId'),
   });
 }

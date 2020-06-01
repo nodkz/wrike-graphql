@@ -1,7 +1,7 @@
 import { schemaComposer } from 'graphql-compose';
 import { ApprovalDecisionStatusEnum } from '../Enums';
 import { ContactID } from '../Scalars';
-import { getRelationContactIds } from 'app/schema/resolvers/contact';
+import { getRelationContactIds } from 'app/schema/relations/contact';
 
 export const ApprovalDecision = schemaComposer.createObjectTC({
   name: 'ApprovalDecision',
@@ -24,6 +24,6 @@ export const ApprovalDecision = schemaComposer.createObjectTC({
 
 if (!process.env.DISABLE_RELATIONS) {
   ApprovalDecision.addFields({
-    approver: getRelationContactIds('approverId'),
+    approver: () => getRelationContactIds('approverId'),
   });
 }

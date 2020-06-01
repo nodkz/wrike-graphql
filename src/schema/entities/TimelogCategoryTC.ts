@@ -1,6 +1,6 @@
 import { TimelogCategoryID } from 'app/schema/types/Scalars';
 import { schemaComposer } from 'graphql-compose';
-import { getRelationTimelogsByTimelogCategoryId } from '../resolvers/timelog';
+import { getRelationTimelogsByTimelogCategoryId } from '../relations/timelog';
 
 export const TimelogCategoryTC = schemaComposer.createObjectTC({
   name: 'TimelogCategory',
@@ -23,6 +23,6 @@ export const TimelogCategoryTC = schemaComposer.createObjectTC({
 
 if (!process.env.DISABLE_BACK_RELATIONS) {
   TimelogCategoryTC.addFields({
-    timelogs: getRelationTimelogsByTimelogCategoryId('id'),
+    timelogs: () => getRelationTimelogsByTimelogCategoryId('id'),
   });
 }

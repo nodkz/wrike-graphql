@@ -1,8 +1,8 @@
 import { composeWithJson } from 'graphql-compose-json';
 import { GroupID, ContactID, AccountID } from 'app/schema/types/Scalars';
 import { KeyValue } from '../types/outputs/KeyValue';
-import { getRelationAccountId } from '../resolvers/account';
-import { getRelationContactIds } from '../resolvers/contact';
+import { getRelationAccountId } from '../relations/account';
+import { getRelationContactIds } from '../relations/contact';
 
 const restApiResponse = {
   id: GroupID.NonNull,
@@ -20,9 +20,9 @@ export const GroupTC = composeWithJson('Group', restApiResponse);
 
 if (!process.env.DISABLE_RELATIONS) {
   GroupTC.addFields({
-    account: getRelationAccountId('accountId'),
-    members: getRelationContactIds('memberIds'),
-    childs: getRelationContactIds('childIds'),
-    parents: getRelationContactIds('parentIds'),
+    account: () => getRelationAccountId('accountId'),
+    members: () => getRelationContactIds('memberIds'),
+    childs: () => getRelationContactIds('childIds'),
+    parents: () => getRelationContactIds('parentIds'),
   });
 }

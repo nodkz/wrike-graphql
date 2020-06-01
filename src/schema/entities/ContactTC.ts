@@ -2,16 +2,16 @@ import { composeWithJson } from 'graphql-compose-json';
 import { UserTypeEnum, UserRoleEnum } from 'app/schema/types/Enums';
 import { ContactID, WorkScheduleID, AccountID } from 'app/schema/types/Scalars';
 import { KeyValue } from '../types/outputs/KeyValue';
-import { getRelationAccountId } from '../resolvers/account';
-import { getRelationContactIds } from '../resolvers/contact';
-import { getRelationWorkScheduleId } from '../resolvers/workSchedule';
-import { getRelationTasksByAuthorId, getRelationTasksByResponsibleId } from '../resolvers/task';
-import { getRelationTimelogsByContactId } from '../resolvers/timelog';
-import { getRelationUserScheduleExclusionByUserId } from '../resolvers/userScheduleExclusion';
+import { getRelationAccountId } from '../relations/account';
+import { getRelationContactIds } from '../relations/contact';
+import { getRelationWorkScheduleId } from '../relations/workSchedule';
+import { getRelationTasksByAuthorId, getRelationTasksByResponsibleId } from '../relations/task';
+import { getRelationTimelogsByContactId } from '../relations/timelog';
+import { getRelationUserScheduleExclusionByUserId } from '../relations/userScheduleExclusion';
 import {
   getRelationApprovalsByApproverUserId,
   getRelationApprovalsByPendingApproverUserId,
-} from '../resolvers/approval';
+} from '../relations/approval';
 
 const restApiResponse = {
   // id: 'KUAHNM4I',
@@ -51,19 +51,19 @@ export const ContactTC = composeWithJson('Contact', restApiResponse);
 
 if (!process.env.DISABLE_RELATIONS) {
   ContactTC.addNestedFields({
-    'profiles.account': getRelationAccountId('accountId'),
+    'profiles.account': () => getRelationAccountId('accountId'),
     members: () => getRelationContactIds('memberIds'),
-    workSchedule: getRelationWorkScheduleId('workScheduleId'),
+    workSchedule: () => getRelationWorkScheduleId('workScheduleId'),
   });
 }
 
 if (!process.env.DISABLE_BACK_RELATIONS) {
   ContactTC.addFields({
-    tasksAuthored: getRelationTasksByAuthorId('id'),
-    tasksResponsible: getRelationTasksByResponsibleId('id'),
-    timelogs: getRelationTimelogsByContactId('id'),
-    scheduleExclusions: getRelationUserScheduleExclusionByUserId('id'),
-    approvals: getRelationApprovalsByApproverUserId('id'),
-    approvalsPending: getRelationApprovalsByPendingApproverUserId('id'),
+    tasksAuthored: () => getRelationTasksByAuthorId('id'),
+    tasksResponsible: () => getRelationTasksByResponsibleId('id'),
+    timelogs: () => getRelationTimelogsByContactId('id'),
+    scheduleExclusions: () => getRelationUserScheduleExclusionByUserId('id'),
+    approvals: () => getRelationApprovalsByApproverUserId('id'),
+    approvalsPending: () => getRelationApprovalsByPendingApproverUserId('id'),
   });
 }

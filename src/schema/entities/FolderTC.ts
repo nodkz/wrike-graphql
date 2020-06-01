@@ -4,12 +4,12 @@ import { schemaComposer } from 'graphql-compose';
 import { ProjectDetails } from '../types/outputs/ProjectDetails';
 import { KeyValue } from '../types/outputs/KeyValue';
 import { CustomFieldTC } from './CustomFieldTC';
-import { getRelationFolderIds } from '../resolvers/folder';
-import { getRelationTasksByFolderId } from '../resolvers/task';
-import { getRelationCommentsByFolderId } from '../resolvers/comment';
-import { getRelationTimelogsByFolderId } from '../resolvers/timelog';
-import { getRelationAttachmentsByFolderId } from '../resolvers/attachment';
-import { getRelationApprovalsByFolderId } from '../resolvers/approval';
+import { getRelationFolderIds } from '../relations/folder';
+import { getRelationTasksByFolderId } from '../relations/task';
+import { getRelationCommentsByFolderId } from '../relations/comment';
+import { getRelationTimelogsByFolderId } from '../relations/timelog';
+import { getRelationAttachmentsByFolderId } from '../relations/attachment';
+import { getRelationApprovalsByFolderId } from '../relations/approval';
 
 export const FolderTC = schemaComposer.createObjectTC({
   name: 'Folder',
@@ -89,8 +89,8 @@ if (!process.env.DISABLE_BACK_RELATIONS) {
   FolderTC.addFields({
     tasks: () => getRelationTasksByFolderId('id'),
     comments: () => getRelationCommentsByFolderId('id'),
-    timelogs: getRelationTimelogsByFolderId('id'),
-    attachments: getRelationAttachmentsByFolderId('id'),
-    approvals: getRelationApprovalsByFolderId('id'),
+    timelogs: () => getRelationTimelogsByFolderId('id'),
+    attachments: () => getRelationAttachmentsByFolderId('id'),
+    approvals: () => getRelationApprovalsByFolderId('id'),
   });
 }

@@ -9,10 +9,10 @@ import {
 } from 'app/schema/types/Scalars';
 import { ApprovalTypeEnum } from '../types/Enums';
 import { ApprovalDecision } from '../types/outputs/ApprovalDecision';
-import { getRelationTaskId } from '../resolvers/task';
-import { getRelationFolderId } from '../resolvers/folder';
-import { getRelationContactId } from '../resolvers/contact';
-import { getRelationAttachmentIds } from '../resolvers/attachment';
+import { getRelationTaskId } from '../relations/task';
+import { getRelationFolderId } from '../relations/folder';
+import { getRelationContactId } from '../relations/contact';
+import { getRelationAttachmentIds } from '../relations/attachment';
 
 export const ApprovalTC = schemaComposer.createObjectTC({
   name: 'Approval',
@@ -79,10 +79,10 @@ export const ApprovalTC = schemaComposer.createObjectTC({
 
 if (!process.env.DISABLE_RELATIONS) {
   ApprovalTC.addFields({
-    task: getRelationTaskId('taskId'),
-    folder: getRelationFolderId('folderId'),
-    author: getRelationContactId('authorId'),
-    attachments: getRelationAttachmentIds('attachmentIds'),
-    finisher: getRelationContactId('finisherId'),
+    task: () => getRelationTaskId('taskId'),
+    folder: () => getRelationFolderId('folderId'),
+    author: () => getRelationContactId('authorId'),
+    attachments: () => getRelationAttachmentIds('attachmentIds'),
+    finisher: () => getRelationContactId('finisherId'),
   });
 }
