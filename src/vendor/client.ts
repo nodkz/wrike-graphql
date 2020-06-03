@@ -2,16 +2,24 @@ import axios from 'axios';
 import debug from 'debug';
 import qs from 'qs';
 import { isObject } from 'util';
+import { dedent } from 'graphql-compose';
 
 const loggerRequest = debug('axios:request');
 const loggerData = debug('axios:data');
 
+if (!process.env.AUTH_TOKEN) {
+  throw new Error(dedent`
+    You need to provide AUTH_TOKEN env variable. 
+    Get your token here: https://www.wrike.com/frontend/apps/index.html#/api
+    Docs: https://developers.wrike.com/oauth-20-authorization/
+  `);
+}
+
 export const client = axios.create({
-  baseURL: 'https://www.wrike.com/api/v4',
+  baseURL: process.env.API_URL,
   timeout: 10000,
   headers: {
-    Authorization:
-      'Bearer eyJ0dCI6InAiLCJhbGciOiJIUzI1NiIsInR2IjoiMSJ9.eyJkIjoie1wiYVwiOjM1NjAxNTYsXCJpXCI6Njk0MTc4MixcImNcIjo0NjE3MTU5LFwidVwiOjc3NDcxMDQsXCJyXCI6XCJVU1wiLFwic1wiOltcIldcIixcIkZcIixcIklcIixcIlVcIixcIktcIixcIkNcIixcIkRcIixcIkFcIixcIkxcIl0sXCJ6XCI6W10sXCJ0XCI6MH0iLCJpYXQiOjE1ODM1MDYzNTZ9.ibFznZ-A5vEmQX8JyegCf_YoSwkDiHG_P5m2qx8HdKo',
+    Authorization: process.env.AUTH_TOKEN,
   },
   paramsSerializer: (params) => {
     Object.keys(params).forEach((key) => {

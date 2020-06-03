@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 require('module-alias').addAlias('app', __dirname);
+require('dotenv').config();
 
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';

@@ -4,7 +4,7 @@
     "target": "es5",
     "module": "commonjs",
     "strict": true,
-    "rootDir": "./src",
+    "rootDir": "./",
     "outDir": "./lib",
     "lib": ["es2017"],
     "moduleResolution": "node",
@@ -17,5 +17,5 @@
     },
     "types": ["node", "jest"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "bonus/**/*"]
 }
