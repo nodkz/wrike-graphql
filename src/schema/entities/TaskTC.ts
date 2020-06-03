@@ -1,11 +1,16 @@
-import { composeWithJson } from 'graphql-compose-json';
-import { TaskStatusEnum, TaskImportanceEnum, TaskDatesTypeEnum } from '../types/Enums';
+import {
+  TaskStatusEnum,
+  TaskImportanceEnum,
+  TaskDatesTypeEnum,
+  TreeScopeEnum,
+} from '../types/Enums';
 import {
   TaskID,
   ContactID,
   FolderID,
   CustomStatusID,
   DependencyID,
+  AccountID,
 } from 'app/schema/types/Scalars';
 import { getRelationFolderIds } from '../relations/folder';
 import { getRelationContactIds } from '../relations/contact';
@@ -18,60 +23,153 @@ import { getRelationApprovalsByTaskId } from '../relations/approval';
 import { KeyValue } from '../types/outputs/KeyValue';
 import { CustomFieldValue } from '../types/outputs/CustomFieldValue';
 import { getRelationTaskIds } from '../relations/task';
+import { schemaComposer } from 'graphql-compose';
 
 // https://developers.wrike.com/api/v4/tasks/
-const restApiResponse = {
-  // id: 'IEADMUW4KQOE4AQG',
-  id: TaskID.NonNull,
-  accountId: 'IEADMUW4',
-  title: 'Write GraphQL wrapper for TaskList',
-  description: '',
-  briefDescription: '',
-  // parentIds: ['IEADMUW4I4OE374R'],
-  parentIds: FolderID.NonNull.List,
-  superParentIds: FolderID.NonNull.List,
-  // sharedIds: ['KUAHMNRA', 'KX73NL7C'],
-  sharedIds: ContactID.NonNull.List,
-  // responsibleIds: ['KUAHMNRA'],
-  responsibleIds: ContactID.NonNull.List,
-  // status: 'Active',
-  status: TaskStatusEnum,
-  // importance: 'Normal',
-  importance: TaskImportanceEnum,
-  createdDate: '2020-03-06T14:47:33Z',
-  updatedDate: '2020-03-06T15:06:53Z',
-  dates: {
-    type: TaskDatesTypeEnum,
-    duration: () => ({
+export const TaskTC = schemaComposer.createObjectTC({
+  name: 'Task',
+  fields: {
+    id: TaskID.NonNull,
+    accountId: {
+      type: AccountID.NonNull,
+      description: 'Account ID',
+    },
+    title: {
+      type: 'String!',
+      description: 'Title, cannot be empty',
+    },
+    description: {
+      type: 'String',
+      description: 'Description',
+    },
+    briefDescription: {
+      type: 'String',
+      description: 'Brief description',
+    },
+    parentIds: {
+      type: FolderID.NonNull.List,
+      description: 'List of task parent folder IDs',
+    },
+    superParentIds: {
+      type: FolderID.NonNull.List,
+      description: 'List of folder IDs inherited from parent task',
+    },
+    sharedIds: {
+      type: ContactID.NonNull.List,
+      description: 'List of user IDs, who share the task',
+    },
+    responsibleIds: {
+      type: ContactID.NonNull.List,
+      description: 'List of responsible user IDs',
+    },
+    status: {
+      type: TaskStatusEnum,
+      description: 'Status of task',
+    },
+    importance: {
+      type: TaskImportanceEnum,
+      description: 'Importance of task',
+    },
+    createdDate: {
+      type: 'Date!',
+      description: 'Created date',
+    },
+    updatedDate: {
+      type: 'Date!',
+      description: 'Updated date',
+    },
+    completedDate: {
+      type: 'Date!',
+      description: 'Completed date, field is present for tasks with `Completed` status',
+    },
+    dates: {
+      description: 'Task dates',
+      type: schemaComposer.createObjectTC({
+        name: 'TaskDates',
+        fields: {
+          type: TaskDatesTypeEnum,
+          duration: {
+            type: 'Int',
+            description:
+              'Duration in minutes. Duration is present in Planned tasks and is optional for Backlog tasks',
+          },
+          start: {
+            type: 'Date',
+            description: 'Start date is present only in Planned tasks',
+          },
+          due: {
+            type: 'Date',
+            description: 'Due date is present only in Planned and Milestone tasks',
+          },
+          workOnWeekends: {
+            type: 'Boolean',
+            description: 'Weekends are included in task scheduling',
+          },
+        },
+      }),
+    },
+    scope: {
+      type: TreeScopeEnum.NonNull,
+      description: 'Task scope',
+    },
+    authorIds: {
+      type: ContactID.NonNull.List,
+      description: 'List of author IDs (currently contains 1 element)',
+    },
+    customStatusId: {
+      type: CustomStatusID,
+      description: 'Custom status ID',
+    },
+    hasAttachments: {
+      type: 'Boolean',
+      description: 'Has attachments',
+    },
+    attachmentCount: {
       type: 'Int',
-      description:
-        'Duration in minutes. Duration is present in Planned tasks and is optional for Backlog tasks',
-    }),
-    start: () => 'Date',
-    due: () => 'Date',
-    workOnWeekends: false,
+      description: 'Total count of task attachments',
+    },
+    permalink: {
+      type: 'String',
+      description: 'Link to open task in web workspace, if user has appropriate access',
+    },
+    priority: {
+      type: 'String',
+      description: 'Ordering key that defines task order in tasklist',
+    },
+    followedByMe: {
+      type: 'Boolean',
+      description: 'Is a task followed by me',
+    },
+    followerIds: {
+      type: ContactID.NonNull.List,
+      description: 'List of user IDs, who follows task',
+    },
+    recurrent: {
+      type: 'Boolean',
+      description: 'Is a task recurrent',
+    },
+    superTaskIds: {
+      type: TaskID.NonNull.List,
+      description: 'List of super task IDs',
+    },
+    subTaskIds: {
+      type: TaskID.NonNull.List,
+      description: 'List of subtask IDs',
+    },
+    dependencyIds: {
+      type: DependencyID.NonNull.List,
+      description: 'List of dependency IDs',
+    },
+    metadata: {
+      type: KeyValue.NonNull.List,
+      description: 'List of task metadata entries',
+    },
+    customFields: {
+      type: CustomFieldValue.NonNull.List,
+      description: 'Custom fields',
+    },
   },
-  scope: 'WsTask',
-  // authorIds: ['KUAHMNRA'],
-  authorIds: ContactID.NonNull.List,
-  // customStatusId: 'IEADMUW4JMAAAAAA',
-  customStatusId: CustomStatusID,
-  hasAttachments: true,
-  attachmentCount: 5,
-  permalink: 'https://www.wrike.com/open.htm?id=474874374',
-  priority: '07e92c008000000000006c00',
-  followedByMe: true,
-  // followerIds: ['KUAHMNRA'],
-  followerIds: ContactID.NonNull.List,
-  recurrent: false,
-  superTaskIds: TaskID.NonNull.List,
-  subTaskIds: TaskID.NonNull.List,
-  dependencyIds: DependencyID.NonNull.List,
-  metadata: KeyValue.NonNull.List,
-  customFields: CustomFieldValue.NonNull.List,
-};
-
-export const TaskTC = composeWithJson('Task', restApiResponse);
+});
 
 if (!process.env.DISABLE_RELATIONS) {
   TaskTC.addFields({

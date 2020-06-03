@@ -461,3 +461,73 @@ export const UserScheduleExclusionEnum = schemaComposer.createEnumTC(`
     OtherNonWorking
   }
 `);
+
+export const TaskFindManySortEnum = schemaComposer.createEnumTC({
+  name: 'TaskFindManySortEnum',
+  values: {
+    CREATED_DATE_ASC: {
+      value: { sortField: 'CreatedDate', sortOrder: 'Asc' },
+      description: 'Sort by created date',
+    },
+    CREATED_DATE_DESC: {
+      value: { sortField: 'CreatedDate', sortOrder: 'Desc' },
+      description: 'Sort by created date',
+    },
+    UPDATED_DATE_ASC: {
+      value: { sortField: 'UpdatedDate', sortOrder: 'Asc' },
+      description: 'Sort by updated date',
+    },
+    UPDATED_DATE_DESC: {
+      value: { sortField: 'UpdatedDate', sortOrder: 'Desc' },
+      description: 'Sort by updated date',
+    },
+    COMPLETED_DATE_ASC: {
+      value: { sortField: 'CompletedDate', sortOrder: 'Asc' },
+      description: 'Sort by completed date',
+    },
+    COMPLETED_DATE_DESC: {
+      value: { sortField: 'CompletedDate', sortOrder: 'Desc' },
+      description: 'Sort by completed date',
+    },
+    DUE_DATE_ASC: {
+      value: { sortField: 'DueDate', sortOrder: 'Asc' },
+      description: 'Sort by due date',
+    },
+    DUE_DATE_DESC: {
+      value: { sortField: 'DueDate', sortOrder: 'Desc' },
+      description: 'Sort by due date',
+    },
+    STATUS_ASC: {
+      value: { sortField: 'Status', sortOrder: 'Asc' },
+      description: 'Sort by status ASC',
+    },
+    STATUS_DESC: {
+      value: { sortField: 'Status', sortOrder: 'Desc' },
+      description: 'Sort by status',
+    },
+    IMPORTANCE_ASC: {
+      value: { sortField: 'Importance', sortOrder: 'Asc' },
+      description: 'Sort by importance',
+    },
+    IMPORTANCE_DESC: {
+      value: { sortField: 'Importance', sortOrder: 'Desc' },
+      description: 'Sort by importance',
+    },
+    TITLE_ASC: {
+      value: { sortField: 'Title', sortOrder: 'Asc' },
+      description: 'Lexicographic sorting by title',
+    },
+    TITLE_DESC: {
+      value: { sortField: 'Title', sortOrder: 'Desc' },
+      description: 'Lexicographic sorting by title',
+    },
+    LAST_ACCESS_DATE_ASC: {
+      value: { sortField: 'LastAccessDate', sortOrder: 'Asc' },
+      description: 'Sort by last access date',
+    },
+    LAST_ACCESS_DATE_DESC: {
+      value: { sortField: 'LastAccessDate', sortOrder: 'Desc' },
+      description: 'Sort by last access date',
+    },
+  },
+});

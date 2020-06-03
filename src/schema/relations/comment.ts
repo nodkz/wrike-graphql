@@ -38,11 +38,13 @@ export function getRelationCommentsByFolderId(
     type: () => CommentTC.NonNull.List,
     args: {
       limit: { type: 'Int', defaultValue: 10 },
+      plainText: 'Boolean',
     },
     resolve: (source, args) => {
       return commentFindMany({
         filter: { folderId: source[sourceFieldName] },
         limit: args.limit,
+        plainText: args.plainText,
       });
     },
     projection: { [sourceFieldName]: 1 },

@@ -3,6 +3,17 @@ import { ObjectTypeComposerFieldConfigDefinition } from 'graphql-compose';
 import { AttachmentTC } from '../entities/AttachmentTC';
 import { attachmentFindByIds } from 'app/vendor/attachment/attachmentFindByIds';
 import { attachmentFindMany } from 'app/vendor/attachment/attachmentFindMany';
+import { DateTimeRangeInput } from '../types/inputs/DateTimeRangeInput';
+
+const AttachmentFilterByRelation = AttachmentTC.schemaComposer.createInputTC({
+  name: 'AttachmentFilterByRelation',
+  fields: {
+    createdDate: {
+      type: DateTimeRangeInput,
+      description: 'Get attachments with previous versions',
+    },
+  },
+});
 
 export function getRelationAttachmentIds(
   sourceFieldName: string
@@ -36,9 +47,17 @@ export function getRelationAttachmentsByFolderId(
 ): ObjectTypeComposerFieldConfigDefinition<any, any> {
   return {
     type: () => AttachmentTC.NonNull.List,
-    resolve: (source, _, __, info) => {
+    args: {
+      filter: AttachmentFilterByRelation,
+      versions: {
+        type: 'Boolean',
+        description: 'Get attachments with previous versions',
+      },
+    },
+    resolve: (source, args, __, info) => {
       return attachmentFindMany({
-        filter: { folderId: source[sourceFieldName] },
+        filter: { ...args.filter, folderId: source[sourceFieldName] },
+        versions: args.versions,
         info,
       });
     },
@@ -51,9 +70,17 @@ export function getRelationAttachmentsByTaskId(
 ): ObjectTypeComposerFieldConfigDefinition<any, any> {
   return {
     type: () => AttachmentTC.NonNull.List,
-    resolve: (source, _, __, info) => {
+    args: {
+      filter: AttachmentFilterByRelation,
+      versions: {
+        type: 'Boolean',
+        description: 'Get attachments with previous versions',
+      },
+    },
+    resolve: (source, args, __, info) => {
       return attachmentFindMany({
-        filter: { taskId: source[sourceFieldName] },
+        filter: { ...args.filter, taskId: source[sourceFieldName] },
+        versions: args.versions,
         info,
       });
     },
