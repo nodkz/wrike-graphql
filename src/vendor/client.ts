@@ -19,7 +19,9 @@ export const client = axios.create({
   baseURL: process.env.API_URL,
   timeout: 10000,
   headers: {
-    Authorization: process.env.AUTH_TOKEN,
+    Authorization: process.env.AUTH_TOKEN.startsWith('BEARER')
+      ? process.env.AUTH_TOKEN
+      : `BEARER ${process.env.AUTH_TOKEN}`,
   },
   paramsSerializer: (params) => {
     Object.keys(params).forEach((key) => {
