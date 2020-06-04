@@ -11,44 +11,59 @@ export type Scalars = {
   Float: number;
   AccountID: any;
   FolderID: any;
-  ContactID: any;
-  CustomStatusID: any;
   Date: any;
   CustomFieldID: any;
-  AsyncJobID: any;
-  JSON: any;
-  AttachmentID: any;
-  TaskID: any;
-  CommentID: any;
-  ReviewID: any;
+  ContactID: any;
   WorkScheduleID: any;
+  JSON: any;
+  WorkScheduleExclusionID: any;
+  DateYMD: any;
+  TaskID: any;
+  CustomStatusID: any;
   DependencyID: any;
+  CommentID: any;
+  TimelogID: any;
+  TimelogCategoryID: any;
+  AttachmentID: any;
+  ReviewID: any;
+  ApprovalID: any;
+  AsyncJobID: any;
+  AuditLogID: any;
+  DataExportID: any;
   GroupID: any;
   InvitationID: any;
   SpaceID: any;
-  TimelogID: any;
-  TimelogCategoryID: any;
-  DateYMD: any;
+  UserScheduleExclusionID: any;
   WorkflowID: any;
 };
 
 export type Query = {
   __typename?: 'Query';
   account?: Maybe<Account>;
+  approvalByIds?: Maybe<Array<Approval>>;
+  approvalFindMany?: Maybe<Array<Approval>>;
+  approvalForFolder?: Maybe<Array<Approval>>;
+  approvalForTask?: Maybe<Array<Approval>>;
   asyncJob?: Maybe<AsyncJob>;
   attachmentByIds?: Maybe<Array<Attachment>>;
   attachmentFindMany?: Maybe<Array<Attachment>>;
+  auditLogFindMany?: Maybe<Array<Maybe<AuditLog>>>;
+  colors?: Maybe<Array<Maybe<Color>>>;
   commentByIds?: Maybe<Array<Comment>>;
   commentFindMany?: Maybe<Array<Comment>>;
   contactByIds?: Maybe<Array<Contact>>;
   contactFindMany?: Maybe<Array<Contact>>;
   customFieldsByIds?: Maybe<Array<CustomField>>;
   customFieldsFindMany?: Maybe<Array<CustomField>>;
+  dataExport?: Maybe<DataExport>;
+  dataExportSchema?: Maybe<DataExportSchema>;
   dependenciesByIds?: Maybe<Array<Dependency>>;
+  folderByIds?: Maybe<Array<Folder>>;
   folderFindMany?: Maybe<Array<Folder>>;
   groupById?: Maybe<Group>;
   groupFindMany?: Maybe<Array<Group>>;
   invitations?: Maybe<Array<Invitation>>;
+  me: Contact;
   noop?: Maybe<Scalars['String']>;
   spaceFindMany?: Maybe<Array<Space>>;
   taskByIds?: Maybe<Array<Task>>;
@@ -58,12 +73,42 @@ export type Query = {
   timelogCategories?: Maybe<Array<TimelogCategory>>;
   timelogFindMany?: Maybe<Array<Timelog>>;
   userById?: Maybe<User>;
+  userScheduleExclusionFindById?: Maybe<UserScheduleExclusion>;
+  userScheduleExclusionFindMany?: Maybe<Array<UserScheduleExclusion>>;
+  version?: Maybe<Version>;
+  workScheduleExclusionFindById?: Maybe<WorkScheduleExclusion>;
+  workScheduleExclusionFindMany?: Maybe<Array<WorkScheduleExclusion>>;
+  workScheduleFindById?: Maybe<WorkSchedule>;
+  workScheduleFindMany?: Maybe<Array<WorkSchedule>>;
   workflows?: Maybe<Array<Workflow>>;
 };
 
 
 export type QueryAccountArgs = {
   filter?: Maybe<AccountFilter>;
+};
+
+
+export type QueryApprovalByIdsArgs = {
+  ids: Array<Scalars['ApprovalID']>;
+};
+
+
+export type QueryApprovalFindManyArgs = {
+  limit?: Maybe<Scalars['Int']>;
+  pageSize?: Maybe<Scalars['Int']>;
+  nextPageToken?: Maybe<Scalars['String']>;
+  filter?: Maybe<ApprovalFindManyFilter>;
+};
+
+
+export type QueryApprovalForFolderArgs = {
+  folderId: Scalars['FolderID'];
+};
+
+
+export type QueryApprovalForTaskArgs = {
+  taskId: Scalars['TaskID'];
 };
 
 
@@ -81,6 +126,13 @@ export type QueryAttachmentByIdsArgs = {
 export type QueryAttachmentFindManyArgs = {
   versions?: Maybe<Scalars['Boolean']>;
   filter?: Maybe<AttachmentFindManyFilter>;
+};
+
+
+export type QueryAuditLogFindManyArgs = {
+  pageSize?: Maybe<Scalars['Int']>;
+  nextPageToken?: Maybe<Scalars['String']>;
+  filter?: Maybe<AuditLogFilter>;
 };
 
 
@@ -112,8 +164,23 @@ export type QueryCustomFieldsByIdsArgs = {
 };
 
 
+export type QueryDataExportArgs = {
+  id?: Maybe<Scalars['DataExportID']>;
+};
+
+
+export type QueryDataExportSchemaArgs = {
+  version?: Maybe<DataSchemaVersion>;
+};
+
+
 export type QueryDependenciesByIdsArgs = {
   ids: Array<Scalars['DependencyID']>;
+};
+
+
+export type QueryFolderByIdsArgs = {
+  ids: Array<Scalars['FolderID']>;
 };
 
 
@@ -152,9 +219,7 @@ export type QueryTaskFindManyArgs = {
   pageSize?: Maybe<Scalars['Int']>;
   nextPageToken?: Maybe<Scalars['String']>;
   filter?: Maybe<TaskFindManyFilter>;
-  sort?: Maybe<TaskFindManySort>;
-  subTasks?: Maybe<Scalars['Boolean']>;
-  descendants?: Maybe<Scalars['Boolean']>;
+  sort?: Maybe<TaskFindManySortEnum>;
 };
 
 
@@ -174,6 +239,32 @@ export type QueryUserByIdArgs = {
   id: Scalars['ContactID'];
 };
 
+
+export type QueryUserScheduleExclusionFindByIdArgs = {
+  id: Scalars['UserScheduleExclusionID'];
+};
+
+
+export type QueryUserScheduleExclusionFindManyArgs = {
+  filter?: Maybe<UserScheduleExclusionFilter>;
+};
+
+
+export type QueryWorkScheduleExclusionFindByIdArgs = {
+  id: Scalars['WorkScheduleExclusionID'];
+};
+
+
+export type QueryWorkScheduleExclusionFindManyArgs = {
+  filter?: Maybe<WorkScheduleExclusionFilter>;
+  workScheduleId: Scalars['WorkScheduleID'];
+};
+
+
+export type QueryWorkScheduleFindByIdArgs = {
+  id: Scalars['WorkScheduleID'];
+};
+
 export type Account = {
   __typename?: 'Account';
   id: Scalars['AccountID'];
@@ -182,14 +273,14 @@ export type Account = {
   firstDayOfWeek: FirstDayOfWeekEnum;
   workDays: Array<WeekDayEnum>;
   rootFolderId: Scalars['FolderID'];
-  rootFolder?: Maybe<Array<Folder>>;
   recycleBinId: Scalars['FolderID'];
-  recycleBin?: Maybe<Array<Folder>>;
   createdDate: Scalars['Date'];
   subscription?: Maybe<AccountSubscription>;
   metadata?: Maybe<Array<KeyValue>>;
   customFields?: Maybe<Array<CustomField>>;
   joinedDate: Scalars['Date'];
+  rootFolder?: Maybe<Folder>;
+  recycleBin?: Maybe<Folder>;
 };
 
 
@@ -210,122 +301,22 @@ export enum WeekDayEnum {
 }
 
 
-export type Folder = {
-  __typename?: 'Folder';
-  id: Scalars['FolderID'];
-  title: Scalars['String'];
-  color?: Maybe<ColorEnum>;
-  childIds: Array<Scalars['FolderID']>;
-  childs?: Maybe<Array<Folder>>;
-  scope: TreeScopeEnum;
-  project?: Maybe<ProjectDetails>;
-  space?: Maybe<Scalars['Boolean']>;
-  metadata?: Maybe<Array<KeyValue>>;
-  hasAttachments?: Maybe<Scalars['Boolean']>;
-  attachmentCount?: Maybe<Scalars['Int']>;
-  description?: Maybe<Scalars['String']>;
-  briefDescription?: Maybe<Scalars['String']>;
-  customFields?: Maybe<Array<CustomField>>;
-  customColumnIds?: Maybe<Array<Scalars['CustomFieldID']>>;
-  superParentIds?: Maybe<Array<Scalars['FolderID']>>;
-  superParents?: Maybe<Array<Folder>>;
-  contractType?: Maybe<ProjectContractTypeEnum>;
+
+export type AccountSubscription = {
+  __typename?: 'AccountSubscription';
+  type: SubscriptionTypeEnum;
+  suspended: Scalars['Boolean'];
+  paid: Scalars['Boolean'];
+  userLimit: Scalars['Int'];
 };
 
-export enum ColorEnum {
-  None = 'None',
-  Person = 'Person',
-  Purple1 = 'Purple1',
-  Purple2 = 'Purple2',
-  Purple3 = 'Purple3',
-  Purple4 = 'Purple4',
-  Indigo1 = 'Indigo1',
-  Indigo2 = 'Indigo2',
-  Indigo3 = 'Indigo3',
-  Indigo4 = 'Indigo4',
-  DarkBlue1 = 'DarkBlue1',
-  DarkBlue2 = 'DarkBlue2',
-  DarkBlue3 = 'DarkBlue3',
-  DarkBlue4 = 'DarkBlue4',
-  Blue1 = 'Blue1',
-  Blue2 = 'Blue2',
-  Blue3 = 'Blue3',
-  Blue4 = 'Blue4',
-  Turquoise1 = 'Turquoise1',
-  Turquoise2 = 'Turquoise2',
-  Turquoise3 = 'Turquoise3',
-  Turquoise4 = 'Turquoise4',
-  DarkCyan1 = 'DarkCyan1',
-  DarkCyan2 = 'DarkCyan2',
-  DarkCyan3 = 'DarkCyan3',
-  DarkCyan4 = 'DarkCyan4',
-  Green1 = 'Green1',
-  Green2 = 'Green2',
-  Green3 = 'Green3',
-  Green4 = 'Green4',
-  YellowGreen1 = 'YellowGreen1',
-  YellowGreen2 = 'YellowGreen2',
-  YellowGreen3 = 'YellowGreen3',
-  YellowGreen4 = 'YellowGreen4',
-  Yellow1 = 'Yellow1',
-  Yellow2 = 'Yellow2',
-  Yellow3 = 'Yellow3',
-  Yellow4 = 'Yellow4',
-  Orange1 = 'Orange1',
-  Orange2 = 'Orange2',
-  Orange3 = 'Orange3',
-  Orange4 = 'Orange4',
-  Red1 = 'Red1',
-  Red2 = 'Red2',
-  Red3 = 'Red3',
-  Red4 = 'Red4',
-  Pink1 = 'Pink1',
-  Pink2 = 'Pink2',
-  Pink3 = 'Pink3',
-  Pink4 = 'Pink4',
-  Gray1 = 'Gray1',
-  Gray2 = 'Gray2',
-  Gray3 = 'Gray3'
-}
-
-export enum TreeScopeEnum {
-  WsRoot = 'WsRoot',
-  RbRoot = 'RbRoot',
-  WsFolder = 'WsFolder',
-  RbFolder = 'RbFolder',
-  WsTask = 'WsTask',
-  RbTask = 'RbTask'
-}
-
-export type ProjectDetails = {
-  __typename?: 'ProjectDetails';
-  authorId?: Maybe<Scalars['ContactID']>;
-  ownerIds: Array<Scalars['ContactID']>;
-  status?: Maybe<ProjectStatusEnum>;
-  customStatusId?: Maybe<Scalars['CustomStatusID']>;
-  startDate?: Maybe<Scalars['String']>;
-  endDate?: Maybe<Scalars['String']>;
-  createdDate?: Maybe<Scalars['Date']>;
-  completedDate?: Maybe<Scalars['Date']>;
-  contractType?: Maybe<ProjectContractTypeEnum>;
-};
-
-
-export enum ProjectStatusEnum {
-  Green = 'Green',
-  Yellow = 'Yellow',
-  Red = 'Red',
-  Completed = 'Completed',
-  OnHold = 'OnHold',
-  Cancelled = 'Cancelled',
-  Custom = 'Custom'
-}
-
-
-
-export enum ProjectContractTypeEnum {
-  Billable = 'Billable',
-  NonBillable = 'NonBillable'
+export enum SubscriptionTypeEnum {
+  Free = 'Free',
+  Premium = 'Premium',
+  Business = 'Business',
+  CreativeBusiness = 'CreativeBusiness',
+  Enterprise = 'Enterprise',
+  CreativeEnterprise = 'CreativeEnterprise'
 }
 
 export type KeyValue = {
@@ -342,6 +333,8 @@ export type CustomField = {
   type: CustomFieldTypeEnum;
   sharedIds?: Maybe<Array<Scalars['ContactID']>>;
   settings?: Maybe<CustomFieldSettings>;
+  account?: Maybe<Account>;
+  shareds?: Maybe<Array<Contact>>;
 };
 
 
@@ -358,6 +351,7 @@ export enum CustomFieldTypeEnum {
   Multiple = 'Multiple'
 }
 
+
 export type CustomFieldSettings = {
   __typename?: 'CustomFieldSettings';
   inheritanceType?: Maybe<CustomFieldInheritanceEnum>;
@@ -367,7 +361,7 @@ export type CustomFieldSettings = {
   aggregation?: Maybe<CustomFieldAggregationEnum>;
   values?: Maybe<Array<Scalars['String']>>;
   allowOtherValues?: Maybe<Scalars['Boolean']>;
-  contacts?: Maybe<Array<Scalars['ContactID']>>;
+  contacts?: Maybe<Array<Contact>>;
 };
 
 export enum CustomFieldInheritanceEnum {
@@ -428,123 +422,9 @@ export enum CustomFieldAggregationEnum {
   Average = 'Average'
 }
 
-export type AccountSubscription = {
-  __typename?: 'AccountSubscription';
-  type: SubscriptionTypeEnum;
-  suspended: Scalars['Boolean'];
-  paid: Scalars['Boolean'];
-  userLimit: Scalars['Int'];
-};
-
-export enum SubscriptionTypeEnum {
-  Free = 'Free',
-  Premium = 'Premium',
-  Business = 'Business',
-  CreativeBusiness = 'CreativeBusiness',
-  Enterprise = 'Enterprise',
-  CreativeEnterprise = 'CreativeEnterprise'
-}
-
-export type AccountFilter = {
-  metadata?: Maybe<KeyValueInput>;
-};
-
-export type KeyValueInput = {
-  key: Scalars['String'];
-  value?: Maybe<Scalars['String']>;
-};
-
-export type AsyncJob = {
-  __typename?: 'AsyncJob';
-  id: Scalars['AsyncJobID'];
-  status: AsyncJobStatusEnum;
-  progressPercent?: Maybe<Scalars['Float']>;
-  totalCount?: Maybe<Scalars['Int']>;
-  processedCount?: Maybe<Scalars['Int']>;
-  type: AsyncJobTypeEnum;
-  result?: Maybe<Scalars['JSON']>;
-  errorMessage?: Maybe<Scalars['String']>;
-};
-
-
-export enum AsyncJobStatusEnum {
-  InQueue = 'InQueue',
-  InProgress = 'InProgress',
-  Completed = 'Completed',
-  Failed = 'Failed'
-}
-
-export enum AsyncJobTypeEnum {
-  CopyFolder = 'CopyFolder'
-}
-
-
-export type Attachment = {
-  __typename?: 'Attachment';
-  id: Scalars['AttachmentID'];
-  authorId: Scalars['ContactID'];
-  name: Scalars['String'];
-  createdDate: Scalars['Date'];
-  version: Scalars['Int'];
-  type: AttachmentTypeEnum;
-  contentType: Scalars['String'];
-  size: Scalars['Int'];
-  taskId?: Maybe<Scalars['TaskID']>;
-  folderId?: Maybe<Scalars['FolderID']>;
-  commentId?: Maybe<Scalars['CommentID']>;
-  currentAttachmentId?: Maybe<Scalars['AttachmentID']>;
-  previewUrl?: Maybe<Scalars['String']>;
-  url?: Maybe<Scalars['String']>;
-  reviewIds?: Maybe<Array<Scalars['ReviewID']>>;
-  width?: Maybe<Scalars['Int']>;
-  height?: Maybe<Scalars['Int']>;
-};
-
-
-export enum AttachmentTypeEnum {
-  Wrike = 'Wrike',
-  Google = 'Google',
-  DropBox = 'DropBox',
-  Box = 'Box',
-  OneDrive = 'OneDrive',
-  External = 'External',
-  Dam = 'DAM'
-}
-
-
-
-
-export type AttachmentFindManyFilter = {
-  folderId?: Maybe<Scalars['FolderID']>;
-  taskId?: Maybe<Scalars['TaskID']>;
-  createdDate?: Maybe<DateTimeRangeInput>;
-};
-
-export type DateTimeRangeInput = {
-  start?: Maybe<Scalars['Date']>;
-  end?: Maybe<Scalars['Date']>;
-};
-
-export type Comment = {
-  __typename?: 'Comment';
-  id: Scalars['CommentID'];
-  authorId: Scalars['ContactID'];
-  text: Scalars['String'];
-  createdDate: Scalars['Date'];
-  taskId?: Maybe<Scalars['TaskID']>;
-  folderId?: Maybe<Scalars['FolderID']>;
-};
-
-export type CommentFindManyFilter = {
-  folderId?: Maybe<Scalars['FolderID']>;
-  taskId?: Maybe<Scalars['TaskID']>;
-  updatedDate?: Maybe<DateTimeRangeInput>;
-};
-
 export type Contact = {
   __typename?: 'Contact';
   id: Scalars['ContactID'];
-  account?: Maybe<Account>;
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   type?: Maybe<UserTypeEnum>;
@@ -555,7 +435,6 @@ export type Contact = {
   deleted?: Maybe<Scalars['Boolean']>;
   me?: Maybe<Scalars['Boolean']>;
   memberIds?: Maybe<Array<Scalars['ContactID']>>;
-  members?: Maybe<Array<User>>;
   metadata?: Maybe<Array<KeyValue>>;
   myTeam?: Maybe<Scalars['Boolean']>;
   title?: Maybe<Scalars['String']>;
@@ -563,6 +442,59 @@ export type Contact = {
   phone?: Maybe<Scalars['String']>;
   location?: Maybe<Scalars['String']>;
   workScheduleId?: Maybe<Scalars['WorkScheduleID']>;
+  members?: Maybe<Array<Contact>>;
+  workSchedule?: Maybe<WorkSchedule>;
+  tasksAuthored?: Maybe<Array<Task>>;
+  tasksResponsible?: Maybe<Array<Task>>;
+  timelogs?: Maybe<Array<Timelog>>;
+  scheduleExclusions?: Maybe<Array<WorkScheduleExclusion>>;
+  approvals?: Maybe<Array<Approval>>;
+  approvalsPending?: Maybe<Array<Approval>>;
+};
+
+
+export type ContactTasksAuthoredArgs = {
+  filter?: Maybe<TaskFilterByRelation>;
+  sort?: Maybe<TaskFindManySortEnum>;
+  limit?: Maybe<Scalars['Int']>;
+  pageSize?: Maybe<Scalars['Int']>;
+  nextPageToken?: Maybe<Scalars['String']>;
+};
+
+
+export type ContactTasksResponsibleArgs = {
+  filter?: Maybe<TaskFilterByRelation>;
+  sort?: Maybe<TaskFindManySortEnum>;
+  limit?: Maybe<Scalars['Int']>;
+  pageSize?: Maybe<Scalars['Int']>;
+  nextPageToken?: Maybe<Scalars['String']>;
+};
+
+
+export type ContactTimelogsArgs = {
+  filter?: Maybe<TimelogFilterByRelation>;
+  plainText?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type ContactScheduleExclusionsArgs = {
+  filter?: Maybe<WorkScheduleExclusionFilterByRelation>;
+};
+
+
+export type ContactApprovalsArgs = {
+  filter?: Maybe<ApprovalFilterByRelationApproverId>;
+  limit?: Maybe<Scalars['Int']>;
+  pageSize?: Maybe<Scalars['Int']>;
+  nextPageToken?: Maybe<Scalars['String']>;
+};
+
+
+export type ContactApprovalsPendingArgs = {
+  filter?: Maybe<ApprovalFilterByRelationPendingApproverId>;
+  limit?: Maybe<Scalars['Int']>;
+  pageSize?: Maybe<Scalars['Int']>;
+  nextPageToken?: Maybe<Scalars['String']>;
 };
 
 export enum UserTypeEnum {
@@ -573,12 +505,12 @@ export enum UserTypeEnum {
 export type Contact_Profiles = {
   __typename?: 'Contact_Profiles';
   accountId?: Maybe<Scalars['AccountID']>;
-  account?: Maybe<Account>;
   email?: Maybe<Scalars['String']>;
   role?: Maybe<UserRoleEnum>;
   external?: Maybe<Scalars['Boolean']>;
   admin?: Maybe<Scalars['Boolean']>;
   owner?: Maybe<Scalars['Boolean']>;
+  account?: Maybe<Account>;
 };
 
 export enum UserRoleEnum {
@@ -586,82 +518,101 @@ export enum UserRoleEnum {
   Collaborator = 'Collaborator'
 }
 
-export type User = {
-  __typename?: 'User';
-  id: Scalars['ContactID'];
-  firstName?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-  type?: Maybe<Scalars['String']>;
-  profiles?: Maybe<Array<Maybe<User_Profiles>>>;
-  avatarUrl?: Maybe<Scalars['String']>;
-  timezone?: Maybe<Scalars['String']>;
-  locale?: Maybe<Scalars['String']>;
-  deleted?: Maybe<Scalars['Boolean']>;
-  me?: Maybe<Scalars['Boolean']>;
+
+export type WorkSchedule = {
+  __typename?: 'WorkSchedule';
+  id: Scalars['WorkScheduleID'];
+  scheduleType: WorkScheduleTypeEnum;
   title?: Maybe<Scalars['String']>;
-  companyName?: Maybe<Scalars['String']>;
-  tasksAuthored?: Maybe<Array<Task>>;
-  tasksResponsible?: Maybe<Array<Task>>;
+  workweek?: Maybe<Scalars['JSON']>;
+  userIds?: Maybe<Array<Scalars['ContactID']>>;
+  users?: Maybe<Array<Contact>>;
+  exclusions?: Maybe<Array<WorkScheduleExclusion>>;
+};
+
+export enum WorkScheduleTypeEnum {
+  Default = 'Default',
+  Custom = 'Custom'
+}
+
+
+export type WorkScheduleExclusion = {
+  __typename?: 'WorkScheduleExclusion';
+  id: Scalars['WorkScheduleExclusionID'];
+  fromDate: Scalars['DateYMD'];
+  toDate: Scalars['DateYMD'];
+  isWorkDays: Scalars['Boolean'];
+  exclusionType: WorkScheduleExclusionEnum;
 };
 
 
-export type UserTasksAuthoredArgs = {
-  limit?: Maybe<Scalars['Int']>;
-};
 
-
-export type UserTasksResponsibleArgs = {
-  limit?: Maybe<Scalars['Int']>;
-};
-
-export type User_Profiles = {
-  __typename?: 'User_Profiles';
-  accountId?: Maybe<Scalars['AccountID']>;
-  account?: Maybe<Account>;
-  email?: Maybe<Scalars['String']>;
-  role?: Maybe<UserRoleEnum>;
-  external?: Maybe<Scalars['Boolean']>;
-  admin?: Maybe<Scalars['Boolean']>;
-  owner?: Maybe<Scalars['Boolean']>;
-};
+export enum WorkScheduleExclusionEnum {
+  AdditionalWorkDays = 'AdditionalWorkDays',
+  PublicHolidays = 'PublicHolidays',
+  OtherEvent = 'OtherEvent'
+}
 
 export type Task = {
   __typename?: 'Task';
   id: Scalars['TaskID'];
-  accountId?: Maybe<Scalars['String']>;
-  account?: Maybe<Account>;
-  title?: Maybe<Scalars['String']>;
+  accountId: Scalars['AccountID'];
+  title: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   briefDescription?: Maybe<Scalars['String']>;
   parentIds?: Maybe<Array<Scalars['FolderID']>>;
-  parents?: Maybe<Array<Folder>>;
   superParentIds?: Maybe<Array<Scalars['FolderID']>>;
-  superParents?: Maybe<Array<Folder>>;
   sharedIds?: Maybe<Array<Scalars['ContactID']>>;
-  shareds?: Maybe<Array<Contact>>;
   responsibleIds?: Maybe<Array<Scalars['ContactID']>>;
-  responsibles?: Maybe<Array<User>>;
   status?: Maybe<TaskStatusEnum>;
   importance?: Maybe<TaskImportanceEnum>;
-  createdDate?: Maybe<Scalars['String']>;
-  updatedDate?: Maybe<Scalars['String']>;
-  dates?: Maybe<Task_Dates>;
-  scope?: Maybe<Scalars['String']>;
+  createdDate: Scalars['Date'];
+  updatedDate: Scalars['Date'];
+  completedDate: Scalars['Date'];
+  dates?: Maybe<TaskDates>;
+  scope: TreeScopeEnum;
   authorIds?: Maybe<Array<Scalars['ContactID']>>;
-  authors?: Maybe<Array<User>>;
   customStatusId?: Maybe<Scalars['CustomStatusID']>;
   hasAttachments?: Maybe<Scalars['Boolean']>;
+  attachmentCount?: Maybe<Scalars['Int']>;
   permalink?: Maybe<Scalars['String']>;
   priority?: Maybe<Scalars['String']>;
   followedByMe?: Maybe<Scalars['Boolean']>;
   followerIds?: Maybe<Array<Scalars['ContactID']>>;
-  followers?: Maybe<Array<User>>;
-  superTaskIds?: Maybe<Array<Maybe<Scalars['JSON']>>>;
-  subTaskIds?: Maybe<Array<Maybe<Scalars['JSON']>>>;
-  dependencyIds?: Maybe<Array<Maybe<Scalars['JSON']>>>;
-  metadata?: Maybe<Array<Maybe<Scalars['JSON']>>>;
-  customFields?: Maybe<Array<Maybe<Scalars['JSON']>>>;
+  recurrent?: Maybe<Scalars['Boolean']>;
+  superTaskIds?: Maybe<Array<Scalars['TaskID']>>;
+  subTaskIds?: Maybe<Array<Scalars['TaskID']>>;
+  dependencyIds?: Maybe<Array<Scalars['DependencyID']>>;
+  metadata?: Maybe<Array<KeyValue>>;
+  customFields?: Maybe<Array<CustomFieldValue>>;
+  account?: Maybe<Account>;
+  parents?: Maybe<Array<Folder>>;
+  superParents?: Maybe<Array<Folder>>;
+  shareds?: Maybe<Array<Contact>>;
+  responsibles?: Maybe<Array<Contact>>;
+  authors?: Maybe<Array<Contact>>;
+  followers?: Maybe<Array<Contact>>;
+  superTasks?: Maybe<Array<Task>>;
+  subTasks?: Maybe<Array<Task>>;
+  dependencies?: Maybe<Array<Dependency>>;
+  comments?: Maybe<Array<Comment>>;
+  timelogs?: Maybe<Array<Timelog>>;
+  attachments?: Maybe<Array<Attachment>>;
+  approvals?: Maybe<Array<Approval>>;
 };
+
+
+export type TaskTimelogsArgs = {
+  filter?: Maybe<TimelogFilterByRelation>;
+  plainText?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type TaskAttachmentsArgs = {
+  filter?: Maybe<AttachmentFilterByRelation>;
+  versions?: Maybe<Scalars['Boolean']>;
+};
+
 
 export enum TaskStatusEnum {
   Active = 'Active',
@@ -676,9 +627,13 @@ export enum TaskImportanceEnum {
   Low = 'Low'
 }
 
-export type Task_Dates = {
-  __typename?: 'Task_Dates';
+export type TaskDates = {
+  __typename?: 'TaskDates';
   type?: Maybe<TaskDatesTypeEnum>;
+  duration?: Maybe<Scalars['Int']>;
+  start?: Maybe<Scalars['Date']>;
+  due?: Maybe<Scalars['Date']>;
+  workOnWeekends?: Maybe<Scalars['Boolean']>;
 };
 
 export enum TaskDatesTypeEnum {
@@ -687,38 +642,205 @@ export enum TaskDatesTypeEnum {
   Planned = 'Planned'
 }
 
-
-export type ContactFindManyFilter = {
-  me?: Maybe<Scalars['Boolean']>;
-  metadata?: Maybe<KeyValueInput>;
-  deleted?: Maybe<Scalars['Boolean']>;
-};
-
-export type Dependency = {
-  __typename?: 'Dependency';
-  id: Scalars['DependencyID'];
-  predecessorId: Scalars['TaskID'];
-  successorId: Scalars['TaskID'];
-  relationType: DependencyRelationEnum;
-};
-
-
-export enum DependencyRelationEnum {
-  StartToStart = 'StartToStart',
-  StartToFinish = 'StartToFinish',
-  FinishToStart = 'FinishToStart',
-  FinishToFinish = 'FinishToFinish'
+export enum TreeScopeEnum {
+  WsRoot = 'WsRoot',
+  RbRoot = 'RbRoot',
+  WsFolder = 'WsFolder',
+  RbFolder = 'RbFolder',
+  WsTask = 'WsTask',
+  RbTask = 'RbTask'
 }
 
-export type FolderFindManyFilter = {
-  permalink?: Maybe<Scalars['String']>;
+
+
+export type CustomFieldValue = {
+  __typename?: 'CustomFieldValue';
+  id: Scalars['CustomFieldID'];
+  value?: Maybe<Scalars['String']>;
+  entity?: Maybe<CustomField>;
+};
+
+export type Folder = {
+  __typename?: 'Folder';
+  id: Scalars['FolderID'];
+  title: Scalars['String'];
+  color?: Maybe<ColorEnum>;
+  childIds?: Maybe<Array<Scalars['FolderID']>>;
+  scope: TreeScopeEnum;
+  project?: Maybe<ProjectDetails>;
+  space?: Maybe<Scalars['Boolean']>;
+  metadata?: Maybe<Array<KeyValue>>;
+  hasAttachments?: Maybe<Scalars['Boolean']>;
+  attachmentCount?: Maybe<Scalars['Int']>;
+  description?: Maybe<Scalars['String']>;
+  briefDescription?: Maybe<Scalars['String']>;
+  customFields?: Maybe<Array<CustomField>>;
+  customColumnIds?: Maybe<Array<Scalars['CustomFieldID']>>;
+  superParentIds?: Maybe<Array<Scalars['FolderID']>>;
+  contractType?: Maybe<ProjectContractTypeEnum>;
+  childs?: Maybe<Array<Folder>>;
+  superParents?: Maybe<Array<Folder>>;
+  tasks?: Maybe<Array<Task>>;
+  comments?: Maybe<Array<Comment>>;
+  timelogs?: Maybe<Array<Timelog>>;
+  attachments?: Maybe<Array<Attachment>>;
+  approvals?: Maybe<Array<Approval>>;
+};
+
+
+export type FolderTasksArgs = {
+  filter?: Maybe<TaskFilterByRelation>;
+  sort?: Maybe<TaskFindManySortEnum>;
+  limit?: Maybe<Scalars['Int']>;
+  pageSize?: Maybe<Scalars['Int']>;
+  nextPageToken?: Maybe<Scalars['String']>;
+};
+
+
+export type FolderCommentsArgs = {
+  limit?: Maybe<Scalars['Int']>;
+  plainText?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type FolderTimelogsArgs = {
+  filter?: Maybe<TimelogFilterByRelation>;
+  plainText?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type FolderAttachmentsArgs = {
+  filter?: Maybe<AttachmentFilterByRelation>;
+  versions?: Maybe<Scalars['Boolean']>;
+};
+
+export enum ColorEnum {
+  None = 'None',
+  Person = 'Person',
+  Purple1 = 'Purple1',
+  Purple2 = 'Purple2',
+  Purple3 = 'Purple3',
+  Purple4 = 'Purple4',
+  Indigo1 = 'Indigo1',
+  Indigo2 = 'Indigo2',
+  Indigo3 = 'Indigo3',
+  Indigo4 = 'Indigo4',
+  DarkBlue1 = 'DarkBlue1',
+  DarkBlue2 = 'DarkBlue2',
+  DarkBlue3 = 'DarkBlue3',
+  DarkBlue4 = 'DarkBlue4',
+  Blue1 = 'Blue1',
+  Blue2 = 'Blue2',
+  Blue3 = 'Blue3',
+  Blue4 = 'Blue4',
+  Turquoise1 = 'Turquoise1',
+  Turquoise2 = 'Turquoise2',
+  Turquoise3 = 'Turquoise3',
+  Turquoise4 = 'Turquoise4',
+  DarkCyan1 = 'DarkCyan1',
+  DarkCyan2 = 'DarkCyan2',
+  DarkCyan3 = 'DarkCyan3',
+  DarkCyan4 = 'DarkCyan4',
+  Green1 = 'Green1',
+  Green2 = 'Green2',
+  Green3 = 'Green3',
+  Green4 = 'Green4',
+  YellowGreen1 = 'YellowGreen1',
+  YellowGreen2 = 'YellowGreen2',
+  YellowGreen3 = 'YellowGreen3',
+  YellowGreen4 = 'YellowGreen4',
+  Yellow1 = 'Yellow1',
+  Yellow2 = 'Yellow2',
+  Yellow3 = 'Yellow3',
+  Yellow4 = 'Yellow4',
+  Orange1 = 'Orange1',
+  Orange2 = 'Orange2',
+  Orange3 = 'Orange3',
+  Orange4 = 'Orange4',
+  Red1 = 'Red1',
+  Red2 = 'Red2',
+  Red3 = 'Red3',
+  Red4 = 'Red4',
+  Pink1 = 'Pink1',
+  Pink2 = 'Pink2',
+  Pink3 = 'Pink3',
+  Pink4 = 'Pink4',
+  Gray1 = 'Gray1',
+  Gray2 = 'Gray2',
+  Gray3 = 'Gray3'
+}
+
+export type ProjectDetails = {
+  __typename?: 'ProjectDetails';
+  authorId?: Maybe<Scalars['ContactID']>;
+  ownerIds?: Maybe<Array<Scalars['ContactID']>>;
+  status?: Maybe<ProjectStatusEnum>;
+  customStatusId?: Maybe<Scalars['CustomStatusID']>;
+  startDate?: Maybe<Scalars['String']>;
+  endDate?: Maybe<Scalars['String']>;
+  createdDate?: Maybe<Scalars['Date']>;
+  completedDate?: Maybe<Scalars['Date']>;
+  contractType?: Maybe<ProjectContractTypeEnum>;
+  author?: Maybe<Contact>;
+  owners?: Maybe<Array<Contact>>;
+};
+
+export enum ProjectStatusEnum {
+  Green = 'Green',
+  Yellow = 'Yellow',
+  Red = 'Red',
+  Completed = 'Completed',
+  OnHold = 'OnHold',
+  Cancelled = 'Cancelled',
+  Custom = 'Custom'
+}
+
+export enum ProjectContractTypeEnum {
+  Billable = 'Billable',
+  NonBillable = 'NonBillable'
+}
+
+export type TaskFilterByRelation = {
   descendants?: Maybe<Scalars['Boolean']>;
+  title?: Maybe<Scalars['String']>;
+  status?: Maybe<TaskStatusEnum>;
+  importance?: Maybe<TaskImportanceEnum>;
+  startDate?: Maybe<DateTimeRangeEqualInput>;
+  dueDate?: Maybe<DateTimeRangeEqualInput>;
+  scheduledDate?: Maybe<DateRangeEqualInput>;
+  createdDate?: Maybe<DateTimeRangeInput>;
+  updatedDate?: Maybe<DateTimeRangeInput>;
+  completedDate?: Maybe<DateTimeRangeInput>;
+  authors?: Maybe<Array<Scalars['ContactID']>>;
+  responsibles?: Maybe<Array<Scalars['ContactID']>>;
+  permalink?: Maybe<Scalars['String']>;
+  type?: Maybe<TaskDatesTypeEnum>;
+  subTasks?: Maybe<Scalars['Boolean']>;
+  customStatuses?: Maybe<Scalars['CustomStatusID']>;
   metadata?: Maybe<KeyValueInput>;
   customField?: Maybe<CustomFieldFilterInput>;
-  updatedDate?: Maybe<DateTimeRangeInput>;
-  project?: Maybe<Scalars['Boolean']>;
-  deleted?: Maybe<Scalars['Boolean']>;
-  contractTypes?: Maybe<ProjectContractTypeEnum>;
+};
+
+export type DateTimeRangeEqualInput = {
+  start?: Maybe<Scalars['Date']>;
+  end?: Maybe<Scalars['Date']>;
+  equal?: Maybe<Scalars['Date']>;
+};
+
+export type DateRangeEqualInput = {
+  start?: Maybe<Scalars['String']>;
+  end?: Maybe<Scalars['String']>;
+  equal?: Maybe<Scalars['String']>;
+};
+
+export type DateTimeRangeInput = {
+  start?: Maybe<Scalars['Date']>;
+  end?: Maybe<Scalars['Date']>;
+};
+
+export type KeyValueInput = {
+  key: Scalars['String'];
+  value?: Maybe<Scalars['String']>;
 };
 
 export type CustomFieldFilterInput = {
@@ -747,106 +869,7 @@ export enum CustomFieldComparatorEnum {
   ContainsAny = 'ContainsAny'
 }
 
-export type Group = {
-  __typename?: 'Group';
-  id: Scalars['GroupID'];
-  accountId: Scalars['AccountID'];
-  account?: Maybe<Account>;
-  title?: Maybe<Scalars['String']>;
-  memberIds?: Maybe<Array<Scalars['ContactID']>>;
-  members?: Maybe<Array<Maybe<Contact>>>;
-  childIds?: Maybe<Array<Scalars['ContactID']>>;
-  childs?: Maybe<Array<Maybe<Contact>>>;
-  parentIds?: Maybe<Array<Scalars['ContactID']>>;
-  parents?: Maybe<Array<Contact>>;
-  avatarUrl?: Maybe<Scalars['String']>;
-  myTeam?: Maybe<Scalars['Boolean']>;
-  metadata?: Maybe<Array<KeyValue>>;
-};
-
-
-export type GroupFindManyFilter = {
-  metadata?: Maybe<KeyValueInput>;
-};
-
-export type Invitation = {
-  __typename?: 'Invitation';
-  id: Scalars['InvitationID'];
-  accountId: Scalars['AccountID'];
-  account?: Maybe<Account>;
-  firstName?: Maybe<Scalars['String']>;
-  lastName?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
-  status?: Maybe<InvitationStatusEnum>;
-  inviterUserId?: Maybe<Scalars['ContactID']>;
-  inviterUser?: Maybe<User>;
-  invitationDate?: Maybe<Scalars['String']>;
-  resolvedDate?: Maybe<Scalars['String']>;
-  role?: Maybe<UserRoleEnum>;
-  external?: Maybe<Scalars['Boolean']>;
-};
-
-
-export enum InvitationStatusEnum {
-  Pending = 'Pending',
-  Accepted = 'Accepted',
-  Declined = 'Declined',
-  Cancelled = 'Cancelled'
-}
-
-export type Space = {
-  __typename?: 'Space';
-  id: Scalars['SpaceID'];
-  title?: Maybe<Scalars['String']>;
-  avatarUrl?: Maybe<Scalars['String']>;
-  accessType?: Maybe<SpaceAccessTypeEnum>;
-  archived?: Maybe<Scalars['Boolean']>;
-  tasks?: Maybe<Array<Task>>;
-};
-
-
-export enum SpaceAccessTypeEnum {
-  Personal = 'Personal',
-  Private = 'Private',
-  Public = 'Public'
-}
-
-export type SpaceFindManyFilter = {
-  withArchived?: Maybe<Scalars['Boolean']>;
-  userIsMember?: Maybe<Scalars['Boolean']>;
-};
-
-export type TaskFindManyFilter = {
-  folderId?: Maybe<Scalars['String']>;
-  spaceId?: Maybe<Scalars['String']>;
-  title?: Maybe<Scalars['String']>;
-  status?: Maybe<TaskStatusEnum>;
-  importance?: Maybe<TaskImportanceEnum>;
-  startDate?: Maybe<DateTimeRangeEqualInput>;
-  dueDate?: Maybe<DateTimeRangeEqualInput>;
-  scheduledDate?: Maybe<DateRangeEqualInput>;
-  createdDate?: Maybe<DateTimeRangeInput>;
-  updatedDate?: Maybe<DateTimeRangeInput>;
-  completedDate?: Maybe<DateTimeRangeInput>;
-  authors?: Maybe<Array<Maybe<Scalars['ContactID']>>>;
-  responsibles?: Maybe<Array<Maybe<Scalars['ContactID']>>>;
-  type?: Maybe<TaskDatesTypeEnum>;
-  metadata?: Maybe<Scalars['JSON']>;
-};
-
-export type DateTimeRangeEqualInput = {
-  start?: Maybe<Scalars['Date']>;
-  end?: Maybe<Scalars['Date']>;
-  equal?: Maybe<Scalars['Date']>;
-};
-
-export type DateRangeEqualInput = {
-  start?: Maybe<Scalars['String']>;
-  end?: Maybe<Scalars['String']>;
-  equal?: Maybe<Scalars['String']>;
-};
-
-export enum TaskFindManySort {
+export enum TaskFindManySortEnum {
   CreatedDateAsc = 'CREATED_DATE_ASC',
   CreatedDateDesc = 'CREATED_DATE_DESC',
   UpdatedDateAsc = 'UPDATED_DATE_ASC',
@@ -865,26 +888,35 @@ export enum TaskFindManySort {
   LastAccessDateDesc = 'LAST_ACCESS_DATE_DESC'
 }
 
+export type Comment = {
+  __typename?: 'Comment';
+  id: Scalars['CommentID'];
+  authorId: Scalars['ContactID'];
+  text: Scalars['String'];
+  createdDate: Scalars['Date'];
+  taskId?: Maybe<Scalars['TaskID']>;
+  folderId?: Maybe<Scalars['FolderID']>;
+  author?: Maybe<Contact>;
+  task?: Maybe<Task>;
+  folder?: Maybe<Folder>;
+};
+
+
 export type Timelog = {
   __typename?: 'Timelog';
   id: Scalars['TimelogID'];
   taskId: Scalars['TaskID'];
   userId: Scalars['ContactID'];
-  categoryId?: Maybe<Scalars['TimelogCategoryID']>;
+  categoryId?: Maybe<TimelogCategory>;
   billingType?: Maybe<BillingTypeEnum>;
   hours: Scalars['Float'];
   createdDate: Scalars['Date'];
   updatedDate: Scalars['Date'];
   trackedDate: Scalars['DateYMD'];
   comment?: Maybe<Scalars['String']>;
+  task?: Maybe<Task>;
+  user?: Maybe<Contact>;
 };
-
-
-
-export enum BillingTypeEnum {
-  Billable = 'Billable',
-  NonBillable = 'NonBillable'
-}
 
 
 export type TimelogCategory = {
@@ -893,6 +925,535 @@ export type TimelogCategory = {
   name: Scalars['String'];
   order: Scalars['Int'];
   hidden: Scalars['Boolean'];
+  timelogs?: Maybe<Array<Timelog>>;
+};
+
+
+export type TimelogCategoryTimelogsArgs = {
+  filter?: Maybe<TimelogFilterByRelation>;
+  plainText?: Maybe<Scalars['Boolean']>;
+};
+
+
+export type TimelogFilterByRelation = {
+  createdDate?: Maybe<DateTimeRangeEqualInput>;
+  updatedDate?: Maybe<DateTimeRangeEqualInput>;
+  trackedDate?: Maybe<DateTimeRangeEqualInput>;
+  me?: Maybe<Scalars['Boolean']>;
+  descendants?: Maybe<Scalars['Boolean']>;
+  subTasks?: Maybe<Scalars['Boolean']>;
+  timelogCategories?: Maybe<Scalars['TimelogCategoryID']>;
+};
+
+export enum BillingTypeEnum {
+  Billable = 'Billable',
+  NonBillable = 'NonBillable'
+}
+
+export type Attachment = {
+  __typename?: 'Attachment';
+  id: Scalars['AttachmentID'];
+  authorId: Scalars['ContactID'];
+  name: Scalars['String'];
+  createdDate: Scalars['Date'];
+  version: Scalars['Int'];
+  type: AttachmentTypeEnum;
+  contentType: Scalars['String'];
+  size: Scalars['Int'];
+  taskId?: Maybe<Scalars['TaskID']>;
+  folderId?: Maybe<Scalars['FolderID']>;
+  commentId?: Maybe<Scalars['CommentID']>;
+  currentAttachmentId?: Maybe<Scalars['AttachmentID']>;
+  previewUrl?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']>;
+  reviewIds?: Maybe<Array<Scalars['ReviewID']>>;
+  width?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']>;
+  author?: Maybe<Contact>;
+  task?: Maybe<Task>;
+  folder?: Maybe<Folder>;
+  comment?: Maybe<Comment>;
+};
+
+
+export enum AttachmentTypeEnum {
+  Wrike = 'Wrike',
+  Google = 'Google',
+  DropBox = 'DropBox',
+  Box = 'Box',
+  OneDrive = 'OneDrive',
+  External = 'External',
+  Dam = 'DAM'
+}
+
+
+export type AttachmentFilterByRelation = {
+  createdDate?: Maybe<DateTimeRangeInput>;
+};
+
+export type Approval = {
+  __typename?: 'Approval';
+  id: Scalars['ApprovalID'];
+  taskId?: Maybe<Scalars['TaskID']>;
+  folderId?: Maybe<Scalars['FolderID']>;
+  authorId: Scalars['ContactID'];
+  title: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  updatedDate: Scalars['Date'];
+  dueDate?: Maybe<Scalars['DateYMD']>;
+  decisions?: Maybe<Array<ApprovalDecision>>;
+  attachmentIds?: Maybe<Array<Scalars['AttachmentID']>>;
+  type: ApprovalTypeEnum;
+  autoFinishOnApprove: Scalars['Boolean'];
+  autoFinishOnReject: Scalars['Boolean'];
+  finished: Scalars['Boolean'];
+  finisherId?: Maybe<Scalars['ContactID']>;
+  task?: Maybe<Task>;
+  folder?: Maybe<Folder>;
+  author?: Maybe<Contact>;
+  attachments?: Maybe<Array<Attachment>>;
+  finisher?: Maybe<Contact>;
+};
+
+
+export type ApprovalDecision = {
+  __typename?: 'ApprovalDecision';
+  approverId: Scalars['ContactID'];
+  comment: Scalars['String'];
+  status: ApprovalDecisionStatusEnum;
+  updatedDate: Scalars['Date'];
+  approver?: Maybe<Array<Contact>>;
+};
+
+export enum ApprovalDecisionStatusEnum {
+  Pending = 'Pending',
+  Approved = 'Approved',
+  Rejected = 'Rejected'
+}
+
+export enum ApprovalTypeEnum {
+  Regular = 'Regular',
+  FilesOnly = 'FilesOnly'
+}
+
+export type Dependency = {
+  __typename?: 'Dependency';
+  id: Scalars['DependencyID'];
+  predecessorId: Scalars['TaskID'];
+  successorId: Scalars['TaskID'];
+  relationType: DependencyRelationEnum;
+  predecessor?: Maybe<Task>;
+  successor?: Maybe<Task>;
+};
+
+export enum DependencyRelationEnum {
+  StartToStart = 'StartToStart',
+  StartToFinish = 'StartToFinish',
+  FinishToStart = 'FinishToStart',
+  FinishToFinish = 'FinishToFinish'
+}
+
+export type WorkScheduleExclusionFilterByRelation = {
+  dateRange?: Maybe<DateRangeEqualInput>;
+};
+
+export type ApprovalFilterByRelationApproverId = {
+  statuses?: Maybe<ApprovalFinalStatusEnum>;
+  updatedDate?: Maybe<DateTimeRangeInput>;
+  pendingApprovers?: Maybe<Array<Scalars['ContactID']>>;
+};
+
+export enum ApprovalFinalStatusEnum {
+  Pending = 'Pending',
+  Approved = 'Approved',
+  Rejected = 'Rejected',
+  Cancelled = 'Cancelled',
+  Draft = 'Draft'
+}
+
+export type ApprovalFilterByRelationPendingApproverId = {
+  statuses?: Maybe<ApprovalFinalStatusEnum>;
+  updatedDate?: Maybe<DateTimeRangeInput>;
+  approvers?: Maybe<Array<Scalars['ContactID']>>;
+};
+
+export type AccountFilter = {
+  metadata?: Maybe<KeyValueInput>;
+};
+
+export type ApprovalFindManyFilter = {
+  statuses?: Maybe<ApprovalFinalStatusEnum>;
+  updatedDate?: Maybe<DateTimeRangeInput>;
+  approvers?: Maybe<Array<Scalars['ContactID']>>;
+  pendingApprovers?: Maybe<Array<Scalars['ContactID']>>;
+};
+
+export type AsyncJob = {
+  __typename?: 'AsyncJob';
+  id: Scalars['AsyncJobID'];
+  status: AsyncJobStatusEnum;
+  progressPercent?: Maybe<Scalars['Float']>;
+  totalCount?: Maybe<Scalars['Int']>;
+  processedCount?: Maybe<Scalars['Int']>;
+  type: AsyncJobTypeEnum;
+  result?: Maybe<Scalars['JSON']>;
+  errorMessage?: Maybe<Scalars['String']>;
+};
+
+
+export enum AsyncJobStatusEnum {
+  InQueue = 'InQueue',
+  InProgress = 'InProgress',
+  Completed = 'Completed',
+  Failed = 'Failed'
+}
+
+export enum AsyncJobTypeEnum {
+  CopyFolder = 'CopyFolder'
+}
+
+export type AttachmentFindManyFilter = {
+  folderId?: Maybe<Scalars['FolderID']>;
+  taskId?: Maybe<Scalars['TaskID']>;
+  createdDate?: Maybe<DateTimeRangeInput>;
+};
+
+export type AuditLog = {
+  __typename?: 'AuditLog';
+  id: Scalars['AuditLogID'];
+  operation: AuditLogOperationEnum;
+  userId: Scalars['ContactID'];
+  userEmail?: Maybe<Scalars['String']>;
+  eventDate?: Maybe<Scalars['Date']>;
+  ipAddress?: Maybe<Scalars['String']>;
+  objectType?: Maybe<AuditLogObjectTypeEnum>;
+  objectName?: Maybe<Scalars['String']>;
+  objectId?: Maybe<Scalars['String']>;
+  details?: Maybe<Scalars['JSON']>;
+  user?: Maybe<Contact>;
+};
+
+
+export enum AuditLogOperationEnum {
+  UserLoggedIn = 'UserLoggedIn',
+  UserFailLogin = 'UserFailLogin',
+  UserLogout = 'UserLogout',
+  AdminLoggedInAsUser = 'AdminLoggedInAsUser',
+  UserRoleChanged = 'UserRoleChanged',
+  UserAdminPermissionsChanged = 'UserAdminPermissionsChanged',
+  UserGrantAdmin = 'UserGrantAdmin',
+  UserRevokeAdmin = 'UserRevokeAdmin',
+  UserDeactivated = 'UserDeactivated',
+  UserActivated = 'UserActivated',
+  UsersAndGroupsExported = 'UsersAndGroupsExported',
+  InvitationSend = 'InvitationSend',
+  InvitationAccepted = 'InvitationAccepted',
+  AttachUploaded = 'AttachUploaded',
+  AttachDeleted = 'AttachDeleted',
+  GroupCreated = 'GroupCreated',
+  GroupMemberAdded = 'GroupMemberAdded',
+  GroupMemberRemoved = 'GroupMemberRemoved',
+  GroupRenamed = 'GroupRenamed',
+  GroupDeleted = 'GroupDeleted',
+  GroupParentAdded = 'GroupParentAdded',
+  GroupParentRemoved = 'GroupParentRemoved',
+  TaskParentAdded = 'TaskParentAdded',
+  TaskParentRemoved = 'TaskParentRemoved',
+  TaskShared = 'TaskShared',
+  TaskUnshared = 'TaskUnshared',
+  TaskAssigned = 'TaskAssigned',
+  TaskUnassigned = 'TaskUnassigned',
+  TaskDeleted = 'TaskDeleted',
+  TaskErased = 'TaskErased',
+  TaskCommentChanged = 'TaskCommentChanged',
+  TaskCommentDeleted = 'TaskCommentDeleted',
+  RecycleBinErased = 'RecycleBinErased',
+  TaskStatusChanged = 'TaskStatusChanged',
+  TaskDuplication = 'TaskDuplication',
+  UserDeleted = 'UserDeleted',
+  UserRestored = 'UserRestored',
+  ApproverAdded = 'ApproverAdded',
+  ApproverRemoved = 'ApproverRemoved',
+  ApprovalDescriptionChanged = 'ApprovalDescriptionChanged',
+  ApprovalDueDateChanged = 'ApprovalDueDateChanged',
+  ApprovalCreated = 'ApprovalCreated',
+  ApprovalFinished = 'ApprovalFinished',
+  ApprovalCanceled = 'ApprovalCanceled',
+  ApprovalDecisionMade = 'ApprovalDecisionMade',
+  CustomFieldCreated = 'CustomFieldCreated',
+  CustomFieldModified = 'CustomFieldModified',
+  CustomFieldRemoved = 'CustomFieldRemoved',
+  CustomFieldRestored = 'CustomFieldRestored',
+  CustomFieldAddedToFolder = 'CustomFieldAddedToFolder',
+  CustomFieldRemovedFromFolder = 'CustomFieldRemovedFromFolder',
+  SecondFactorEnabled = 'SecondFactorEnabled',
+  SecondFactorDisabled = 'SecondFactorDisabled',
+  SecondFactorUsageReportCreated = 'SecondFactorUsageReportCreated',
+  AuditReportCreated = 'AuditReportCreated',
+  AccountBackupCreated = 'AccountBackupCreated',
+  AccountModified = 'AccountModified',
+  AccountDeleted = 'AccountDeleted',
+  Oauth2AccessGranted = 'Oauth2AccessGranted',
+  Oauth2AccessRevoked = 'Oauth2AccessRevoked',
+  FeedCreated = 'FeedCreated',
+  ExcelExportCreated = 'ExcelExportCreated',
+  AccessAuditReportCsvExport = 'AccessAuditReportCsvExport',
+  UserProfileUpdated = 'UserProfileUpdated',
+  PasswordChanged = 'PasswordChanged',
+  PasswordPolicyModified = 'PasswordPolicyModified',
+  ApprovedIpRangesOrSubnetsChanged = 'ApprovedIpRangesOrSubnetsChanged',
+  InvitationPolicyChanged = 'InvitationPolicyChanged',
+  RequestFormCreated = 'RequestFormCreated',
+  RequestFormModified = 'RequestFormModified',
+  RequestFormDeleted = 'RequestFormDeleted',
+  AccessRoleCreated = 'AccessRoleCreated',
+  AccessRoleModified = 'AccessRoleModified',
+  AccessRoleDeleted = 'AccessRoleDeleted',
+  WorkflowCreated = 'WorkflowCreated',
+  WorkflowDeleted = 'WorkflowDeleted',
+  WorkflowModified = 'WorkflowModified',
+  CalendarExternalLinksDeactivated = 'CalendarExternalLinksDeactivated',
+  CalendarExternalLinksActivated = 'CalendarExternalLinksActivated',
+  CalendarExternalLinkCreated = 'CalendarExternalLinkCreated',
+  CalendarExternalLinkDeleted = 'CalendarExternalLinkDeleted',
+  GuestReviewerInvited = 'GuestReviewerInvited',
+  GuestReviewerChanged = 'GuestReviewerChanged',
+  GuestReviewerRevoked = 'GuestReviewerRevoked',
+  GuestReviewAccepted = 'GuestReviewAccepted',
+  GuestReviewRejected = 'GuestReviewRejected',
+  GuestReviewAccountSettingsChanged = 'GuestReviewAccountSettingsChanged',
+  GanttSnapshotCreated = 'GanttSnapshotCreated',
+  GanttSnapshotDeleted = 'GanttSnapshotDeleted',
+  UserTaskGroupRolesChanged = 'UserTaskGroupRolesChanged',
+  AccountDataExportRequested = 'AccountDataExportRequested',
+  AccountDataExportGenerated = 'AccountDataExportGenerated',
+  SamlSsoEnabled = 'SamlSSOEnabled',
+  SamlSsoDisabled = 'SamlSSODisabled',
+  SamlSsoSettingsChanged = 'SamlSSOSettingsChanged',
+  SamlSsoMetadataChanged = 'SamlSSOMetadataChanged',
+  SamlClearPasswordForSamlUsers = 'SamlClearPasswordForSamlUsers',
+  AccessCodeGenerated = 'AccessCodeGenerated',
+  AccessCodeAccepted = 'AccessCodeAccepted',
+  AccessCodeDeclined = 'AccessCodeDeclined',
+  ApprovedDomainsChanged = 'ApprovedDomainsChanged',
+  SpaceCreated = 'SpaceCreated',
+  SpaceDeleted = 'SpaceDeleted',
+  SpaceArchivedUnarchived = 'SpaceArchivedUnarchived',
+  UserJoinedSpace = 'UserJoinedSpace',
+  UserLeftSpace = 'UserLeftSpace'
+}
+
+export enum AuditLogObjectTypeEnum {
+  User = 'User',
+  Account = 'Account',
+  Task = 'Task',
+  Folder = 'Folder',
+  Project = 'Project',
+  Comment = 'Comment',
+  Attachment = 'Attachment',
+  Invitation = 'Invitation',
+  Group = 'Group',
+  CustomField = 'CustomField',
+  Oauth2Client = 'Oauth2Client',
+  RequestForm = 'RequestForm',
+  Workflow = 'Workflow',
+  CalendarExternalLink = 'CalendarExternalLink',
+  WorkspaceSnapshot = 'WorkspaceSnapshot',
+  DataExport = 'DataExport',
+  AccessRole = 'AccessRole',
+  Space = 'Space'
+}
+
+export type AuditLogFilter = {
+  eventDate?: Maybe<DateTimeRangeInput>;
+  operations?: Maybe<AuditLogOperationEnum>;
+};
+
+export type Color = {
+  __typename?: 'Color';
+  name: Scalars['String'];
+  hex: Scalars['String'];
+};
+
+export type CommentFindManyFilter = {
+  folderId?: Maybe<Scalars['FolderID']>;
+  taskId?: Maybe<Scalars['TaskID']>;
+  updatedDate?: Maybe<DateTimeRangeInput>;
+};
+
+export type ContactFindManyFilter = {
+  me?: Maybe<Scalars['Boolean']>;
+  metadata?: Maybe<KeyValueInput>;
+  deleted?: Maybe<Scalars['Boolean']>;
+};
+
+export type DataExport = {
+  __typename?: 'DataExport';
+  id: Scalars['DataExportID'];
+  completedDate?: Maybe<Scalars['Date']>;
+  status: DataExportStatusEnum;
+  resources?: Maybe<Array<DataExportResource>>;
+};
+
+
+export enum DataExportStatusEnum {
+  Scheduled = 'Scheduled',
+  InProgress = 'InProgress',
+  Completed = 'Completed',
+  Cancelled = 'Cancelled',
+  Failed = 'Failed'
+}
+
+export type DataExportResource = {
+  __typename?: 'DataExportResource';
+  name: Scalars['String'];
+  url: Scalars['String'];
+};
+
+export type DataExportSchema = {
+  __typename?: 'DataExportSchema';
+  id: Scalars['String'];
+  alias: Scalars['String'];
+  columns?: Maybe<DataExportSchemaColumn>;
+};
+
+export type DataExportSchemaColumn = {
+  __typename?: 'DataExportSchemaColumn';
+  id?: Maybe<Scalars['String']>;
+  alias?: Maybe<Scalars['String']>;
+  dataType?: Maybe<Scalars['String']>;
+  foreignKey?: Maybe<Scalars['JSON']>;
+};
+
+export enum DataSchemaVersion {
+  V0 = 'V0',
+  V1 = 'V1'
+}
+
+export type FolderFindManyFilter = {
+  permalink?: Maybe<Scalars['String']>;
+  descendants?: Maybe<Scalars['Boolean']>;
+  metadata?: Maybe<KeyValueInput>;
+  customField?: Maybe<CustomFieldFilterInput>;
+  updatedDate?: Maybe<DateTimeRangeInput>;
+  project?: Maybe<Scalars['Boolean']>;
+  deleted?: Maybe<Scalars['Boolean']>;
+  contractTypes?: Maybe<ProjectContractTypeEnum>;
+};
+
+export type Group = {
+  __typename?: 'Group';
+  id: Scalars['GroupID'];
+  accountId: Scalars['AccountID'];
+  title?: Maybe<Scalars['String']>;
+  memberIds?: Maybe<Array<Scalars['ContactID']>>;
+  childIds?: Maybe<Array<Scalars['ContactID']>>;
+  parentIds?: Maybe<Array<Scalars['ContactID']>>;
+  avatarUrl?: Maybe<Scalars['String']>;
+  myTeam?: Maybe<Scalars['Boolean']>;
+  metadata?: Maybe<Array<KeyValue>>;
+  account?: Maybe<Account>;
+  members?: Maybe<Array<Contact>>;
+  childs?: Maybe<Array<Contact>>;
+  parents?: Maybe<Array<Contact>>;
+};
+
+
+export type GroupFindManyFilter = {
+  metadata?: Maybe<KeyValueInput>;
+};
+
+export type Invitation = {
+  __typename?: 'Invitation';
+  id: Scalars['InvitationID'];
+  accountId: Scalars['AccountID'];
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  status?: Maybe<InvitationStatusEnum>;
+  inviterUserId?: Maybe<Scalars['ContactID']>;
+  invitationDate?: Maybe<Scalars['String']>;
+  resolvedDate?: Maybe<Scalars['String']>;
+  role?: Maybe<UserRoleEnum>;
+  external?: Maybe<Scalars['Boolean']>;
+  account?: Maybe<Account>;
+  inviterUser?: Maybe<Contact>;
+};
+
+
+export enum InvitationStatusEnum {
+  Pending = 'Pending',
+  Accepted = 'Accepted',
+  Declined = 'Declined',
+  Cancelled = 'Cancelled'
+}
+
+export type Space = {
+  __typename?: 'Space';
+  id: Scalars['SpaceID'];
+  title?: Maybe<Scalars['String']>;
+  avatarUrl?: Maybe<Scalars['String']>;
+  accessType?: Maybe<SpaceAccessTypeEnum>;
+  archived?: Maybe<Scalars['Boolean']>;
+  tasks?: Maybe<Array<Task>>;
+  folders?: Maybe<Array<Folder>>;
+};
+
+
+export type SpaceTasksArgs = {
+  filter?: Maybe<TaskFilterByRelation>;
+  sort?: Maybe<TaskFindManySortEnum>;
+  limit?: Maybe<Scalars['Int']>;
+  pageSize?: Maybe<Scalars['Int']>;
+  nextPageToken?: Maybe<Scalars['String']>;
+};
+
+
+export type SpaceFoldersArgs = {
+  filter?: Maybe<FolderFilterByRelationSpaceId>;
+};
+
+
+export enum SpaceAccessTypeEnum {
+  Personal = 'Personal',
+  Private = 'Private',
+  Public = 'Public'
+}
+
+export type FolderFilterByRelationSpaceId = {
+  descendants?: Maybe<Scalars['Boolean']>;
+  metadata?: Maybe<KeyValueInput>;
+  customField?: Maybe<CustomFieldFilterInput>;
+  updatedDate?: Maybe<DateTimeRangeInput>;
+  project?: Maybe<Scalars['Boolean']>;
+  deleted?: Maybe<Scalars['Boolean']>;
+};
+
+export type SpaceFindManyFilter = {
+  withArchived?: Maybe<Scalars['Boolean']>;
+  userIsMember?: Maybe<Scalars['Boolean']>;
+};
+
+export type TaskFindManyFilter = {
+  descendants?: Maybe<Scalars['Boolean']>;
+  title?: Maybe<Scalars['String']>;
+  status?: Maybe<TaskStatusEnum>;
+  importance?: Maybe<TaskImportanceEnum>;
+  startDate?: Maybe<DateTimeRangeEqualInput>;
+  dueDate?: Maybe<DateTimeRangeEqualInput>;
+  scheduledDate?: Maybe<DateRangeEqualInput>;
+  createdDate?: Maybe<DateTimeRangeInput>;
+  updatedDate?: Maybe<DateTimeRangeInput>;
+  completedDate?: Maybe<DateTimeRangeInput>;
+  authors?: Maybe<Array<Scalars['ContactID']>>;
+  responsibles?: Maybe<Array<Scalars['ContactID']>>;
+  type?: Maybe<TaskDatesTypeEnum>;
+  subTasks?: Maybe<Scalars['Boolean']>;
+  customStatuses?: Maybe<Scalars['CustomStatusID']>;
+  metadata?: Maybe<KeyValueInput>;
+  customField?: Maybe<CustomFieldFilterInput>;
+  folderId?: Maybe<Scalars['String']>;
+  spaceId?: Maybe<Scalars['String']>;
 };
 
 export type TimelogFindManyFilter = {
@@ -907,6 +1468,116 @@ export type TimelogFindManyFilter = {
   descendants: Scalars['Boolean'];
   subTasks: Scalars['Boolean'];
   timelogCategories?: Maybe<Array<Scalars['TimelogCategoryID']>>;
+};
+
+export type User = {
+  __typename?: 'User';
+  id: Scalars['ContactID'];
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+  profiles?: Maybe<Array<Maybe<User_Profiles>>>;
+  avatarUrl?: Maybe<Scalars['String']>;
+  timezone?: Maybe<Scalars['String']>;
+  locale?: Maybe<Scalars['String']>;
+  deleted?: Maybe<Scalars['Boolean']>;
+  me?: Maybe<Scalars['Boolean']>;
+  myTeam?: Maybe<Scalars['Boolean']>;
+  title?: Maybe<Scalars['String']>;
+  companyName?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
+  location?: Maybe<Scalars['String']>;
+  workScheduleId?: Maybe<Scalars['WorkScheduleID']>;
+  workSchedule?: Maybe<WorkSchedule>;
+  tasksAuthored?: Maybe<Array<Task>>;
+  tasksResponsible?: Maybe<Array<Task>>;
+  scheduleExclusions?: Maybe<Array<WorkScheduleExclusion>>;
+  approvals?: Maybe<Array<Approval>>;
+  approvalsPending?: Maybe<Array<Approval>>;
+};
+
+
+export type UserTasksAuthoredArgs = {
+  filter?: Maybe<TaskFilterByRelation>;
+  sort?: Maybe<TaskFindManySortEnum>;
+  limit?: Maybe<Scalars['Int']>;
+  pageSize?: Maybe<Scalars['Int']>;
+  nextPageToken?: Maybe<Scalars['String']>;
+};
+
+
+export type UserTasksResponsibleArgs = {
+  filter?: Maybe<TaskFilterByRelation>;
+  sort?: Maybe<TaskFindManySortEnum>;
+  limit?: Maybe<Scalars['Int']>;
+  pageSize?: Maybe<Scalars['Int']>;
+  nextPageToken?: Maybe<Scalars['String']>;
+};
+
+
+export type UserScheduleExclusionsArgs = {
+  filter?: Maybe<WorkScheduleExclusionFilterByRelation>;
+};
+
+
+export type UserApprovalsArgs = {
+  filter?: Maybe<ApprovalFilterByRelationApproverId>;
+  limit?: Maybe<Scalars['Int']>;
+  pageSize?: Maybe<Scalars['Int']>;
+  nextPageToken?: Maybe<Scalars['String']>;
+};
+
+
+export type UserApprovalsPendingArgs = {
+  filter?: Maybe<ApprovalFilterByRelationPendingApproverId>;
+  limit?: Maybe<Scalars['Int']>;
+  pageSize?: Maybe<Scalars['Int']>;
+  nextPageToken?: Maybe<Scalars['String']>;
+};
+
+export type User_Profiles = {
+  __typename?: 'User_Profiles';
+  accountId?: Maybe<Scalars['AccountID']>;
+  email?: Maybe<Scalars['String']>;
+  role?: Maybe<UserRoleEnum>;
+  external?: Maybe<Scalars['Boolean']>;
+  admin?: Maybe<Scalars['Boolean']>;
+  owner?: Maybe<Scalars['Boolean']>;
+  account?: Maybe<Account>;
+};
+
+export type UserScheduleExclusion = {
+  __typename?: 'UserScheduleExclusion';
+  id: Scalars['UserScheduleExclusionID'];
+  userId: Scalars['ContactID'];
+  fromDate: Scalars['DateYMD'];
+  toDate: Scalars['DateYMD'];
+  isWorkDays: Scalars['Boolean'];
+  exclusionType: UserScheduleExclusionEnum;
+  user?: Maybe<Contact>;
+};
+
+
+export enum UserScheduleExclusionEnum {
+  Overtime = 'Overtime',
+  VacationPto = 'VacationPTO',
+  OtherNonWorking = 'OtherNonWorking'
+}
+
+export type UserScheduleExclusionFilter = {
+  dateRange?: Maybe<DateRangeEqualInput>;
+  userIds?: Maybe<Array<Scalars['ContactID']>>;
+};
+
+export type Version = {
+  __typename?: 'Version';
+  major: Scalars['Int'];
+  minor: Scalars['Int'];
+  full?: Maybe<Scalars['String']>;
+};
+
+export type WorkScheduleExclusionFilter = {
+  dateRange?: Maybe<DateRangeEqualInput>;
 };
 
 export type Workflow = {
@@ -949,13 +1620,22 @@ export enum StatusColorEnum {
 export type Mutation = {
   __typename?: 'Mutation';
   accountSetMetadata?: Maybe<Account>;
+  approvalAddApprovers?: Maybe<Approval>;
+  approvalAddAttachments?: Maybe<Approval>;
+  approvalCancel?: Maybe<Approval>;
+  approvalCreateForFolder?: Maybe<Approval>;
+  approvalCreateForTask?: Maybe<Approval>;
+  approvalRemoveApprovers?: Maybe<Approval>;
+  approvalRemoveAttachments?: Maybe<Approval>;
+  approvalUpdate?: Maybe<Approval>;
   commentCreateForFolder?: Maybe<Comment>;
   commentCreateForTask?: Maybe<Comment>;
-  commentRemove?: Maybe<Folder>;
+  commentRemove?: Maybe<Comment>;
   commentUpdate?: Maybe<Comment>;
   contactUpdate?: Maybe<Contact>;
   customFieldCreate?: Maybe<CustomField>;
   customFieldUpdate?: Maybe<CustomField>;
+  dataExportRefresh?: Maybe<DataExport>;
   dependencyCreate?: Maybe<Dependency>;
   dependencyRemove?: Maybe<Dependency>;
   dependencyUpdate?: Maybe<Dependency>;
@@ -990,7 +1670,18 @@ export type Mutation = {
   timelogCreate?: Maybe<Timelog>;
   timelogRemove?: Maybe<Timelog>;
   timelogUpdate?: Maybe<Timelog>;
+  userScheduleExclusionCreate?: Maybe<UserScheduleExclusion>;
+  userScheduleExclusionRemove?: Maybe<UserScheduleExclusion>;
+  userScheduleExclusionUpdate?: Maybe<UserScheduleExclusion>;
   userUpdate?: Maybe<User>;
+  workScheduleAddUsers?: Maybe<WorkSchedule>;
+  workScheduleCreate?: Maybe<WorkSchedule>;
+  workScheduleExclusionCreate?: Maybe<WorkScheduleExclusion>;
+  workScheduleExclusionRemove?: Maybe<WorkScheduleExclusion>;
+  workScheduleExclusionUpdate?: Maybe<WorkScheduleExclusion>;
+  workScheduleRemove?: Maybe<WorkSchedule>;
+  workScheduleRemoveUsers?: Maybe<WorkSchedule>;
+  workScheduleUpdate?: Maybe<WorkSchedule>;
   workflowCreate?: Maybe<Workflow>;
   workflowUpdate?: Maybe<Workflow>;
 };
@@ -998,6 +1689,53 @@ export type Mutation = {
 
 export type MutationAccountSetMetadataArgs = {
   metadata: Array<KeyValueInput>;
+};
+
+
+export type MutationApprovalAddApproversArgs = {
+  id: Scalars['ApprovalID'];
+  approvers: Array<Scalars['ContactID']>;
+};
+
+
+export type MutationApprovalAddAttachmentsArgs = {
+  id: Scalars['ApprovalID'];
+  attachments: Array<Scalars['AttachmentID']>;
+};
+
+
+export type MutationApprovalCancelArgs = {
+  id: Scalars['ApprovalID'];
+};
+
+
+export type MutationApprovalCreateForFolderArgs = {
+  folderId: Scalars['FolderID'];
+  approval: ApprovalCreateInput;
+};
+
+
+export type MutationApprovalCreateForTaskArgs = {
+  taskId: Scalars['TaskID'];
+  approval: ApprovalCreateInput;
+};
+
+
+export type MutationApprovalRemoveApproversArgs = {
+  id: Scalars['ApprovalID'];
+  approvers: Array<Scalars['ContactID']>;
+};
+
+
+export type MutationApprovalRemoveAttachmentsArgs = {
+  id: Scalars['ApprovalID'];
+  attachments: Array<Scalars['AttachmentID']>;
+};
+
+
+export type MutationApprovalUpdateArgs = {
+  id: Scalars['ApprovalID'];
+  approval: ApprovalUpdateInput;
 };
 
 
@@ -1014,7 +1752,7 @@ export type MutationCommentCreateForTaskArgs = {
 
 
 export type MutationCommentRemoveArgs = {
-  id: Scalars['FolderID'];
+  id: Scalars['CommentID'];
 };
 
 
@@ -1237,9 +1975,70 @@ export type MutationTimelogUpdateArgs = {
 };
 
 
+export type MutationUserScheduleExclusionCreateArgs = {
+  exclusion: UserScheduleExclusionCreateInput;
+};
+
+
+export type MutationUserScheduleExclusionRemoveArgs = {
+  id: Scalars['UserScheduleExclusionID'];
+};
+
+
+export type MutationUserScheduleExclusionUpdateArgs = {
+  id: Scalars['UserScheduleExclusionID'];
+  exclusion: UserScheduleExclusionUpdateInput;
+};
+
+
 export type MutationUserUpdateArgs = {
   id: Scalars['ContactID'];
   profile?: Maybe<UpdateUserProfileInput>;
+};
+
+
+export type MutationWorkScheduleAddUsersArgs = {
+  id: Scalars['WorkScheduleID'];
+  userIds: Array<Scalars['ContactID']>;
+};
+
+
+export type MutationWorkScheduleCreateArgs = {
+  workschedule: WorkSchedulecreateInput;
+};
+
+
+export type MutationWorkScheduleExclusionCreateArgs = {
+  workScheduleId: Scalars['WorkScheduleID'];
+  exclusion: WorkScheduleExclusionCreateInput;
+};
+
+
+export type MutationWorkScheduleExclusionRemoveArgs = {
+  id: Scalars['WorkScheduleExclusionID'];
+};
+
+
+export type MutationWorkScheduleExclusionUpdateArgs = {
+  id: Scalars['WorkScheduleExclusionID'];
+  exclusion: WorkScheduleExclusionUpdateInput;
+};
+
+
+export type MutationWorkScheduleRemoveArgs = {
+  id: Scalars['WorkScheduleID'];
+};
+
+
+export type MutationWorkScheduleRemoveUsersArgs = {
+  id: Scalars['WorkScheduleID'];
+  userIds: Array<Scalars['ContactID']>;
+};
+
+
+export type MutationWorkScheduleUpdateArgs = {
+  id: Scalars['WorkScheduleID'];
+  workschedule: WorkScheduleUpdateInput;
 };
 
 
@@ -1251,6 +2050,22 @@ export type MutationWorkflowCreateArgs = {
 export type MutationWorkflowUpdateArgs = {
   id: Scalars['WorkflowID'];
   workflow: WorkflowUpdateInput;
+};
+
+export type ApprovalCreateInput = {
+  description?: Maybe<Scalars['String']>;
+  dueDate?: Maybe<Scalars['DateYMD']>;
+  approvers?: Maybe<Array<Scalars['ContactID']>>;
+  attachments?: Maybe<Array<Scalars['AttachmentID']>>;
+  autoFinishOnApprove?: Maybe<Scalars['Boolean']>;
+  autoFinishOnReject?: Maybe<Scalars['Boolean']>;
+};
+
+export type ApprovalUpdateInput = {
+  description?: Maybe<Scalars['String']>;
+  dueDate?: Maybe<Scalars['DateYMD']>;
+  autoFinishOnApprove: Scalars['Boolean'];
+  autoFinishOnReject: Scalars['Boolean'];
 };
 
 export type CommentInput = {
@@ -1441,10 +2256,51 @@ export type TimelogUpdateInput = {
   categoryId?: Maybe<Scalars['TimelogCategoryID']>;
 };
 
+export type UserScheduleExclusionCreateInput = {
+  userId: Scalars['ContactID'];
+  fromDate: Scalars['DateYMD'];
+  toDate: Scalars['DateYMD'];
+  exclusionType: Array<UserScheduleExclusionEnum>;
+};
+
+export type UserScheduleExclusionUpdateInput = {
+  fromDate: Scalars['DateYMD'];
+  toDate: Scalars['DateYMD'];
+  exclusionType: Array<UserScheduleExclusionEnum>;
+};
+
 export type UpdateUserProfileInput = {
   accountId?: Maybe<Scalars['AccountID']>;
   role?: Maybe<UserRoleEnum>;
   external?: Maybe<Scalars['Boolean']>;
+};
+
+export type WorkSchedulecreateInput = {
+  title?: Maybe<Scalars['String']>;
+  workweek?: Maybe<Array<WorkWeekInput>>;
+  addUsers?: Maybe<Array<Scalars['ContactID']>>;
+};
+
+export type WorkWeekInput = {
+  dayOfWeek: WeekDayEnum;
+  isWorkDay: Scalars['Boolean'];
+};
+
+export type WorkScheduleExclusionCreateInput = {
+  fromDate: Scalars['DateYMD'];
+  toDate: Scalars['DateYMD'];
+  exclusionType: Array<WorkScheduleExclusionEnum>;
+};
+
+export type WorkScheduleExclusionUpdateInput = {
+  fromDate?: Maybe<Scalars['DateYMD']>;
+  toDate?: Maybe<Scalars['DateYMD']>;
+  exclusionType?: Maybe<Array<WorkScheduleExclusionEnum>>;
+};
+
+export type WorkScheduleUpdateInput = {
+  title?: Maybe<Scalars['String']>;
+  workweek?: Maybe<Array<WorkWeekInput>>;
 };
 
 export type WorkflowCreateInput = {
@@ -1771,9 +2627,64 @@ export type RemoveCommentMutationVariables = {};
 export type RemoveCommentMutation = (
   { __typename?: 'Mutation' }
   & { commentRemove?: Maybe<(
-    { __typename?: 'Folder' }
-    & Pick<Folder, 'id' | 'title'>
+    { __typename?: 'Comment' }
+    & Pick<Comment, 'id'>
   )> }
+);
+
+export type GetDataQueryVariables = {};
+
+
+export type GetDataQuery = (
+  { __typename?: 'Query' }
+  & { contactFindMany?: Maybe<Array<(
+    { __typename?: 'Contact' }
+    & Pick<Contact, 'id' | 'firstName' | 'lastName'>
+  )>>, taskFindMany?: Maybe<Array<(
+    { __typename?: 'Task' }
+    & Pick<Task, 'id' | 'title'>
+  )>> }
+);
+
+export type CreateApprovalMutationVariables = {};
+
+
+export type CreateApprovalMutation = (
+  { __typename?: 'Mutation' }
+  & { approvalCreateForTask?: Maybe<(
+    { __typename?: 'Approval' }
+    & Pick<Approval, 'id' | 'authorId' | 'title' | 'description'>
+    & { decisions?: Maybe<Array<(
+      { __typename?: 'ApprovalDecision' }
+      & Pick<ApprovalDecision, 'approverId' | 'comment' | 'status' | 'updatedDate'>
+    )>> }
+  )> }
+);
+
+export type GetTasksQueryVariables = {};
+
+
+export type GetTasksQuery = (
+  { __typename?: 'Query' }
+  & { taskFindMany?: Maybe<Array<(
+    { __typename?: 'Task' }
+    & Pick<Task, 'id' | 'title'>
+    & { account?: Maybe<(
+      { __typename?: 'Account' }
+      & Pick<Account, 'dateFormat'>
+      & { customFields?: Maybe<Array<(
+        { __typename?: 'CustomField' }
+        & Pick<CustomField, 'title'>
+      )>> }
+    )>, authors?: Maybe<Array<(
+      { __typename?: 'Contact' }
+      & Pick<Contact, 'firstName' | 'lastName'>
+      & { workSchedule?: Maybe<(
+        { __typename?: 'WorkSchedule' }
+        & Pick<WorkSchedule, 'workweek' | 'scheduleType' | 'title'>
+      )> }
+    )>> }
+  )>> }
 );
 
 
@@ -2078,7 +2989,58 @@ export const RemoveCommentDocument = gql`
     mutation removeComment {
   commentRemove(id: "IEADMUW4IMBMTNKZ") {
     id
+  }
+}
+    `;
+export const GetDataDocument = gql`
+    query getData {
+  contactFindMany {
+    id
+    firstName
+    lastName
+  }
+  taskFindMany(limit: 100) {
+    id
     title
+  }
+}
+    `;
+export const CreateApprovalDocument = gql`
+    mutation createApproval {
+  approvalCreateForTask(taskId: "IEADMUW4KQOE4ATL", approval: {description: "Test approval", approvers: ["KUAHMNRA", "KUAHNM4I"]}) {
+    id
+    authorId
+    title
+    description
+    decisions {
+      approverId
+      comment
+      status
+      updatedDate
+    }
+  }
+}
+    `;
+export const GetTasksDocument = gql`
+    query getTasks {
+  taskFindMany(limit: 2) {
+    id
+    title
+    account {
+      dateFormat
+      customFields {
+        title
+      }
+    }
+    authors {
+      firstName
+      lastName
+      workSchedule {
+        workweek
+        scheduleType
+        title
+      }
+    }
   }
 }
     `;
@@ -2160,6 +3122,15 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     removeComment(variables?: RemoveCommentMutationVariables): Promise<RemoveCommentMutation> {
       return withWrapper(() => client.request<RemoveCommentMutation>(print(RemoveCommentDocument), variables));
+    },
+    getData(variables?: GetDataQueryVariables): Promise<GetDataQuery> {
+      return withWrapper(() => client.request<GetDataQuery>(print(GetDataDocument), variables));
+    },
+    createApproval(variables?: CreateApprovalMutationVariables): Promise<CreateApprovalMutation> {
+      return withWrapper(() => client.request<CreateApprovalMutation>(print(CreateApprovalDocument), variables));
+    },
+    getTasks(variables?: GetTasksQueryVariables): Promise<GetTasksQuery> {
+      return withWrapper(() => client.request<GetTasksQuery>(print(GetTasksDocument), variables));
     }
   };
 }

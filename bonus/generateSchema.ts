@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 require('module-alias').addAlias('app', require('path').resolve(__dirname, '../src'));
+require('dotenv').config();
 
 import { printSchema } from 'graphql';
 import path from 'path';

@@ -316,7 +316,6 @@ mutation updateComment {
 mutation removeComment {
   commentRemove(id: "IEADMUW4IMBMTNKZ") {
     id
-    title
   }
 }
 
