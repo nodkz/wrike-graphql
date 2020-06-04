@@ -11,4 +11,7 @@ export default {
   resolve: (_, args) => {
     return dependencyForTask(args);
   },
+  extensions: {
+    complexity: ({ childComplexity }) => childComplexity * 10,
+  },
 } as FieldConfig<FindOpts>;

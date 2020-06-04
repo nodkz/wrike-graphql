@@ -11,4 +11,7 @@ export default {
   resolve: (_, args, context, info) => {
     return taskFindByIds({ ids: args.ids, info });
   },
+  extensions: {
+    complexity: ({ args, childComplexity }) => childComplexity * (args.ids.length || 100),
+  },
 } as FieldConfig<{ ids: string[] }>;

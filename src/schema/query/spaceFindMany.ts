@@ -13,4 +13,7 @@ export default {
   resolve: (_, args) => {
     return spaceFindMany(args);
   },
+  extensions: {
+    complexity: ({ childComplexity }) => childComplexity * 10,
+  },
 } as FieldConfig;

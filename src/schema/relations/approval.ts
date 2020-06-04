@@ -18,6 +18,9 @@ export function getRelationApprovalsByFolderId(
       });
     },
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ childComplexity }) => childComplexity * 10,
+    },
   };
 }
 
@@ -32,6 +35,9 @@ export function getRelationApprovalsByTaskId(
       });
     },
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ childComplexity }) => childComplexity * 10,
+    },
   };
 }
 
@@ -85,6 +91,10 @@ export function getRelationApprovalsByApproverUserId(
       });
     },
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ args, childComplexity }) =>
+        childComplexity * (args.limit || args.pageSize || 100),
+    },
   };
 }
 
@@ -138,5 +148,9 @@ export function getRelationApprovalsByPendingApproverUserId(
       });
     },
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ args, childComplexity }) =>
+        childComplexity * (args.limit || args.pageSize || 100),
+    },
   };
 }

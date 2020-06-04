@@ -12,4 +12,7 @@ export default {
   resolve: (_, args) => {
     return approvalForFolder(args);
   },
+  extensions: {
+    complexity: ({ childComplexity }) => childComplexity * 10,
+  },
 } as FieldConfig<FindManyOpts>;

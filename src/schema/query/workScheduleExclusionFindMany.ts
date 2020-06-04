@@ -23,4 +23,7 @@ export default {
   resolve: (_, args) => {
     return workScheduleExclusionFindMany(args);
   },
+  extensions: {
+    complexity: ({ childComplexity }) => childComplexity * 10,
+  },
 } as FieldConfig<FindManyOpts>;

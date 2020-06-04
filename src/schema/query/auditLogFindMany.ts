@@ -28,4 +28,7 @@ export default {
   resolve: (_, args) => {
     return auditLogFindMany(args);
   },
+  extensions: {
+    complexity: ({ args, childComplexity }) => childComplexity * (args.pageSize || 100),
+  },
 } as FieldConfig<FindManyOpts>;

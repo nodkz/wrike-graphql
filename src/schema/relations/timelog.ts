@@ -62,6 +62,9 @@ export function getRelationTimelogsByContactId(
       });
     },
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ childComplexity }) => childComplexity * 10,
+    },
   };
 }
 
@@ -87,6 +90,9 @@ export function getRelationTimelogsByFolderId(
       });
     },
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ childComplexity }) => childComplexity * 10,
+    },
   };
 }
 
@@ -112,6 +118,9 @@ export function getRelationTimelogsByTaskId(
       });
     },
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ childComplexity }) => childComplexity * 10,
+    },
   };
 }
 
@@ -137,5 +146,8 @@ export function getRelationTimelogsByTimelogCategoryId(
       });
     },
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ childComplexity }) => childComplexity * 10,
+    },
   };
 }

@@ -7,4 +7,7 @@ export default {
   resolve: (_, __, context, info) => {
     return workScheduleFindMany({ info });
   },
+  extensions: {
+    complexity: ({ childComplexity }) => childComplexity * 10,
+  },
 } as FieldConfig<FindManyOpts>;

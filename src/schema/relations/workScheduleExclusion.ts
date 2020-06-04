@@ -13,5 +13,8 @@ export function getRelationWorkScheduleExclusionByWorkScheduleId(
       });
     },
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ childComplexity }) => childComplexity * 10,
+    },
   };
 }

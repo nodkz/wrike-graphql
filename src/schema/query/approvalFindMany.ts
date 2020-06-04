@@ -33,4 +33,8 @@ export default {
   resolve: (_, args) => {
     return approvalFindMany(args);
   },
+  extensions: {
+    complexity: ({ args, childComplexity }) =>
+      childComplexity * (args.limit || args.pageSize || 100),
+  },
 } as FieldConfig<FindManyOpts>;

@@ -55,4 +55,7 @@ export default {
   resolve: (_, { filter }, context, info) => {
     return folderFindMany({ filter, info });
   },
+  extensions: {
+    complexity: ({ childComplexity }) => childComplexity * 100,
+  },
 } as FieldConfig;

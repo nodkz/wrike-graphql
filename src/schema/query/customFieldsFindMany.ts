@@ -7,4 +7,7 @@ export default {
   resolve: () => {
     return customFieldFindMany();
   },
+  extensions: {
+    complexity: ({ childComplexity }) => childComplexity * 10,
+  },
 } as FieldConfig<{ ids: string[] }>;

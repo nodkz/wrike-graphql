@@ -72,4 +72,7 @@ export default {
       plainText: args.plainText,
     });
   },
+  extensions: {
+    complexity: ({ childComplexity }) => childComplexity * 10,
+  },
 } as FieldConfig<FindManyOpts>;

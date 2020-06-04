@@ -11,4 +11,7 @@ export default {
   resolve: (_, args) => {
     return dependencyFindByIds(args);
   },
+  extensions: {
+    complexity: ({ args, childComplexity }) => childComplexity * (args.ids.length || 100),
+  },
 } as FieldConfig<FindByIdsArgs>;

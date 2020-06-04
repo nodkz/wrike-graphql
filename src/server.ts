@@ -6,12 +6,14 @@ import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { express as voyagerMiddleware } from 'graphql-voyager/middleware';
 import schema from 'app/schema';
+import { queryCostPlugin } from './queryCostPlugin';
 
 const PORT = parseInt(process.env.PORT || '3000');
 const app = express();
 
 const apolloServer = new ApolloServer({
   schema,
+  plugins: [queryCostPlugin({ schema, maxComplexity: 10000 })],
 });
 
 app.use('/voyager', voyagerMiddleware({ endpointUrl: apolloServer.graphqlPath }));

@@ -7,4 +7,7 @@ export default {
   resolve: () => {
     return invitationFindMany();
   },
+  extensions: {
+    complexity: ({ childComplexity }) => childComplexity * 100,
+  },
 } as FieldConfig;

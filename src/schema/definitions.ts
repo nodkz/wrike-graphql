@@ -16,5 +16,8 @@ export interface FieldConfig<
   };
   description?: string;
   resolve: (source: TSource, args: TArgs, context: TContext, info: GraphQLResolveInfo) => any;
-  extensions?: Record<string, any>;
+  extensions?: {
+    complexity: number | ((opts: { args: TArgs; childComplexity: number }) => number);
+    [key: string]: any;
+  };
 }

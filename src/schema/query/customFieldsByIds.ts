@@ -11,4 +11,7 @@ export default {
   resolve: (_, args) => {
     return customFieldFindByIds({ ids: args.ids });
   },
+  extensions: {
+    complexity: ({ args, childComplexity }) => childComplexity * (args.ids.length || 100),
+  },
 } as FieldConfig<{ ids: string[] }>;

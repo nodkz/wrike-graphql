@@ -13,6 +13,9 @@ export function getRelationCommentIds(
       ? (source) => commentFindByIds({ ids: source[sourceFieldName] })
       : resolveManyViaDL('CommentID', (s) => s[sourceFieldName]),
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ childComplexity }) => childComplexity * 10,
+    },
   };
 }
 
@@ -48,6 +51,9 @@ export function getRelationCommentsByFolderId(
       });
     },
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ args, childComplexity }) => childComplexity * (args.limit || 10),
+    },
   };
 }
 
@@ -62,5 +68,8 @@ export function getRelationCommentsByTaskId(
       });
     },
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ childComplexity }) => childComplexity * 10,
+    },
   };
 }

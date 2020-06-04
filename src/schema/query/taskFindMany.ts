@@ -117,4 +117,8 @@ export default {
       ...args.sort,
     });
   },
+  extensions: {
+    complexity: ({ args, childComplexity }) =>
+      childComplexity * (args.limit || args.pageSize || 100),
+  },
 } as FieldConfig;

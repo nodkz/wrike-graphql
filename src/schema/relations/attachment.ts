@@ -24,6 +24,9 @@ export function getRelationAttachmentIds(
       ? (source) => attachmentFindByIds({ ids: source[sourceFieldName] })
       : resolveManyViaDL('AttachmentID', (s) => s[sourceFieldName]),
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ childComplexity }) => childComplexity * 10,
+    },
   };
 }
 
@@ -62,6 +65,9 @@ export function getRelationAttachmentsByFolderId(
       });
     },
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ childComplexity }) => childComplexity * 10,
+    },
   };
 }
 
@@ -85,5 +91,8 @@ export function getRelationAttachmentsByTaskId(
       });
     },
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ childComplexity }) => childComplexity * 10,
+    },
   };
 }

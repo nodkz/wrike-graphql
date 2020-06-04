@@ -25,6 +25,9 @@ export function getRelationTaskIds(
       ? (source, _, __, info) => taskFindByIds({ ids: source[sourceFieldName], info })
       : resolveManyViaDL('TaskID', (s) => s[sourceFieldName]),
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ childComplexity }) => childComplexity * 10,
+    },
   };
 }
 
@@ -158,6 +161,10 @@ export function getRelationTasksBySpaceId(
       });
     },
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ args, childComplexity }) =>
+        childComplexity * (args.limit || args.pageSize || 10),
+    },
   };
 }
 
@@ -197,6 +204,10 @@ export function getRelationTasksByFolderId(
       });
     },
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ args, childComplexity }) =>
+        childComplexity * (args.limit || args.pageSize || 10),
+    },
   };
 }
 
@@ -236,6 +247,10 @@ export function getRelationTasksByAuthorId(
       });
     },
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ args, childComplexity }) =>
+        childComplexity * (args.limit || args.pageSize || 10),
+    },
   };
 }
 
@@ -275,5 +290,9 @@ export function getRelationTasksByResponsibleId(
       });
     },
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ args, childComplexity }) =>
+        childComplexity * (args.limit || args.pageSize || 100),
+    },
   };
 }

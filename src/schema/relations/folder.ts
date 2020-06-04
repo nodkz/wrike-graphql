@@ -16,6 +16,9 @@ export function getRelationFolderIds(
       ? (source, _, __, info) => folderFindByIds({ ids: source[sourceFieldName], info })
       : resolveManyViaDL('FolderID', (s) => s[sourceFieldName]),
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ childComplexity }) => childComplexity * 10,
+    },
   };
 }
 
@@ -83,5 +86,8 @@ export function getRelationFoldersBySpaceId(
       });
     },
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ childComplexity }) => childComplexity * 10,
+    },
   };
 }

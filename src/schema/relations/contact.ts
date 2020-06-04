@@ -12,6 +12,9 @@ export function getRelationContactIds(
       ? (source, _, __, info) => contactFindByIds({ ids: source[sourceFieldName], info })
       : resolveManyViaDL('ContactID', (s) => s[sourceFieldName]),
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ childComplexity }) => childComplexity * 3,
+    },
   };
 }
 

@@ -28,4 +28,7 @@ export default {
       info,
     });
   },
+  extensions: {
+    complexity: ({ childComplexity }) => childComplexity * 100,
+  },
 } as FieldConfig<FindManyOpts>;

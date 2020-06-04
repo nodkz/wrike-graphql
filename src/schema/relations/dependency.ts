@@ -15,6 +15,9 @@ export function getRelationDependenciesByTaskId(
       });
     },
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ childComplexity }) => childComplexity * 10,
+    },
   };
 }
 
@@ -27,5 +30,8 @@ export function getRelationDependencyIds(
       ? (source) => dependencyFindByIds({ ids: source[sourceFieldName] })
       : resolveManyViaDL('DependencyID', (s) => s[sourceFieldName]),
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ childComplexity }) => childComplexity * 10,
+    },
   };
 }

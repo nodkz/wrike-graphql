@@ -30,5 +30,8 @@ export function getRelationUserScheduleExclusionByUserId(
       });
     },
     projection: { [sourceFieldName]: 1 },
+    extensions: {
+      complexity: ({ childComplexity }) => childComplexity * 10,
+    },
   };
 }
