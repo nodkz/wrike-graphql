@@ -8,6 +8,9 @@
 
 ## Live DEMO with your TOKEN
 
+Get your token here: <https://www.wrike.com/frontend/apps/index.html#/api>
+Docs: <https://developers.wrike.com/oauth-20-authorization/>
+
 ```bash
 docker run --rm -p 3000:3000 -e AUTH_TOKEN="XXXX" docker.io/nodkz/wrike-graphql:latest
 ```
