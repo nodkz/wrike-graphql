@@ -30,7 +30,7 @@
     "watch": "DEBUG=axios:* jest --env node --watch",
     "test": "jest --env node",
     "build": "tsc -p ./tsconfig.build.json",
-    "docker-build": "rimraf ./dist && yarn build && docker build -t graphql-wrike .",
+    "docker-build": "rimraf ./dist && yarn build && docker build -t nodkz/wrike-graphql . && docker push nodkz/wrike-graphql:latest",
     "gen-sdk": "ts-node ./bonus/generateSchema && yarn graphql-codegen -c ./bonus/codegen.yml"
   },
   "dependencies": {

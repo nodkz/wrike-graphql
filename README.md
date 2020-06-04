@@ -1,3 +1,16 @@
+# Live DEMO
+
+## Live DEMO via browser with my token
+
+<https://graphql-wrike.herokuapp.com/>
+
+<https://graphql-wrike.herokuapp.com/voyager>
+
+## Live DEMO with your TOKEN
+
+```bash
+docker run --rm -p 3000:3000 -e AUTH_TOKEN="XXXX" docker.io/nodkz/wrike-graphql:latest
+```
 
 ## Подключаемся к АПИ
 
@@ -293,14 +306,30 @@ QueryCost отрабатывает перед запуском выполнен�
 ## Собираем Docker образ
 
 ```bash
-docker build -t graphql-wrike .
-docker run -it --rm graphql-wrike:latest /bin/sh
-docker run --rm -p 3000:3000 nodkz/graphql-wrike:latest
+docker build -t nodkz/wrike-graphql .
+docker push nodkz/wrike-graphql:latest
+docker run -it --rm wrike-graphql:latest /bin/sh
+
+yarn docker-build
+```
+
+RUN VIA
+
+```bash
+docker run --rm -p 3000:3000 -e AUTH_TOKEN="XXXX" docker.io/nodkz/wrike-graphql:latest
+```
+
+## Деплой на Heroku
+
+```bash
+heroku login
+heroku container:login
+heroku container:push web -a graphql-wrike
+heroku container:release web -a graphql-wrike
 ```
 
 # Добавки
 
-- Задеплоить на хероку TODO:
 - Добавить кастомные поля с привязкой к гитхабу. Например к коммитам для прикручивания федерации. В другой раз, не расспыляемся на федерацию/mesh.
 - Сделать пример для нового v4 АПИ (идея была собрать на АполлеКлиенте простенькое приложение. Но и так было потрачено на все апи нереально много времени. В топку идею.)
 - Заюзать Web-hooks для сабкрипшенов (лажа, нужен полноценный PubSub. Что если запущено 5 инстансов сервера? Нужно деплоить пример и потом вязать хуки в аккаунте – костыльно как-то. Нет смысла неправильным вещам учить людей).
