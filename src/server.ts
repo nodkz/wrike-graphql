@@ -13,7 +13,9 @@ const app = express();
 
 const apolloServer = new ApolloServer({
   schema,
-  plugins: [queryCostPlugin({ schema, maxComplexity: 10000 })],
+  plugins: process.env.DISABLE_QUERY_COST
+    ? []
+    : [queryCostPlugin({ schema, maxComplexity: 10000 })],
 });
 
 app.use('/voyager', voyagerMiddleware({ endpointUrl: apolloServer.graphqlPath }));

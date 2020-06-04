@@ -7,6 +7,7 @@
     "declarationMap": true,
     "skipLibCheck": true,
     "noEmitOnError": true,
+    "rootDir": "./src",
     "types": ["node"],
     "outDir": "./dist",
   },
