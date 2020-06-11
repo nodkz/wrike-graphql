@@ -11,7 +11,7 @@ export default {
     folderId: FolderID.NonNull,
     options: FolderCopyOptsInput.NonNull,
   },
-  resolve: (_, args) => {
-    return folderCopy(args);
+  resolve: (_, args, context) => {
+    return folderCopy(args, context);
   },
 } as FieldConfig<Args>;

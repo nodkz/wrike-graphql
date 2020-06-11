@@ -9,7 +9,7 @@ export default {
     id: TaskID.NonNull,
     shareds: ContactID.NonNull.List.NonNull,
   },
-  resolve: (_, args) => {
-    return taskUpdate({ id: args.id, task: { addShareds: args.shareds } });
+  resolve: (_, args, context) => {
+    return taskUpdate({ id: args.id, task: { addShareds: args.shareds } }, context);
   },
 } as FieldConfig;

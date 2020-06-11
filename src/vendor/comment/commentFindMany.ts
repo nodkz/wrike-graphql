@@ -1,4 +1,5 @@
 import client from '../client';
+import { AxiosRequestConfig } from 'axios';
 
 type CommentFindFilter = {
   updatedDate?: {
@@ -16,7 +17,7 @@ export type FindManyOpts = {
 };
 
 // https://developers.wrike.com/api/v4/comments/#get-comments
-export async function commentFindMany(opts?: FindManyOpts) {
+export async function commentFindMany(opts: FindManyOpts, config: AxiosRequestConfig) {
   const { filter, limit, plainText } = opts || {};
 
   let params: Record<string, any> = {};
@@ -38,7 +39,7 @@ export async function commentFindMany(opts?: FindManyOpts) {
     url = `/tasks/${taskId}/comments`;
   }
 
-  const res = await client.get(url, { params });
+  const res = await client.get(url, { ...config, params });
 
   return res?.data?.data;
 }

@@ -30,7 +30,7 @@ export default {
   args: {
     group: InvitationCreateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return groupCreate(args);
+  resolve: (_, args, context) => {
+    return groupCreate(args, context);
   },
 } as FieldConfig<CreateArgs>;

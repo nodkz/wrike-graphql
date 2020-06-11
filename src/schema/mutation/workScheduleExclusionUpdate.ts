@@ -31,7 +31,7 @@ export default {
     id: WorkScheduleExclusionID.NonNull,
     exclusion: WorkScheduleExclusionUpdateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return workScheduleExclusionUpdate(args);
+  resolve: (_, args, context) => {
+    return workScheduleExclusionUpdate(args, context);
   },
 } as FieldConfig<UpdateArgs>;

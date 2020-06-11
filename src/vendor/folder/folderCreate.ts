@@ -1,4 +1,5 @@
 import client from '../client';
+import { AxiosRequestConfig } from 'axios';
 
 export interface CreateArgs {
   parentFolderId: string;
@@ -6,13 +7,13 @@ export interface CreateArgs {
 }
 
 // https://developers.wrike.com/api/v4/folders-projects/#create-folder
-export async function folderCreate(opts: CreateArgs) {
+export async function folderCreate(opts: CreateArgs, config: AxiosRequestConfig) {
   const { parentFolderId, folder } = opts || {};
 
   if (!parentFolderId) throw new Error('You should provide `parentFolderId`');
   if (!folder?.title) throw new Error('You should provide `title`');
 
-  const res = await client.post(`/folders/${parentFolderId}/folders`, folder);
+  const res = await client.post(`/folders/${parentFolderId}/folders`, folder, config);
 
   return res?.data?.data[0];
 }

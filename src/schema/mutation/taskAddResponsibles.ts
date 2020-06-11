@@ -9,7 +9,13 @@ export default {
     id: TaskID.NonNull,
     responsibles: ContactID.NonNull.List.NonNull,
   },
-  resolve: (_, args) => {
-    return taskUpdate({ id: args.id, task: { addResponsibles: args.responsibles } });
+  resolve: (_, args, context) => {
+    return taskUpdate(
+      {
+        id: args.id,
+        task: { addResponsibles: args.responsibles },
+      },
+      context
+    );
   },
 } as FieldConfig;

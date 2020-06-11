@@ -8,8 +8,8 @@ export default {
   args: {
     ids: CustomFieldID.NonNull.List.NonNull,
   },
-  resolve: (_, args) => {
-    return customFieldFindByIds({ ids: args.ids });
+  resolve: (_, args, context) => {
+    return customFieldFindByIds({ ids: args.ids }, context);
   },
   extensions: {
     complexity: ({ args, childComplexity }) => childComplexity * (args.ids.length || 100),

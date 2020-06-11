@@ -10,7 +10,7 @@ export default {
     id: CustomFieldID,
     customField: CustomFieldInput.NonNull,
   },
-  resolve: (_, args) => {
-    return customFieldUpdate(args);
+  resolve: (_, args, context) => {
+    return customFieldUpdate(args, context);
   },
 } as FieldConfig<UpdateArgs>;

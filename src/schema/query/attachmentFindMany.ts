@@ -1,4 +1,3 @@
-import { TaskTC } from 'app/schema/entities/TaskTC';
 import { FieldConfig } from 'app/schema/definitions';
 import { DateTimeRangeInput } from '../types/inputs/DateTimeRangeInput';
 import { TaskID, FolderID } from '../types/Scalars';
@@ -22,11 +21,14 @@ export default {
     }),
   },
   resolve: (_, args, context, info) => {
-    return attachmentFindMany({
-      filter: args.filter,
-      versions: args.versions,
-      info,
-    });
+    return attachmentFindMany(
+      {
+        filter: args.filter,
+        versions: args.versions,
+        info,
+      },
+      context
+    );
   },
   extensions: {
     complexity: ({ childComplexity }) => childComplexity * 100,

@@ -36,7 +36,7 @@ export default {
     id: TimelogID.NonNull,
     timelog: TimelogUpdateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return timelogUpdate(args);
+  resolve: (_, args, context) => {
+    return timelogUpdate(args, context);
   },
 } as FieldConfig<UpdateArgs>;

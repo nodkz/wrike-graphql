@@ -9,7 +9,13 @@ export default {
     id: ApprovalID.NonNull,
     attachments: AttachmentID.NonNull.List.NonNull,
   },
-  resolve: (_, args) => {
-    return approvalUpdate({ id: args.id, approval: { addAttachments: args.attachments } });
+  resolve: (_, args, context) => {
+    return approvalUpdate(
+      {
+        id: args.id,
+        approval: { addAttachments: args.attachments },
+      },
+      context
+    );
   },
 } as FieldConfig;

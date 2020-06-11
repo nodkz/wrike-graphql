@@ -9,13 +9,16 @@ export default {
     id: WorkScheduleID.NonNull,
     userIds: ContactID.NonNull.List.NonNull,
   },
-  resolve: (_, { id, userIds }, __, info) => {
-    return workScheduleUpdate({
-      id,
-      info,
-      workschedule: {
-        removeUsers: userIds,
+  resolve: (_, { id, userIds }, context, info) => {
+    return workScheduleUpdate(
+      {
+        id,
+        info,
+        workschedule: {
+          removeUsers: userIds,
+        },
       },
-    });
+      context
+    );
   },
 } as FieldConfig;

@@ -10,7 +10,7 @@ export default {
     folderId: FolderID.NonNull,
     approval: ApprovalCreateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return approvalCreateForFolder(args);
+  resolve: (_, args, context) => {
+    return approvalCreateForFolder(args, context);
   },
 } as FieldConfig<CreateArgs>;

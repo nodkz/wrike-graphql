@@ -1,4 +1,5 @@
 import client from '../client';
+import { AxiosRequestConfig } from 'axios';
 
 export interface ContactUpdateArgs {
   id: string;
@@ -6,11 +7,11 @@ export interface ContactUpdateArgs {
 }
 
 // https://developers.wrike.com/api/v4/contacts/#modify-contact
-export async function contactUpdate(opts: ContactUpdateArgs) {
+export async function contactUpdate(opts: ContactUpdateArgs, config: AxiosRequestConfig) {
   const { id, metadata } = opts || {};
 
   if (!id) throw new Error('You should provide `id`');
-  const res = await client.put(`/contacts/${id}`, { metadata });
+  const res = await client.put(`/contacts/${id}`, { metadata }, config);
 
   return res?.data?.data[0];
 }

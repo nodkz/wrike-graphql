@@ -1,6 +1,7 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { getFlatProjectionFromAST } from 'graphql-compose';
 import client from '../client';
+import { AxiosRequestConfig } from 'axios';
 
 export type TaskStatus = 'Active' | 'Completed' | 'Deferred' | 'Cancelled';
 export type TaskImportance = 'High' | 'Normal' | 'Low';
@@ -77,7 +78,7 @@ type FindManyOpts = {
 };
 
 // https://developers.wrike.com/documentation/api/methods/query-tasks
-export async function _taskFindMany(opts?: FindManyOpts) {
+export async function _taskFindMany(opts: FindManyOpts, config: AxiosRequestConfig) {
   const {
     filter,
     limit,
@@ -137,15 +138,16 @@ export async function _taskFindMany(opts?: FindManyOpts) {
     url = `/spaces/${spaceId}/tasks`;
   }
 
-  const res = await client.get(url, { params });
+  const res = await client.get(url, { ...config, params });
 
   return res?.data?.data;
 }
 
 export function taskFindMany(
-  opts: Exclude<FindManyOpts, 'projection'> & { info: GraphQLResolveInfo }
+  opts: Exclude<FindManyOpts, 'projection'> & { info: GraphQLResolveInfo },
+  config: AxiosRequestConfig
 ) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _taskFindMany({ ...opts, projection });
+  return _taskFindMany({ ...opts, projection }, config);
 }

@@ -9,7 +9,13 @@ export default {
     id: TaskID.NonNull,
     parents: FolderID.NonNull.List.NonNull,
   },
-  resolve: (_, args) => {
-    return taskUpdate({ id: args.id, task: { addParents: args.parents } });
+  resolve: (_, args, context) => {
+    return taskUpdate(
+      {
+        id: args.id,
+        task: { addParents: args.parents },
+      },
+      context
+    );
   },
 } as FieldConfig;

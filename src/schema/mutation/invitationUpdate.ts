@@ -14,7 +14,7 @@ export default {
     id: InvitationID.NonNull,
     invitation: InvitationUpdateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return invitationUpdate(args);
+  resolve: (_, args, context) => {
+    return invitationUpdate(args, context);
   },
 } as FieldConfig<UpdateArgs>;

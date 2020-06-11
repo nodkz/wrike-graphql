@@ -8,7 +8,7 @@ export default {
   args: {
     id: FolderID.NonNull,
   },
-  resolve: (_, args) => {
-    return folderRemove(args);
+  resolve: (_, args, context) => {
+    return folderRemove(args, context);
   },
 } as FieldConfig<RemoveArgs>;

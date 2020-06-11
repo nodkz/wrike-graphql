@@ -27,7 +27,7 @@ export default {
   args: {
     workschedule: WorkScheduleUpdateInput.NonNull,
   },
-  resolve: (_, args, __, info) => {
-    return workScheduleCreate({ ...args, info });
+  resolve: (_, args, context, info) => {
+    return workScheduleCreate({ ...args, info }, context);
   },
 } as FieldConfig<CreateArgs>;

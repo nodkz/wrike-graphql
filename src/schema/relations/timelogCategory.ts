@@ -9,8 +9,8 @@ export function getRelationTimelogCategoryId(
   return {
     type: () => TimelogCategoryTC,
     resolve: process.env.DISABLE_DATALOADERS
-      ? async (source) => {
-          const records = await timelogCategoryFindMany();
+      ? async (source, _, context) => {
+          const records = await timelogCategoryFindMany({}, context);
           return records.find((x) => x.id === source[sourceFieldName]);
         }
       : resolveOneViaDL('TimelogCategoryID', (s) => s[sourceFieldName]),

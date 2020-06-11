@@ -1,6 +1,7 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { getFlatProjectionFromAST } from 'graphql-compose';
 import client from '../client';
+import { AxiosRequestConfig } from 'axios';
 
 interface ContactFilter {
   me?: boolean;
@@ -18,7 +19,7 @@ type FindManyOpts = {
 };
 
 // https://developers.wrike.com/api/v4/contacts/#query-contacts
-export async function _contactFindMany(opts?: FindManyOpts) {
+export async function _contactFindMany(opts: FindManyOpts, config: AxiosRequestConfig) {
   const { filter, projection } = opts || {};
 
   let params: Record<string, any> = {};
@@ -31,15 +32,16 @@ export async function _contactFindMany(opts?: FindManyOpts) {
     if (projection.length > 0) params.fields = projection;
   }
 
-  const res = await client.get('/contacts', { params });
+  const res = await client.get('/contacts', { ...config, params });
 
   return res?.data?.data;
 }
 
 export function contactFindMany(
-  opts: Exclude<FindManyOpts, 'projection'> & { info: GraphQLResolveInfo }
+  opts: Exclude<FindManyOpts, 'projection'> & { info: GraphQLResolveInfo },
+  config: AxiosRequestConfig
 ) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _contactFindMany({ ...opts, projection });
+  return _contactFindMany({ ...opts, projection }, config);
 }

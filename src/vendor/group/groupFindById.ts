@@ -1,6 +1,7 @@
 import client from '../client';
 import { GraphQLResolveInfo } from 'graphql-compose/lib/graphql';
 import { getFlatProjectionFromAST } from 'graphql-compose/lib/utils/projection';
+import { AxiosRequestConfig } from 'axios';
 
 export const projectionFields = ['metadata'] as const;
 
@@ -12,7 +13,7 @@ type FindByIdOpts = {
 };
 
 // https://developers.wrike.com/api/v4/groups/#query-groups
-export async function _groupFindById(opts: FindByIdOpts) {
+export async function _groupFindById(opts: FindByIdOpts, config: AxiosRequestConfig) {
   const { id, projection } = opts || {};
 
   const params: Record<string, any> = {};
@@ -22,6 +23,7 @@ export async function _groupFindById(opts: FindByIdOpts) {
   }
 
   const res = await client.get(`/groups/${id}`, {
+    ...config,
     params,
   });
 
@@ -29,9 +31,10 @@ export async function _groupFindById(opts: FindByIdOpts) {
 }
 
 export function groupFindById(
-  opts: Exclude<FindByIdOpts, 'projection'> & { info: GraphQLResolveInfo }
+  opts: Exclude<FindByIdOpts, 'projection'> & { info: GraphQLResolveInfo },
+  config: AxiosRequestConfig
 ) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _groupFindById({ ...opts, projection });
+  return _groupFindById({ ...opts, projection }, config);
 }

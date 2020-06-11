@@ -1,6 +1,7 @@
 import client from '../client';
 import { GraphQLResolveInfo } from 'graphql';
 import { getFlatProjectionFromAST } from 'graphql-compose';
+import { AxiosRequestConfig } from 'axios';
 
 type CommentFindFilter = {
   createdDate?: {
@@ -18,7 +19,7 @@ export type FindManyOpts = {
 };
 
 // https://developers.wrike.com/api/v4/attachments/#get-attachments
-export async function _attachmentFindMany(opts?: FindManyOpts) {
+export async function _attachmentFindMany(opts: FindManyOpts, config: AxiosRequestConfig) {
   const { filter, withUrls, versions } = opts || {};
 
   let params: Record<string, any> = {};
@@ -36,15 +37,16 @@ export async function _attachmentFindMany(opts?: FindManyOpts) {
     url = `/tasks/${taskId}/attachments`;
   }
 
-  const res = await client.get(url, { params });
+  const res = await client.get(url, { ...config, params });
 
   return res?.data?.data;
 }
 
 export function attachmentFindMany(
-  opts: Exclude<FindManyOpts, 'withUrls'> & { info: GraphQLResolveInfo }
+  opts: Exclude<FindManyOpts, 'withUrls'> & { info: GraphQLResolveInfo },
+  config: AxiosRequestConfig
 ) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const withUrls = requestedFields.includes('url');
-  return _attachmentFindMany({ ...opts, withUrls });
+  return _attachmentFindMany({ ...opts, withUrls }, config);
 }

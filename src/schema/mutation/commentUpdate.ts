@@ -10,7 +10,7 @@ export default {
     id: CommentID.NonNull,
     comment: CommentInput.NonNull,
   },
-  resolve: (_, args) => {
-    return commentUpdate(args);
+  resolve: (_, args, context) => {
+    return commentUpdate(args, context);
   },
 } as FieldConfig<UpdateArgs>;

@@ -4,8 +4,8 @@ import { customFieldFindMany } from 'app/vendor/customFields/customFieldFindMany
 
 export default {
   type: CustomFieldTC.NonNull.List,
-  resolve: () => {
-    return customFieldFindMany();
+  resolve: (_, __, context) => {
+    return customFieldFindMany({}, context);
   },
   extensions: {
     complexity: ({ childComplexity }) => childComplexity * 10,

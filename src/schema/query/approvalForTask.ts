@@ -9,8 +9,8 @@ export default {
   args: {
     taskId: TaskID.NonNull,
   },
-  resolve: (_, args) => {
-    return approvalForTask(args);
+  resolve: (_, args, context) => {
+    return approvalForTask(args, context);
   },
   extensions: {
     complexity: ({ childComplexity }) => childComplexity * 10,

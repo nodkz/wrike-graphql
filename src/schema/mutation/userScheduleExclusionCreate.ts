@@ -34,7 +34,7 @@ export default {
   args: {
     exclusion: UserScheduleExclusionCreateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return userScheduleExclusionCreate(args);
+  resolve: (_, args, context) => {
+    return userScheduleExclusionCreate(args, context);
   },
 } as FieldConfig<CreateArgs>;

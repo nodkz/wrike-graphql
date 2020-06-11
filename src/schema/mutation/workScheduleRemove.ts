@@ -8,7 +8,7 @@ export default {
   args: {
     id: WorkScheduleID.NonNull,
   },
-  resolve: (_, args) => {
-    return workScheduleRemove(args);
+  resolve: (_, args, context) => {
+    return workScheduleRemove(args, context);
   },
 } as FieldConfig<RemoveArgs>;

@@ -4,9 +4,9 @@ import { GraphQLResolveInfo } from 'graphql';
 
 // IMPORTANT: THIS IS NOT A REAL DATA LOADER
 // This is simple cache for current account data
-export function accountDL(info: GraphQLResolveInfo) {
+export function accountDL(context: any, info: GraphQLResolveInfo) {
   return new DataLoader<string, any>(async (ids) => {
-    const results = [await accountFindOne({ info })];
+    const results = [await accountFindOne({ info }, context)];
     return ids.map(
       (id) => results.find((x) => x.id === id) || new Error(`Account: no result for ${id}`)
     );

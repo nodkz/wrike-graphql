@@ -10,7 +10,7 @@ export default {
     taskId: TaskID.NonNull,
     comment: CommentInput.NonNull,
   },
-  resolve: (_, args) => {
-    return commentCreateForTask(args);
+  resolve: (_, args, context) => {
+    return commentCreateForTask(args, context);
   },
 } as FieldConfig<CreateArgs>;

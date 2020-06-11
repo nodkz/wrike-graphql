@@ -22,7 +22,7 @@ export function getRelationTaskIds(
   return {
     type: () => TaskTC.NonNull.List,
     resolve: process.env.DISABLE_DATALOADERS
-      ? (source, _, __, info) => taskFindByIds({ ids: source[sourceFieldName], info })
+      ? (source, _, context, info) => taskFindByIds({ ids: source[sourceFieldName], info }, context)
       : resolveManyViaDL('TaskID', (s) => s[sourceFieldName]),
     projection: { [sourceFieldName]: 1 },
     extensions: {
@@ -37,8 +37,8 @@ export function getRelationTaskId(
   return {
     type: () => TaskTC,
     resolve: process.env.DISABLE_DATALOADERS
-      ? async (source, _, __, info) => {
-          const records = await taskFindByIds({ ids: source[sourceFieldName], info });
+      ? async (source, _, context, info) => {
+          const records = await taskFindByIds({ ids: source[sourceFieldName], info }, context);
           return records?.[0];
         }
       : resolveOneViaDL('TaskID', (s) => s[sourceFieldName]),
@@ -147,18 +147,21 @@ export function getRelationTasksBySpaceId(
         description: 'Next page token, overrides any other parameters in request',
       },
     },
-    resolve: (source, args, __, info) => {
-      return taskFindMany({
-        info,
-        filter: {
-          ...args.filter,
-          spaceId: source[sourceFieldName],
+    resolve: (source, args, context, info) => {
+      return taskFindMany(
+        {
+          info,
+          filter: {
+            ...args.filter,
+            spaceId: source[sourceFieldName],
+          },
+          limit: args.limit,
+          pageSize: args.pageSize,
+          nextPageToken: args.nextPageToken,
+          ...args.sort,
         },
-        limit: args.limit,
-        pageSize: args.pageSize,
-        nextPageToken: args.nextPageToken,
-        ...args.sort,
-      });
+        context
+      );
     },
     projection: { [sourceFieldName]: 1 },
     extensions: {
@@ -190,18 +193,21 @@ export function getRelationTasksByFolderId(
         description: 'Next page token, overrides any other parameters in request',
       },
     },
-    resolve: (source, args, __, info) => {
-      return taskFindMany({
-        info,
-        filter: {
-          ...args.filter,
-          folderId: source[sourceFieldName],
+    resolve: (source, args, context, info) => {
+      return taskFindMany(
+        {
+          info,
+          filter: {
+            ...args.filter,
+            folderId: source[sourceFieldName],
+          },
+          limit: args.limit,
+          pageSize: args.pageSize,
+          nextPageToken: args.nextPageToken,
+          ...args.sort,
         },
-        limit: args.limit,
-        pageSize: args.pageSize,
-        nextPageToken: args.nextPageToken,
-        ...args.sort,
-      });
+        context
+      );
     },
     projection: { [sourceFieldName]: 1 },
     extensions: {
@@ -233,18 +239,21 @@ export function getRelationTasksByAuthorId(
         description: 'Next page token, overrides any other parameters in request',
       },
     },
-    resolve: (source, args, __, info) => {
-      return taskFindMany({
-        info,
-        filter: {
-          ...args.filter,
-          authors: [source[sourceFieldName]],
+    resolve: (source, args, context, info) => {
+      return taskFindMany(
+        {
+          info,
+          filter: {
+            ...args.filter,
+            authors: [source[sourceFieldName]],
+          },
+          limit: args.limit,
+          pageSize: args.pageSize,
+          nextPageToken: args.nextPageToken,
+          ...args.sort,
         },
-        limit: args.limit,
-        pageSize: args.pageSize,
-        nextPageToken: args.nextPageToken,
-        ...args.sort,
-      });
+        context
+      );
     },
     projection: { [sourceFieldName]: 1 },
     extensions: {
@@ -276,18 +285,21 @@ export function getRelationTasksByResponsibleId(
         description: 'Next page token, overrides any other parameters in request',
       },
     },
-    resolve: (source, args, __, info) => {
-      return taskFindMany({
-        info,
-        filter: {
-          ...args.filter,
-          responsibles: [source[sourceFieldName]],
+    resolve: (source, args, context, info) => {
+      return taskFindMany(
+        {
+          info,
+          filter: {
+            ...args.filter,
+            responsibles: [source[sourceFieldName]],
+          },
+          limit: args.limit,
+          pageSize: args.pageSize,
+          nextPageToken: args.nextPageToken,
+          ...args.sort,
         },
-        limit: args.limit,
-        pageSize: args.pageSize,
-        nextPageToken: args.nextPageToken,
-        ...args.sort,
-      });
+        context
+      );
     },
     projection: { [sourceFieldName]: 1 },
     extensions: {

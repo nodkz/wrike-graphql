@@ -9,8 +9,8 @@ export function getCustomFieldId(
   return {
     type: () => CustomFieldTC,
     resolve: process.env.DISABLE_DATALOADERS
-      ? async (source) => {
-          const rows = await customFieldFindByIds({ ids: [source[sourceFieldName]] });
+      ? async (source, _, context) => {
+          const rows = await customFieldFindByIds({ ids: [source[sourceFieldName]] }, context);
           return rows?.[0];
         }
       : resolveOneViaDL('CustomFieldID', (s) => s[sourceFieldName]),

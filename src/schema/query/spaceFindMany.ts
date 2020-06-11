@@ -10,8 +10,8 @@ export default {
       userIsMember: Boolean
     }`,
   },
-  resolve: (_, args) => {
-    return spaceFindMany(args);
+  resolve: (_, args, context) => {
+    return spaceFindMany(args, context);
   },
   extensions: {
     complexity: ({ childComplexity }) => childComplexity * 10,

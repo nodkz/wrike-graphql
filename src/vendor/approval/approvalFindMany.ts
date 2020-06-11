@@ -1,4 +1,5 @@
 import client from '../client';
+import { AxiosRequestConfig } from 'axios';
 
 interface Filter {
   statuses?: string;
@@ -18,7 +19,7 @@ export type FindManyOpts = {
 };
 
 // https://developers.wrike.com/api/v4/approvals/#get-approvals
-export async function approvalFindMany(opts?: FindManyOpts) {
+export async function approvalFindMany(opts: FindManyOpts, config: AxiosRequestConfig) {
   const { filter, limit, pageSize, nextPageToken } = opts || {};
 
   const params: Record<string, any> = filter || {};
@@ -35,7 +36,7 @@ export async function approvalFindMany(opts?: FindManyOpts) {
     params.nextPageToken = nextPageToken;
   }
 
-  const res = await client.get('/approvals', { params });
+  const res = await client.get('/approvals', { ...config, params });
 
   return res?.data?.data;
 }

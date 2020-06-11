@@ -4,8 +4,8 @@ import { TimelogCategoryTC } from '../entities/TimelogCategoryTC';
 
 export default {
   type: TimelogCategoryTC.NonNull.List,
-  resolve: () => {
-    return timelogCategoryFindMany();
+  resolve: (_, __, context) => {
+    return timelogCategoryFindMany({}, context);
   },
   extensions: {
     complexity: ({ childComplexity }) => childComplexity * 10,

@@ -21,7 +21,7 @@ export default {
     id: WorkflowID.NonNull,
     workflow: WorkflowUpdateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return workflowUpdate(args);
+  resolve: (_, args, context) => {
+    return workflowUpdate(args, context);
   },
 } as FieldConfig<UpdateArgs>;

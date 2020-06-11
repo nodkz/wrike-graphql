@@ -9,7 +9,7 @@ export function getRelationAccountId(
   return {
     type: () => AccountTC,
     resolve: process.env.DISABLE_DATALOADERS
-      ? (s, _, __, info) => accountFindOne({ info })
+      ? (s, _, context, info) => accountFindOne({ info }, context)
       : resolveOneViaDL('AccountID', (s) => s[sourceFieldName]),
     projection: { [sourceFieldName]: 1 },
   };

@@ -31,7 +31,7 @@ export default {
     id: ApprovalID.NonNull,
     approval: ApprovalUpdateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return approvalUpdate(args);
+  resolve: (_, args, context) => {
+    return approvalUpdate(args, context);
   },
 } as FieldConfig<UpdateArgs>;

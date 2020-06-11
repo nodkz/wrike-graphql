@@ -27,7 +27,7 @@ export default {
     taskId: TaskID.NonNull,
     dependency: DependencyCreateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return dependencyCreate(args);
+  resolve: (_, args, context) => {
+    return dependencyCreate(args, context);
   },
 } as FieldConfig<CreateArgs>;

@@ -108,14 +108,17 @@ export default {
     sort: TaskFindManySortEnum,
   },
   resolve: (_, args, context, info) => {
-    return taskFindMany({
-      info,
-      filter: args.filter,
-      limit: args.limit,
-      pageSize: args.pageSize,
-      nextPageToken: args.nextPageToken,
-      ...args.sort,
-    });
+    return taskFindMany(
+      {
+        info,
+        filter: args.filter,
+        limit: args.limit,
+        pageSize: args.pageSize,
+        nextPageToken: args.nextPageToken,
+        ...args.sort,
+      },
+      context
+    );
   },
   extensions: {
     complexity: ({ args, childComplexity }) =>

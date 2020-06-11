@@ -53,7 +53,7 @@ export default {
     filter: FolderFilterInput,
   },
   resolve: (_, { filter }, context, info) => {
-    return folderFindMany({ filter, info });
+    return folderFindMany({ filter, info }, context);
   },
   extensions: {
     complexity: ({ childComplexity }) => childComplexity * 100,

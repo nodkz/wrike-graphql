@@ -12,12 +12,15 @@ export default {
     folderId: FolderID.NonNull,
     sharedIds: ContactID.NonNull.List.NonNull,
   },
-  resolve: (_, args) => {
-    return folderUpdate({
-      folderId: args.folderId,
-      folder: {
-        addShareds: args.sharedIds,
+  resolve: (_, args, context) => {
+    return folderUpdate(
+      {
+        folderId: args.folderId,
+        folder: {
+          addShareds: args.sharedIds,
+        },
       },
-    });
+      context
+    );
   },
 } as FieldConfig;

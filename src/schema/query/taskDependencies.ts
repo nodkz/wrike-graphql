@@ -8,8 +8,8 @@ export default {
   args: {
     taskId: TaskID.NonNull,
   },
-  resolve: (_, args) => {
-    return dependencyForTask(args);
+  resolve: (_, args, context) => {
+    return dependencyForTask(args, context);
   },
   extensions: {
     complexity: ({ childComplexity }) => childComplexity * 10,

@@ -31,7 +31,7 @@ export default {
     id: UserScheduleExclusionID.NonNull,
     exclusion: UserScheduleExclusionUpdateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return userScheduleExclusionUpdate(args);
+  resolve: (_, args, context) => {
+    return userScheduleExclusionUpdate(args, context);
   },
 } as FieldConfig<UpdateArgs>;

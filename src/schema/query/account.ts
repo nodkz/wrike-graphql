@@ -14,6 +14,6 @@ export default {
     }),
   },
   resolve: (_, { filter }, context, info) => {
-    return accountFindOne({ filter, info });
+    return accountFindOne({ filter, info }, context);
   },
 } as FieldConfig;

@@ -21,7 +21,7 @@ export function getRelationAttachmentIds(
   return {
     type: () => AttachmentTC.NonNull.List,
     resolve: process.env.DISABLE_DATALOADERS
-      ? (source) => attachmentFindByIds({ ids: source[sourceFieldName] })
+      ? (source, _, context) => attachmentFindByIds({ ids: source[sourceFieldName] }, context)
       : resolveManyViaDL('AttachmentID', (s) => s[sourceFieldName]),
     projection: { [sourceFieldName]: 1 },
     extensions: {
@@ -36,8 +36,8 @@ export function getRelationAttachmentId(
   return {
     type: () => AttachmentTC,
     resolve: process.env.DISABLE_DATALOADERS
-      ? async (source) => {
-          const records = await attachmentFindByIds({ ids: source[sourceFieldName] });
+      ? async (source, _, context) => {
+          const records = await attachmentFindByIds({ ids: source[sourceFieldName] }, context);
           return records?.[0];
         }
       : resolveOneViaDL('AttachmentID', (s) => s[sourceFieldName]),
@@ -57,12 +57,15 @@ export function getRelationAttachmentsByFolderId(
         description: 'Get attachments with previous versions',
       },
     },
-    resolve: (source, args, __, info) => {
-      return attachmentFindMany({
-        filter: { ...args.filter, folderId: source[sourceFieldName] },
-        versions: args.versions,
-        info,
-      });
+    resolve: (source, args, context, info) => {
+      return attachmentFindMany(
+        {
+          filter: { ...args.filter, folderId: source[sourceFieldName] },
+          versions: args.versions,
+          info,
+        },
+        context
+      );
     },
     projection: { [sourceFieldName]: 1 },
     extensions: {
@@ -83,12 +86,15 @@ export function getRelationAttachmentsByTaskId(
         description: 'Get attachments with previous versions',
       },
     },
-    resolve: (source, args, __, info) => {
-      return attachmentFindMany({
-        filter: { ...args.filter, taskId: source[sourceFieldName] },
-        versions: args.versions,
-        info,
-      });
+    resolve: (source, args, context, info) => {
+      return attachmentFindMany(
+        {
+          filter: { ...args.filter, taskId: source[sourceFieldName] },
+          versions: args.versions,
+          info,
+        },
+        context
+      );
     },
     projection: { [sourceFieldName]: 1 },
     extensions: {

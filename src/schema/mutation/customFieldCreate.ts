@@ -12,7 +12,7 @@ export default {
   args: {
     customField: CustomFieldCreateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return customFieldCreate(args);
+  resolve: (_, args, context) => {
+    return customFieldCreate(args, context);
   },
 } as FieldConfig<CreateArgs>;

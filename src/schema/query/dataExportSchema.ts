@@ -35,7 +35,7 @@ export default {
   args: {
     version: `enum DataSchemaVersion { V0 V1 }`,
   },
-  resolve: (_, args) => {
-    return dataExportSchema(args);
+  resolve: (_, args, context) => {
+    return dataExportSchema(args, context);
   },
 } as FieldConfig<Args>;

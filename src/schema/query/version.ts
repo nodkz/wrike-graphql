@@ -14,8 +14,8 @@ export default {
       },
     },
   }),
-  resolve: async () => {
-    const res = await client.get('/version');
+  resolve: async (_, __, context) => {
+    const res = await client.get('/version', context);
     return res?.data?.data?.[0];
   },
 } as FieldConfig;

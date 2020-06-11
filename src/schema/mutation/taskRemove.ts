@@ -8,7 +8,7 @@ export default {
   args: {
     id: TaskID.NonNull,
   },
-  resolve: (_, args) => {
-    return taskRemove(args);
+  resolve: (_, args, context) => {
+    return taskRemove(args, context);
   },
 } as FieldConfig<RemoveArgs>;

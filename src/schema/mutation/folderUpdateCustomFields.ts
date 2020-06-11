@@ -10,12 +10,15 @@ export default {
     folderIds: FolderID.NonNull.List.NonNull,
     customFields: CustomFieldValueInput.NonNull.List.NonNull,
   },
-  resolve: (_, args) => {
-    return folderUpdateMany({
-      folderIds: args.folderIds,
-      folder: {
-        customFields: args.customFields,
+  resolve: (_, args, context) => {
+    return folderUpdateMany(
+      {
+        folderIds: args.folderIds,
+        folder: {
+          customFields: args.customFields,
+        },
       },
-    });
+      context
+    );
   },
 } as FieldConfig;

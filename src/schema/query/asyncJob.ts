@@ -8,7 +8,7 @@ export default {
   args: {
     id: AsyncJobID.NonNull,
   },
-  resolve: (_, args) => {
-    return asyncJobFindById(args);
+  resolve: (_, args, context) => {
+    return asyncJobFindById(args, context);
   },
 } as FieldConfig<FindArgs>;

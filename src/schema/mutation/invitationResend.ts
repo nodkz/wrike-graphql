@@ -8,7 +8,13 @@ export default {
   args: {
     id: InvitationID.NonNull,
   },
-  resolve: (_, args) => {
-    return invitationUpdate({ id: args.id, invitation: { resend: true } });
+  resolve: (_, args, context) => {
+    return invitationUpdate(
+      {
+        id: args.id,
+        invitation: { resend: true },
+      },
+      context
+    );
   },
 } as FieldConfig;

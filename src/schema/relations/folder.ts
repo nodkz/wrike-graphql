@@ -13,7 +13,8 @@ export function getRelationFolderIds(
   return {
     type: () => FolderTC.NonNull.List,
     resolve: process.env.DISABLE_DATALOADERS
-      ? (source, _, __, info) => folderFindByIds({ ids: source[sourceFieldName], info })
+      ? (source, _, context, info) =>
+          folderFindByIds({ ids: source[sourceFieldName], info }, context)
       : resolveManyViaDL('FolderID', (s) => s[sourceFieldName]),
     projection: { [sourceFieldName]: 1 },
     extensions: {
@@ -28,8 +29,8 @@ export function getRelationFolderId(
   return {
     type: () => FolderTC,
     resolve: process.env.DISABLE_DATALOADERS
-      ? async (source, _, __, info) => {
-          const records = await folderFindByIds({ ids: source[sourceFieldName], info });
+      ? async (source, _, context, info) => {
+          const records = await folderFindByIds({ ids: source[sourceFieldName], info }, context);
           return records?.[0];
         }
       : resolveOneViaDL('FolderID', (s) => s[sourceFieldName]),
@@ -76,14 +77,17 @@ export function getRelationFoldersBySpaceId(
     args: {
       filter: FolderFilterByRelationSpaceId,
     },
-    resolve: (source, args, __, info) => {
-      return folderFindMany({
-        filter: {
-          spaceId: source[sourceFieldName],
-          ...args.filter,
+    resolve: (source, args, context, info) => {
+      return folderFindMany(
+        {
+          filter: {
+            spaceId: source[sourceFieldName],
+            ...args.filter,
+          },
+          info,
         },
-        info,
-      });
+        context
+      );
     },
     projection: { [sourceFieldName]: 1 },
     extensions: {

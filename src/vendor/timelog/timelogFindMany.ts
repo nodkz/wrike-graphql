@@ -1,4 +1,5 @@
 import client from '../client';
+import { AxiosRequestConfig } from 'axios';
 
 type CommentFindFilter = {
   folderId?: string;
@@ -29,7 +30,7 @@ export type FindManyOpts = {
 };
 
 // https://developers.wrike.com/api/v4/timelogs/#query-timelogs
-export async function timelogFindMany(opts?: FindManyOpts) {
+export async function timelogFindMany(opts: FindManyOpts, config: AxiosRequestConfig) {
   const { filter, plainText } = opts || {};
 
   let params: Record<string, any> = {};
@@ -51,7 +52,7 @@ export async function timelogFindMany(opts?: FindManyOpts) {
     url = `/timelog_categories/${timelogCategoryId}/timelogs`;
   }
 
-  const res = await client.get(url, { params });
+  const res = await client.get(url, { ...config, params });
 
   return res?.data?.data;
 }

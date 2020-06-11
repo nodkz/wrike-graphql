@@ -1,4 +1,5 @@
 import client from '../client';
+import { AxiosRequestConfig } from 'axios';
 
 interface Filter {
   operations?: string[];
@@ -15,7 +16,7 @@ export type FindManyOpts = {
 };
 
 // https://developers.wrike.com/api/v4/audit-log/
-export async function auditLogFindMany(opts?: FindManyOpts) {
+export async function auditLogFindMany(opts: FindManyOpts, config: AxiosRequestConfig) {
   const { filter, pageSize, nextPageToken } = opts || {};
 
   const params: Record<string, any> = filter || {};
@@ -28,7 +29,7 @@ export async function auditLogFindMany(opts?: FindManyOpts) {
     params.nextPageToken = nextPageToken;
   }
 
-  const res = await client.get('/audit_log', { params });
+  const res = await client.get('/audit_log', { ...config, params });
 
   return res?.data?.data;
 }

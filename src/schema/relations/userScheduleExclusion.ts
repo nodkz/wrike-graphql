@@ -21,13 +21,16 @@ export function getRelationUserScheduleExclusionByUserId(
     args: {
       filter: WorkScheduleExclusionFilterByRelation,
     },
-    resolve: (source, args) => {
-      return userScheduleExclusionFindMany({
-        filter: {
-          ...args.filter,
-          userIds: [source[sourceFieldName]],
+    resolve: (source, args, context) => {
+      return userScheduleExclusionFindMany(
+        {
+          filter: {
+            ...args.filter,
+            userIds: [source[sourceFieldName]],
+          },
         },
-      });
+        context
+      );
     },
     projection: { [sourceFieldName]: 1 },
     extensions: {

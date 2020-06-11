@@ -8,7 +8,7 @@ export default {
   args: {
     id: ApprovalID.NonNull,
   },
-  resolve: (_, args) => {
-    return approvalCancel(args);
+  resolve: (_, args, context) => {
+    return approvalCancel(args, context);
   },
 } as FieldConfig<RemoveArgs>;

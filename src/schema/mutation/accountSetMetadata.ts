@@ -8,7 +8,7 @@ export default {
   args: {
     metadata: KeyValueInput.NonNull.List.NonNull,
   },
-  resolve: (_, args) => {
-    return accountUpdate(args);
+  resolve: (_, args, context) => {
+    return accountUpdate(args, context);
   },
 } as FieldConfig<UpdateArgs>;

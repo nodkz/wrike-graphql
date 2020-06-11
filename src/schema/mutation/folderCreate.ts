@@ -14,7 +14,7 @@ export default {
     parentFolderId: FolderID.NonNull,
     folder: FolderCreateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return folderCreate(args);
+  resolve: (_, args, context) => {
+    return folderCreate(args, context);
   },
 } as FieldConfig<CreateArgs>;

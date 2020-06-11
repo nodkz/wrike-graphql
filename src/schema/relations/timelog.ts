@@ -52,14 +52,17 @@ export function getRelationTimelogsByContactId(
         description: 'Get comment text as plain text, HTML otherwise',
       },
     },
-    resolve: (source, args) => {
-      return timelogFindMany({
-        filter: {
-          ...args.filter,
-          contactId: source[sourceFieldName],
+    resolve: (source, args, context) => {
+      return timelogFindMany(
+        {
+          filter: {
+            ...args.filter,
+            contactId: source[sourceFieldName],
+          },
+          plainText: args.plainText,
         },
-        plainText: args.plainText,
-      });
+        context
+      );
     },
     projection: { [sourceFieldName]: 1 },
     extensions: {
@@ -80,14 +83,17 @@ export function getRelationTimelogsByFolderId(
         description: 'Get comment text as plain text, HTML otherwise',
       },
     },
-    resolve: (source, args) => {
-      return timelogFindMany({
-        filter: {
-          ...args.filter,
-          folderId: source[sourceFieldName],
+    resolve: (source, args, context) => {
+      return timelogFindMany(
+        {
+          filter: {
+            ...args.filter,
+            folderId: source[sourceFieldName],
+          },
+          plainText: args.plainText,
         },
-        plainText: args.plainText,
-      });
+        context
+      );
     },
     projection: { [sourceFieldName]: 1 },
     extensions: {
@@ -108,14 +114,17 @@ export function getRelationTimelogsByTaskId(
         description: 'Get comment text as plain text, HTML otherwise',
       },
     },
-    resolve: (source, args) => {
-      return timelogFindMany({
-        filter: {
-          ...args.filter,
-          taskId: source[sourceFieldName],
+    resolve: (source, args, context) => {
+      return timelogFindMany(
+        {
+          filter: {
+            ...args.filter,
+            taskId: source[sourceFieldName],
+          },
+          plainText: args.plainText,
         },
-        plainText: args.plainText,
-      });
+        context
+      );
     },
     projection: { [sourceFieldName]: 1 },
     extensions: {
@@ -136,14 +145,17 @@ export function getRelationTimelogsByTimelogCategoryId(
         description: 'Get comment text as plain text, HTML otherwise',
       },
     },
-    resolve: (source, args) => {
-      return timelogFindMany({
-        filter: {
-          ...args.filter,
-          timelogCategoryId: source[sourceFieldName],
+    resolve: (source, args, context) => {
+      return timelogFindMany(
+        {
+          filter: {
+            ...args.filter,
+            timelogCategoryId: source[sourceFieldName],
+          },
+          plainText: args.plainText,
         },
-        plainText: args.plainText,
-      });
+        context
+      );
     },
     projection: { [sourceFieldName]: 1 },
     extensions: {

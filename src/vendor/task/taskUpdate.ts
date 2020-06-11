@@ -1,4 +1,5 @@
 import client from '../client';
+import { AxiosRequestConfig } from 'axios';
 
 export interface TaskUpdateArgs {
   id: string;
@@ -6,11 +7,11 @@ export interface TaskUpdateArgs {
 }
 
 // https://developers.wrike.com/api/v4/tasks/#modify-tasks
-export async function taskUpdate(opts: TaskUpdateArgs) {
+export async function taskUpdate(opts: TaskUpdateArgs, config: AxiosRequestConfig) {
   const { id, task } = opts || {};
 
   if (!id) throw new Error('You should provide `id`');
-  const res = await client.put(`/tasks/${id}`, task);
+  const res = await client.put(`/tasks/${id}`, task, config);
 
   return res?.data?.data[0];
 }

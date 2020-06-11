@@ -9,7 +9,8 @@ export function getRelationContactIds(
   return {
     type: () => ContactTC.NonNull.List,
     resolve: process.env.DISABLE_DATALOADERS
-      ? (source, _, __, info) => contactFindByIds({ ids: source[sourceFieldName], info })
+      ? (source, _, context, info) =>
+          contactFindByIds({ ids: source[sourceFieldName], info }, context)
       : resolveManyViaDL('ContactID', (s) => s[sourceFieldName]),
     projection: { [sourceFieldName]: 1 },
     extensions: {
@@ -24,11 +25,14 @@ export function getRelationContactId(
   return {
     type: () => ContactTC,
     resolve: process.env.DISABLE_DATALOADERS
-      ? async (source, _, __, info) => {
-          const records = await contactFindByIds({
-            ids: source[sourceFieldName],
-            info,
-          });
+      ? async (source, _, context, info) => {
+          const records = await contactFindByIds(
+            {
+              ids: source[sourceFieldName],
+              info,
+            },
+            context
+          );
           return records?.[0];
         }
       : resolveOneViaDL('ContactID', (s) => s[sourceFieldName]),

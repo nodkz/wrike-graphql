@@ -2,6 +2,7 @@ import client from '../client';
 import { GraphQLResolveInfo } from 'graphql-compose/lib/graphql';
 import { getFlatProjectionFromAST } from 'graphql-compose';
 import { splitRequestBy100 } from '../_helpers/splitRequestBy100';
+import { AxiosRequestConfig } from 'axios';
 
 export const projectionFields = [
   'attachmentCount',
@@ -18,7 +19,7 @@ type FindByIdsOpts = {
 };
 
 // https://developers.wrike.com/documentation/api/methods/query-tasks
-export async function _taskFindByIds(opts: FindByIdsOpts) {
+export async function _taskFindByIds(opts: FindByIdsOpts, config: AxiosRequestConfig) {
   const { ids, projection } = opts || {};
   const params: Record<string, any> = {};
 
@@ -27,15 +28,16 @@ export async function _taskFindByIds(opts: FindByIdsOpts) {
   }
 
   return splitRequestBy100(ids, async (preparedIds) => {
-    const res = await client.get(`/tasks/${preparedIds}`, { params });
+    const res = await client.get(`/tasks/${preparedIds}`, { ...config, params });
     return res?.data?.data;
   });
 }
 
 export function taskFindByIds(
-  opts: Exclude<FindByIdsOpts, 'projection'> & { info: GraphQLResolveInfo }
+  opts: Exclude<FindByIdsOpts, 'projection'> & { info: GraphQLResolveInfo },
+  config: AxiosRequestConfig
 ) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _taskFindByIds({ ...opts, projection });
+  return _taskFindByIds({ ...opts, projection }, config);
 }

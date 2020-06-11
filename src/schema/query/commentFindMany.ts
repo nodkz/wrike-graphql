@@ -26,12 +26,15 @@ export default {
       },
     }),
   },
-  resolve: (_, args) => {
-    return commentFindMany({
-      filter: args.filter,
-      limit: args.limit,
-      plainText: args.plainText,
-    });
+  resolve: (_, args, context) => {
+    return commentFindMany(
+      {
+        filter: args.filter,
+        limit: args.limit,
+        plainText: args.plainText,
+      },
+      context
+    );
   },
   extensions: {
     complexity: ({ args, childComplexity }) => childComplexity * (args.limit || 100),

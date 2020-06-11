@@ -7,7 +7,7 @@ export default {
   args: {
     id: ContactID.NonNull,
   },
-  resolve: (_, args) => {
-    return userFindById(args);
+  resolve: (_, args, context) => {
+    return userFindById(args, context);
   },
 };

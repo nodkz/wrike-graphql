@@ -2,6 +2,7 @@ import client from '../client';
 import { getFlatProjectionFromAST } from 'graphql-compose';
 import { GraphQLResolveInfo } from 'graphql-compose/lib/graphql';
 import { splitRequestBy100 } from '../_helpers/splitRequestBy100';
+import { AxiosRequestConfig } from 'axios';
 
 export const projectionFields = ['metadata', 'workScheduleId'] as const;
 
@@ -13,7 +14,7 @@ type FindByIdsOpts = {
 };
 
 // https://developers.wrike.com/api/v4/contacts/#query-contacts
-export async function _contactFindByIds(opts: FindByIdsOpts) {
+export async function _contactFindByIds(opts: FindByIdsOpts, config: AxiosRequestConfig) {
   const { ids, projection } = opts || {};
 
   const params: Record<string, any> = {};
@@ -22,15 +23,16 @@ export async function _contactFindByIds(opts: FindByIdsOpts) {
   }
 
   return splitRequestBy100(ids, async (preparedIds) => {
-    const res = await client.get(`/contacts/${preparedIds}`, { params });
+    const res = await client.get(`/contacts/${preparedIds}`, { ...config, params });
     return res?.data?.data;
   });
 }
 
 export function contactFindByIds(
-  opts: Exclude<FindByIdsOpts, 'projection'> & { info: GraphQLResolveInfo }
+  opts: Exclude<FindByIdsOpts, 'projection'> & { info: GraphQLResolveInfo },
+  config: AxiosRequestConfig
 ) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _contactFindByIds({ ...opts, projection });
+  return _contactFindByIds({ ...opts, projection }, config);
 }

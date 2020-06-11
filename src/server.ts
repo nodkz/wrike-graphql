@@ -13,6 +13,12 @@ const app = express();
 
 const apolloServer = new ApolloServer({
   schema,
+  context: ({ req }) => {
+    if (req?.headers?.authorization) {
+      return { headers: { authorization: req?.headers?.authorization } };
+    }
+    return {};
+  },
   plugins: process.env.DISABLE_QUERY_COST
     ? []
     : [queryCostPlugin({ schema, maxComplexity: 10000 })],

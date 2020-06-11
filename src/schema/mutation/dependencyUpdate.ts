@@ -17,7 +17,7 @@ export default {
     id: DependencyID.NonNull,
     dependency: DependencyUpdateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return dependencyUpdate(args);
+  resolve: (_, args, context) => {
+    return dependencyUpdate(args, context);
   },
 } as FieldConfig<UpdateArgs>;

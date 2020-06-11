@@ -8,7 +8,7 @@ export default {
   args: {
     id: DependencyID.NonNull,
   },
-  resolve: (_, args) => {
-    return dependencyRemove(args);
+  resolve: (_, args, context) => {
+    return dependencyRemove(args, context);
   },
 } as FieldConfig<RemoveArgs>;

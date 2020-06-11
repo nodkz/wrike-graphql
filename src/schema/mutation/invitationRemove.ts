@@ -8,7 +8,7 @@ export default {
   args: {
     id: InvitationID.NonNull,
   },
-  resolve: (_, args) => {
-    return invitationRemove({ id: args.id });
+  resolve: (_, args, context) => {
+    return invitationRemove({ id: args.id }, context);
   },
 } as FieldConfig;

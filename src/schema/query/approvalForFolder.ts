@@ -9,8 +9,8 @@ export default {
   args: {
     folderId: FolderID.NonNull,
   },
-  resolve: (_, args) => {
-    return approvalForFolder(args);
+  resolve: (_, args, context) => {
+    return approvalForFolder(args, context);
   },
   extensions: {
     complexity: ({ childComplexity }) => childComplexity * 10,

@@ -8,7 +8,7 @@ export default {
   args: {
     id: CommentID.NonNull,
   },
-  resolve: (_, args) => {
-    return commentRemove(args);
+  resolve: (_, args, context) => {
+    return commentRemove(args, context);
   },
 } as FieldConfig<RemoveArgs>;

@@ -9,8 +9,8 @@ export default {
     ids: CommentID.NonNull.List.NonNull,
     plainText: 'Boolean',
   },
-  resolve: (_, args) => {
-    return commentFindByIds(args);
+  resolve: (_, args, context) => {
+    return commentFindByIds(args, context);
   },
   extensions: {
     complexity: ({ args, childComplexity }) => childComplexity * (args.ids.length || 100),

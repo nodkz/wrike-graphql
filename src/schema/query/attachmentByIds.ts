@@ -12,8 +12,8 @@ export default {
       description: 'Get attachments with previous versions',
     },
   },
-  resolve: (_, args) => {
-    return attachmentFindByIds(args);
+  resolve: (_, args, context) => {
+    return attachmentFindByIds(args, context);
   },
   extensions: {
     complexity: ({ args, childComplexity }) => childComplexity * (args.ids.length || 100),

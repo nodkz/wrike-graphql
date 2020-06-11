@@ -66,11 +66,14 @@ export default {
       description: 'Get comment text as plain text, HTML otherwise',
     },
   },
-  resolve: (_, args) => {
-    return timelogFindMany({
-      filter: args.filter,
-      plainText: args.plainText,
-    });
+  resolve: (_, args, context) => {
+    return timelogFindMany(
+      {
+        filter: args.filter,
+        plainText: args.plainText,
+      },
+      context
+    );
   },
   extensions: {
     complexity: ({ childComplexity }) => childComplexity * 10,

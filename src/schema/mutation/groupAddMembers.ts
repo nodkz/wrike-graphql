@@ -9,7 +9,7 @@ export default {
     id: GroupID.NonNull,
     members: ContactID.NonNull.List.NonNull,
   },
-  resolve: (_, args) => {
-    return groupUpdate({ id: args.is, group: { addMembers: args.members } });
+  resolve: (_, args, context) => {
+    return groupUpdate({ id: args.is, group: { addMembers: args.members } }, context);
   },
 } as FieldConfig;

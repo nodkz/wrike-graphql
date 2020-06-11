@@ -1,4 +1,5 @@
 import client from '../client';
+import { AxiosRequestConfig } from 'axios';
 
 export interface UpdateArgs {
   id: string;
@@ -6,11 +7,11 @@ export interface UpdateArgs {
 }
 
 // https://developers.wrike.com/api/v4/workflows/#modify-workflow
-export async function workflowUpdate(opts: UpdateArgs) {
+export async function workflowUpdate(opts: UpdateArgs, config: AxiosRequestConfig) {
   const { id, workflow } = opts || {};
 
   if (!id) throw new Error('You should provide `id`');
-  const res = await client.put(`/workflows/${id}`, workflow);
+  const res = await client.put(`/workflows/${id}`, workflow, config);
 
   return res?.data?.data[0];
 }

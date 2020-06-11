@@ -10,7 +10,7 @@ export function getRelationCommentIds(
   return {
     type: () => CommentTC.NonNull.List,
     resolve: process.env.DISABLE_DATALOADERS
-      ? (source) => commentFindByIds({ ids: source[sourceFieldName] })
+      ? (source, _, context) => commentFindByIds({ ids: source[sourceFieldName] }, context)
       : resolveManyViaDL('CommentID', (s) => s[sourceFieldName]),
     projection: { [sourceFieldName]: 1 },
     extensions: {
@@ -25,8 +25,8 @@ export function getRelationCommentId(
   return {
     type: () => CommentTC,
     resolve: process.env.DISABLE_DATALOADERS
-      ? async (source) => {
-          const records = await commentFindByIds({ ids: source[sourceFieldName] });
+      ? async (source, _, context) => {
+          const records = await commentFindByIds({ ids: source[sourceFieldName] }, context);
           return records?.[0];
         }
       : resolveOneViaDL('CommentID', (s) => s[sourceFieldName]),
@@ -43,12 +43,15 @@ export function getRelationCommentsByFolderId(
       limit: { type: 'Int', defaultValue: 10 },
       plainText: 'Boolean',
     },
-    resolve: (source, args) => {
-      return commentFindMany({
-        filter: { folderId: source[sourceFieldName] },
-        limit: args.limit,
-        plainText: args.plainText,
-      });
+    resolve: (source, args, context) => {
+      return commentFindMany(
+        {
+          filter: { folderId: source[sourceFieldName] },
+          limit: args.limit,
+          plainText: args.plainText,
+        },
+        context
+      );
     },
     projection: { [sourceFieldName]: 1 },
     extensions: {
@@ -62,10 +65,13 @@ export function getRelationCommentsByTaskId(
 ): ObjectTypeComposerFieldConfigDefinition<any, any> {
   return {
     type: () => CommentTC.NonNull.List,
-    resolve: (source) => {
-      return commentFindMany({
-        filter: { taskId: source[sourceFieldName] },
-      });
+    resolve: (source, _, context) => {
+      return commentFindMany(
+        {
+          filter: { taskId: source[sourceFieldName] },
+        },
+        context
+      );
     },
     projection: { [sourceFieldName]: 1 },
     extensions: {

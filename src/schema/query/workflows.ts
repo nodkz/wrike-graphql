@@ -4,8 +4,8 @@ import { workflowFindMany } from 'app/vendor/workflow/workflowFindMany';
 
 export default {
   type: WorkflowTC.NonNull.List,
-  resolve: () => {
-    return workflowFindMany;
+  resolve: (_, __, context) => {
+    return workflowFindMany({}, context);
   },
   extensions: {
     complexity: ({ childComplexity }) => childComplexity * 10,

@@ -9,7 +9,7 @@ export default {
     ids: TaskID.NonNull.List.NonNull,
   },
   resolve: (_, args, context, info) => {
-    return taskFindByIds({ ids: args.ids, info });
+    return taskFindByIds({ ids: args.ids, info }, context);
   },
   extensions: {
     complexity: ({ args, childComplexity }) => childComplexity * (args.ids.length || 100),

@@ -20,8 +20,14 @@ enum DataLoaderKind {
 }
 
 type DLCfg =
-  | { init: () => DataLoader<any, any>; kind: DataLoaderKind.OperationGlobal }
-  | { init: (info: GraphQLResolveInfo) => DataLoader<any, any>; kind: DataLoaderKind.FieldNode };
+  | {
+      init: (context: any) => DataLoader<any, any>;
+      kind: DataLoaderKind.OperationGlobal;
+    }
+  | {
+      init: (context: any, info: GraphQLResolveInfo) => DataLoader<any, any>;
+      kind: DataLoaderKind.FieldNode;
+    };
 
 const DataLoadersCfg = {
   // Global DataLoaders
@@ -67,7 +73,7 @@ function getDataLoader(
   // get or create DataLoader in GraphQL context
   let dl: DataLoader<any, any> = dataLoaders.get(contextKey);
   if (!dl) {
-    dl = cfg.init(info);
+    dl = cfg.init(context, info);
     dataLoaders.set(contextKey, dl);
   }
   return dl;

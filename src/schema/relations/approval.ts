@@ -12,10 +12,13 @@ export function getRelationApprovalsByFolderId(
 ): ObjectTypeComposerFieldConfigDefinition<any, any> {
   return {
     type: () => ApprovalTC.NonNull.List,
-    resolve: (source) => {
-      return approvalForFolder({
-        folderId: source[sourceFieldName],
-      });
+    resolve: (source, _, context) => {
+      return approvalForFolder(
+        {
+          folderId: source[sourceFieldName],
+        },
+        context
+      );
     },
     projection: { [sourceFieldName]: 1 },
     extensions: {
@@ -29,10 +32,13 @@ export function getRelationApprovalsByTaskId(
 ): ObjectTypeComposerFieldConfigDefinition<any, any> {
   return {
     type: () => ApprovalTC.NonNull.List,
-    resolve: (source) => {
-      return approvalForTask({
-        taskId: source[sourceFieldName],
-      });
+    resolve: (source, _, context) => {
+      return approvalForTask(
+        {
+          taskId: source[sourceFieldName],
+        },
+        context
+      );
     },
     projection: { [sourceFieldName]: 1 },
     extensions: {
@@ -79,16 +85,19 @@ export function getRelationApprovalsByApproverUserId(
         description: 'Next page token, overrides any other parameters in request',
       },
     },
-    resolve: (source, args) => {
-      return approvalFindMany({
-        filter: {
-          ...args.filter,
-          approvers: [source[sourceFieldName]],
+    resolve: (source, args, context) => {
+      return approvalFindMany(
+        {
+          filter: {
+            ...args.filter,
+            approvers: [source[sourceFieldName]],
+          },
+          limit: args.limit,
+          pageSize: args.pageSize,
+          nextPageToken: args.nextPageToken,
         },
-        limit: args.limit,
-        pageSize: args.pageSize,
-        nextPageToken: args.nextPageToken,
-      });
+        context
+      );
     },
     projection: { [sourceFieldName]: 1 },
     extensions: {
@@ -136,16 +145,19 @@ export function getRelationApprovalsByPendingApproverUserId(
         description: 'Next page token, overrides any other parameters in request',
       },
     },
-    resolve: (source, args) => {
-      return approvalFindMany({
-        filter: {
-          ...args.filter,
-          pendingApprovers: [source[sourceFieldName]],
+    resolve: (source, args, context) => {
+      return approvalFindMany(
+        {
+          filter: {
+            ...args.filter,
+            pendingApprovers: [source[sourceFieldName]],
+          },
+          limit: args.limit,
+          pageSize: args.pageSize,
+          nextPageToken: args.nextPageToken,
         },
-        limit: args.limit,
-        pageSize: args.pageSize,
-        nextPageToken: args.nextPageToken,
-      });
+        context
+      );
     },
     projection: { [sourceFieldName]: 1 },
     extensions: {

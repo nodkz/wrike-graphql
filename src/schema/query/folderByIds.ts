@@ -9,7 +9,7 @@ export default {
     ids: FolderID.NonNull.List.NonNull,
   },
   resolve: (_, args, context, info) => {
-    return folderFindByIds({ ids: args.ids, info });
+    return folderFindByIds({ ids: args.ids, info }, context);
   },
   extensions: {
     complexity: ({ args, childComplexity }) => childComplexity * (args.ids.length || 100),

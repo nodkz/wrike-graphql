@@ -6,10 +6,15 @@
 
 <https://graphql-wrike.herokuapp.com/voyager>
 
-## Live DEMO with your TOKEN
+By default is using token from my demo account. But you may provide your token via `Authorization` header:
 
-Get your token here: <https://www.wrike.com/frontend/apps/index.html#/api>
-Docs: <https://developers.wrike.com/oauth-20-authorization/>
+<img width="1102" alt="Screen Shot 2020-06-12 at 01 48 04" src="https://user-images.githubusercontent.com/1946920/84432588-d89fcf80-ac4e-11ea-9b5a-0685c7dfd824.png">
+
+Get your Authorization token here: <https://www.wrike.com/frontend/apps/index.html#/api>
+
+Docs about Wrike's authorization: <https://developers.wrike.com/oauth-20-authorization/>
+
+## Live DEMO on your server
 
 ```bash
 docker run --rm -p 3000:3000 -e AUTH_TOKEN="XXXX" docker.io/nodkz/wrike-graphql:latest

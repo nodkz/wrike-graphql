@@ -9,8 +9,8 @@ export default {
     ids: TimelogID.NonNull.List.NonNull,
     plainText: 'Boolean',
   },
-  resolve: (_, args) => {
-    return timelogFindByIds(args);
+  resolve: (_, args, context) => {
+    return timelogFindByIds(args, context);
   },
   extensions: {
     complexity: ({ args, childComplexity }) => childComplexity * (args.ids.length || 100),

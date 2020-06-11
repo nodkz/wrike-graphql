@@ -30,8 +30,8 @@ export default {
       },
     }),
   },
-  resolve: (_, args) => {
-    return approvalFindMany(args);
+  resolve: (_, args, context) => {
+    return approvalFindMany(args, context);
   },
   extensions: {
     complexity: ({ args, childComplexity }) =>

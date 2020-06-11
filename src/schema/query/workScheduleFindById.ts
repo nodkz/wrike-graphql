@@ -8,7 +8,7 @@ export default {
   args: {
     id: WorkScheduleID.NonNull,
   },
-  resolve: (_, { id }, __, info) => {
-    return workScheduleFindById({ id, info });
+  resolve: (_, { id }, context, info) => {
+    return workScheduleFindById({ id, info }, context);
   },
 } as FieldConfig<FindByIdOpts>;

@@ -5,7 +5,7 @@ import { WorkScheduleTC } from '../entities/WorkScheduleTC';
 export default {
   type: WorkScheduleTC.NonNull.List,
   resolve: (_, __, context, info) => {
-    return workScheduleFindMany({ info });
+    return workScheduleFindMany({ info }, context);
   },
   extensions: {
     complexity: ({ childComplexity }) => childComplexity * 10,

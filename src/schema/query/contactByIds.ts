@@ -9,7 +9,7 @@ export default {
     ids: ContactID.NonNull.List.NonNull,
   },
   resolve: (_, args, context, info) => {
-    return contactFindByIds({ ids: args.ids, info });
+    return contactFindByIds({ ids: args.ids, info }, context);
   },
   extensions: {
     complexity: ({ args, childComplexity }) => childComplexity * (args.ids.length || 100),

@@ -12,7 +12,7 @@ export default {
     folderId: FolderID.NonNull,
     folder: FolderUpdateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return folderUpdate(args);
+  resolve: (_, args, context) => {
+    return folderUpdate(args, context);
   },
 } as FieldConfig<UpdateArgs>;

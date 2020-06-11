@@ -1,6 +1,7 @@
 import { GraphQLResolveInfo } from 'graphql';
 import { getFlatProjectionFromAST } from 'graphql-compose';
 import client from '../client';
+import { AxiosRequestConfig } from 'axios';
 
 interface Filter {
   // path fields
@@ -41,7 +42,7 @@ type FindManyOpts = {
 };
 
 // https://developers.wrike.com/api/v4/folders-projects/#get-folder-tree
-export async function _folderFindMany(opts?: FindManyOpts) {
+export async function _folderFindMany(opts: FindManyOpts, config: AxiosRequestConfig) {
   const { filter, projection } = opts || {};
 
   let params: Record<string, any> = {};
@@ -63,15 +64,16 @@ export async function _folderFindMany(opts?: FindManyOpts) {
     url = `/spaces/${spaceId}/folders`;
   }
 
-  const res = await client.get(url, { params });
+  const res = await client.get(url, { ...config, params });
 
   return res?.data?.data;
 }
 
 export function folderFindMany(
-  opts: Exclude<FindManyOpts, 'projection'> & { info: GraphQLResolveInfo }
+  opts: Exclude<FindManyOpts, 'projection'> & { info: GraphQLResolveInfo },
+  config: AxiosRequestConfig
 ) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _folderFindMany({ ...opts, projection });
+  return _folderFindMany({ ...opts, projection }, config);
 }

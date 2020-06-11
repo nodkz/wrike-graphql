@@ -8,8 +8,8 @@ export default {
   args: {
     ids: DependencyID.NonNull.List.NonNull,
   },
-  resolve: (_, args) => {
-    return dependencyFindByIds(args);
+  resolve: (_, args, context) => {
+    return dependencyFindByIds(args, context);
   },
   extensions: {
     complexity: ({ args, childComplexity }) => childComplexity * (args.ids.length || 100),

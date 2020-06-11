@@ -8,8 +8,8 @@ export default {
   args: {
     ids: ApprovalID.NonNull.List.NonNull,
   },
-  resolve: (_, args) => {
-    return approvalFindByIds(args);
+  resolve: (_, args, context) => {
+    return approvalFindByIds(args, context);
   },
   extensions: {
     complexity: ({ args, childComplexity }) => childComplexity * (args.ids.length || 100),

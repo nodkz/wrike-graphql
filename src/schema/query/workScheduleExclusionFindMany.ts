@@ -20,8 +20,8 @@ export default {
     filter: WorkScheduleExclusionFilter,
     workScheduleId: WorkScheduleID.NonNull,
   },
-  resolve: (_, args) => {
-    return workScheduleExclusionFindMany(args);
+  resolve: (_, args, context) => {
+    return workScheduleExclusionFindMany(args, context);
   },
   extensions: {
     complexity: ({ childComplexity }) => childComplexity * 10,

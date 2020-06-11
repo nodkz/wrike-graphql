@@ -36,7 +36,7 @@ export default {
     taskId: TaskID.NonNull,
     timelog: TimelogCreateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return timelogCreate(args);
+  resolve: (_, args, context) => {
+    return timelogCreate(args, context);
   },
 } as FieldConfig<CreateArgs>;

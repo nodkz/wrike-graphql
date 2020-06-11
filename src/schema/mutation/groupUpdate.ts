@@ -14,7 +14,7 @@ export default {
     id: GroupID.NonNull,
     group: GroupUpdateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return groupUpdate(args);
+  resolve: (_, args, context) => {
+    return groupUpdate(args, context);
   },
 } as FieldConfig<UpdateArgs>;

@@ -14,7 +14,7 @@ export default {
     id: TaskID.NonNull,
     task: TaskUpdateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return taskUpdate(args);
+  resolve: (_, args, context) => {
+    return taskUpdate(args, context);
   },
 } as FieldConfig<TaskUpdateArgs>;

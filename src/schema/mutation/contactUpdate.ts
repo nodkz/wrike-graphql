@@ -10,7 +10,7 @@ export default {
     id: ContactID.NonNull,
     metadata: KeyValueInput.NonNull.List.NonNull,
   },
-  resolve: (_, args) => {
-    return contactUpdate(args);
+  resolve: (_, args, context) => {
+    return contactUpdate(args, context);
   },
 } as FieldConfig<ContactUpdateArgs>;

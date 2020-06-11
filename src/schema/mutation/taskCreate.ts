@@ -44,7 +44,7 @@ export default {
     folderId: FolderID.NonNull,
     task: TaskCreateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return taskCreate(args);
+  resolve: (_, args, context) => {
+    return taskCreate(args, context);
   },
 } as FieldConfig<CreateArgs>;

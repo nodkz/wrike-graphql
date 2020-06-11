@@ -11,7 +11,7 @@ export default {
   args: {
     id: WorkScheduleExclusionID.NonNull,
   },
-  resolve: (_, args) => {
-    return workScheduleExclusionRemove(args);
+  resolve: (_, args, context) => {
+    return workScheduleExclusionRemove(args, context);
   },
 } as FieldConfig<RemoveArgs>;

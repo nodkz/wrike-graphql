@@ -9,7 +9,13 @@ export default {
     id: ApprovalID.NonNull,
     approvers: ContactID.NonNull.List.NonNull,
   },
-  resolve: (_, args) => {
-    return approvalUpdate({ id: args.id, approval: { removeApprovers: args.approvers } });
+  resolve: (_, args, context) => {
+    return approvalUpdate(
+      {
+        id: args.id,
+        approval: { removeApprovers: args.approvers },
+      },
+      context
+    );
   },
 } as FieldConfig;

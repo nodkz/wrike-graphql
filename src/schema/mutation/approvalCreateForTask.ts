@@ -10,7 +10,7 @@ export default {
     taskId: TaskID.NonNull,
     approval: ApprovalCreateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return approvalCreateForTask(args);
+  resolve: (_, args, context) => {
+    return approvalCreateForTask(args, context);
   },
 } as FieldConfig<CreateArgs>;

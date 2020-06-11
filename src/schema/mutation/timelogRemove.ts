@@ -8,7 +8,7 @@ export default {
   args: {
     id: TimelogID.NonNull,
   },
-  resolve: (_, args) => {
-    return timelogRemove(args);
+  resolve: (_, args, context) => {
+    return timelogRemove(args, context);
   },
 } as FieldConfig<RemoveArgs>;

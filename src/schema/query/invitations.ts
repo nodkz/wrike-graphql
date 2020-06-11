@@ -4,8 +4,8 @@ import { FieldConfig } from 'app/schema/definitions';
 
 export default {
   type: InvitationTC.NonNull.List,
-  resolve: () => {
-    return invitationFindMany();
+  resolve: (_, __, context) => {
+    return invitationFindMany({}, context);
   },
   extensions: {
     complexity: ({ childComplexity }) => childComplexity * 100,

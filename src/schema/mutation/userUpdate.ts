@@ -17,7 +17,7 @@ export default {
       },
     }),
   },
-  resolve: (_, args) => {
-    return userUpdate(args);
+  resolve: (_, args, context) => {
+    return userUpdate(args, context);
   },
 } as FieldConfig<UserUpdateArgs>;

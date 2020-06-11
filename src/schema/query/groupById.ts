@@ -9,6 +9,6 @@ export default {
     id: GroupID.NonNull,
   },
   resolve: (_, args, context, info) => {
-    return groupFindById({ id: args.id, info });
+    return groupFindById({ id: args.id, info }, context);
   },
 } as FieldConfig;

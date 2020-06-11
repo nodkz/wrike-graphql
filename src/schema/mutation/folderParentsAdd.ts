@@ -12,12 +12,15 @@ export default {
     folderId: FolderID.NonNull,
     parentFolderIds: FolderID.NonNull.List.NonNull,
   },
-  resolve: (_, args) => {
-    return folderUpdate({
-      folderId: args.folderId,
-      folder: {
-        addParents: args.parentFolderIds,
+  resolve: (_, args, context) => {
+    return folderUpdate(
+      {
+        folderId: args.folderId,
+        folder: {
+          addParents: args.parentFolderIds,
+        },
       },
-    });
+      context
+    );
   },
 } as FieldConfig;

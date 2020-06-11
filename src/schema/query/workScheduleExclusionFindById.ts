@@ -11,7 +11,7 @@ export default {
   args: {
     id: WorkScheduleExclusionID.NonNull,
   },
-  resolve: (_, args) => {
-    return workScheduleExclusionFindById(args);
+  resolve: (_, args, context) => {
+    return workScheduleExclusionFindById(args, context);
   },
 } as FieldConfig<FindByIdOpts>;

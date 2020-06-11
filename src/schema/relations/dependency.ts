@@ -9,10 +9,13 @@ export function getRelationDependenciesByTaskId(
 ): ObjectTypeComposerFieldConfigDefinition<any, any> {
   return {
     type: () => DependencyTC.NonNull.List,
-    resolve: (source) => {
-      return dependencyForTask({
-        taskId: source[sourceFieldName],
-      });
+    resolve: (source, _, context) => {
+      return dependencyForTask(
+        {
+          taskId: source[sourceFieldName],
+        },
+        context
+      );
     },
     projection: { [sourceFieldName]: 1 },
     extensions: {
@@ -27,7 +30,7 @@ export function getRelationDependencyIds(
   return {
     type: () => DependencyTC.NonNull.List,
     resolve: process.env.DISABLE_DATALOADERS
-      ? (source) => dependencyFindByIds({ ids: source[sourceFieldName] })
+      ? (source, _, context) => dependencyFindByIds({ ids: source[sourceFieldName] }, context)
       : resolveManyViaDL('DependencyID', (s) => s[sourceFieldName]),
     projection: { [sourceFieldName]: 1 },
     extensions: {

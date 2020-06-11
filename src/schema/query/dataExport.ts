@@ -9,7 +9,7 @@ export default {
   args: {
     id: DataExportID,
   },
-  resolve: (_, args) => {
-    return dataExportById(args);
+  resolve: (_, args, context) => {
+    return dataExportById(args, context);
   },
 } as FieldConfig<FindArgs>;

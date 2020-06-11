@@ -20,8 +20,8 @@ export default {
   args: {
     filter: UserScheduleExclusionFilter,
   },
-  resolve: (_, args) => {
-    return userScheduleExclusionFindMany(args);
+  resolve: (_, args, context) => {
+    return userScheduleExclusionFindMany(args, context);
   },
   extensions: {
     complexity: ({ childComplexity }) => childComplexity * 10,

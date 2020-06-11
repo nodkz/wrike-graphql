@@ -15,7 +15,7 @@ export default {
   args: {
     workflow: WorkflowCreateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return workflowCreate(args);
+  resolve: (_, args, context) => {
+    return workflowCreate(args, context);
   },
 } as FieldConfig<CreateArgs>;

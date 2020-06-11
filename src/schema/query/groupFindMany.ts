@@ -14,7 +14,7 @@ export default {
     }),
   },
   resolve: (_, { filter }, context, info) => {
-    return groupFindMany({ filter, info });
+    return groupFindMany({ filter, info }, context);
   },
   extensions: {
     complexity: ({ childComplexity }) => childComplexity * 100,

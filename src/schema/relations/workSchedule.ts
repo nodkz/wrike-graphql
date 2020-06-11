@@ -9,8 +9,8 @@ export function getRelationWorkScheduleId(
   return {
     type: () => WorkScheduleTC,
     resolve: process.env.DISABLE_DATALOADERS
-      ? async (source, _, __, info) => {
-          const records = await workScheduleFindMany({ info });
+      ? async (source, _, context, info) => {
+          const records = await workScheduleFindMany({ info }, context);
           return records.find((x) => x.id === source[sourceFieldName]);
         }
       : resolveOneViaDL('WorkScheduleID', (s) => s[sourceFieldName]),

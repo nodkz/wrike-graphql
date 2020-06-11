@@ -25,8 +25,8 @@ export default {
       },
     }),
   },
-  resolve: (_, args) => {
-    return auditLogFindMany(args);
+  resolve: (_, args, context) => {
+    return auditLogFindMany(args, context);
   },
   extensions: {
     complexity: ({ args, childComplexity }) => childComplexity * (args.pageSize || 100),

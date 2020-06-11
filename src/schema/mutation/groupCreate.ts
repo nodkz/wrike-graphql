@@ -27,7 +27,7 @@ export default {
   args: {
     group: GroupCreateInput.NonNull,
   },
-  resolve: (_, args) => {
-    return groupCreate(args);
+  resolve: (_, args, context) => {
+    return groupCreate(args, context);
   },
 } as FieldConfig<CreateArgs>;

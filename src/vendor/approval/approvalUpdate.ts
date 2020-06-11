@@ -1,4 +1,5 @@
 import client from '../client';
+import { AxiosRequestConfig } from 'axios';
 
 export interface UpdateArgs {
   id: string;
@@ -6,11 +7,11 @@ export interface UpdateArgs {
 }
 
 // https://developers.wrike.com/api/v4/approvals/#update-approval
-export async function approvalUpdate(opts: UpdateArgs) {
+export async function approvalUpdate(opts: UpdateArgs, config: AxiosRequestConfig) {
   const { id, approval } = opts || {};
 
   if (!id) throw new Error('You should provide `id`');
-  const res = await client.put(`/approvals/${id}`, approval);
+  const res = await client.put(`/approvals/${id}`, approval, config);
 
   return res?.data?.data[0];
 }

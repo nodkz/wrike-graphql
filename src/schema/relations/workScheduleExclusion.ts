@@ -7,10 +7,13 @@ export function getRelationWorkScheduleExclusionByWorkScheduleId(
 ): ObjectTypeComposerFieldConfigDefinition<any, any> {
   return {
     type: () => WorkScheduleExclusionTC.NonNull.List,
-    resolve: (source) => {
-      return workScheduleExclusionFindMany({
-        workScheduleId: source[sourceFieldName],
-      });
+    resolve: (source, _, context) => {
+      return workScheduleExclusionFindMany(
+        {
+          workScheduleId: source[sourceFieldName],
+        },
+        context
+      );
     },
     projection: { [sourceFieldName]: 1 },
     extensions: {
