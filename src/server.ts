@@ -14,10 +14,14 @@ const app = express();
 const apolloServer = new ApolloServer({
   schema,
   context: ({ req }) => {
+    const ctx = {} as Record<string, any>;
     if (req?.headers?.authorization) {
-      return { headers: { authorization: req?.headers?.authorization } };
+      ctx.headers = { ...ctx.headers, authorization: req?.headers?.authorization };
     }
-    return {};
+    if (req?.headers?.cookie) {
+      ctx.headers = { ...ctx.headers, cookie: req?.headers?.cookie };
+    }
+    return ctx;
   },
   plugins: process.env.DISABLE_QUERY_COST
     ? []
