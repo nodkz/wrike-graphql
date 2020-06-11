@@ -69,9 +69,9 @@ export const AttachmentTC = schemaComposer.createObjectTC({
     url: {
       type: 'String',
       description: 'Link to download attachment',
-      resolve: async (source) => {
+      resolve: async (source, _, context) => {
         if (source?.url) return source?.url;
-        return attachmentAccessUrl(source.id);
+        return attachmentAccessUrl(source.id, context);
       },
     },
     reviewIds: {
