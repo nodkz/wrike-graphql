@@ -111,27 +111,3 @@ export function resolveManyViaDL(
     return getDataLoader(entityName, context, info).loadMany(ids);
   };
 }
-
-export function dataLoaderLoadById(
-  id: string,
-  entityName: DataLoaderEntityNames,
-  context: Record<string, any>,
-  info: GraphQLResolveInfo
-): Promise<any[]> {
-  return getDataLoader(entityName, context, info).load(id);
-}
-
-/**
- * Load many ids records via DataLoader
- *
- * @example
- *   resolve: (s, a, c, i) => dataLoaderLoadMany(s.authorIds, 'ContactID', c, i),
- */
-export function dataLoaderLoadMany(
-  ids: string[],
-  entityName: DataLoaderEntityNames,
-  context: Record<string, any>,
-  info: GraphQLResolveInfo
-): Promise<any[]> {
-  return getDataLoader(entityName, context, info).loadMany(ids);
-}
