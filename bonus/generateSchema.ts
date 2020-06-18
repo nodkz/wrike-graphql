@@ -4,7 +4,7 @@ require('dotenv').config();
 
 import { printSchema } from 'graphql';
 import path from 'path';
-import schema from '../src/schema';
+import { schema } from '../src/schema/entrypoints';
 import fs from 'fs';
 
 // generate schema.graphql file

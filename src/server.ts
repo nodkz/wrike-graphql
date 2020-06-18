@@ -5,11 +5,13 @@ require('dotenv').config();
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { express as voyagerMiddleware } from 'graphql-voyager/middleware';
-import schema from 'app/schema';
+import { schema } from 'app/schema/entrypoints';
 import { queryCostPlugin } from './queryCostPlugin';
 
 const PORT = parseInt(process.env.PORT || '3000');
 const app = express();
+
+app.use('/voyager', voyagerMiddleware({ endpointUrl: '/' }));
 
 const apolloServer = new ApolloServer({
   schema,
@@ -28,17 +30,13 @@ const apolloServer = new ApolloServer({
     : [queryCostPlugin({ schema, maxComplexity: 10000 })],
 });
 
-app.use('/voyager', voyagerMiddleware({ endpointUrl: apolloServer.graphqlPath }));
-
 app.use(
   apolloServer.getMiddleware({
     path: '/',
     disableHealthCheck: true,
     cors: {
       credentials: true,
-      origin: (origin: string | undefined, callback: any) => {
-        callback(null, true);
-      },
+      origin: (origin: string | undefined, callback: any) => callback(null, true),
     },
   })
 );

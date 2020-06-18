@@ -1,10 +1,4 @@
-import { astToSchema, directoryToAst } from 'graphql-compose-modules';
-import { schemaComposer } from 'graphql-compose';
+import { schema } from './entrypoints';
 
-const ast = directoryToAst(module);
-const sc = astToSchema(ast, { schemaComposer });
-sc.Query.setDescription('for Microsoft with ❤️');
-sc.Mutation.setDescription('for Google with ❤️');
-
-const schema = sc.buildSchema();
+export { schema };
 export default schema;

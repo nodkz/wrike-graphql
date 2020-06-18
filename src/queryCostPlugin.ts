@@ -1,7 +1,7 @@
 // Read apollo-server docs
-//    https://www.apollographql.com/docs/apollo-server/integrations/plugins/
+//   https://www.apollographql.com/docs/apollo-server/integrations/plugins/
 // Read graphql-query-complexity docs
-//    https://github.com/slicknode/graphql-query-complexity
+//   https://github.com/slicknode/graphql-query-complexity
 
 import type { ApolloServerPlugin } from 'apollo-server-plugin-base';
 import { getComplexity, simpleEstimator, fieldExtensionsEstimator } from 'graphql-query-complexity';

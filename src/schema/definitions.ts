@@ -9,7 +9,7 @@ export interface FieldConfig<
   TContext = any,
   TSource = any
 > {
-  name?: never; // FORBIT TO USE `name` KEY, cause it introduce confusion for developers
+  name?: never; // FORBID TO USE `name` KEY, cause it introduce confusion for developers
   type: ComposeOutputTypeDefinition<TContext>;
   args?: {
     [argName in keyof TArgs]: ObjectTypeComposerArgumentConfigDefinition;
