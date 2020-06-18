@@ -1,7 +1,7 @@
 import { ObjectTypeComposerFieldConfigDefinition } from 'graphql-compose';
-import { DependencyTC } from '../entities/DependencyTC';
+import { DependencyTC } from 'app/schema/entities/DependencyTC';
 import { dependencyForTask } from 'app/vendor/dependency/dependencyForTask';
-import { resolveManyViaDL } from '../dataLoaders';
+import { resolveManyViaDL } from 'app/schema/dataLoaders';
 import { dependencyFindByIds } from 'app/vendor/dependency/dependencyFindByIds';
 
 export function getRelationDependenciesByTaskId(

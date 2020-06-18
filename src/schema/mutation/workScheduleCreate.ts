@@ -1,8 +1,8 @@
 import { FieldConfig } from 'app/schema/definitions';
-import { WorkScheduleTC } from '../entities/WorkScheduleTC';
-import { WorkWeekInput } from '../types/inputs/WorkWeekInput';
+import { WorkScheduleTC } from 'app/schema/entities/WorkScheduleTC';
+import { WorkWeekInput } from 'app/schema/types/inputs/WorkWeekInput';
 import { workScheduleCreate, CreateArgs } from 'app/vendor/workSchedule/workScheduleCreate';
-import { ContactID } from '../types/Scalars';
+import { ContactID } from 'app/schema/types/Scalars';
 
 const WorkScheduleUpdateInput = WorkScheduleTC.schemaComposer.createInputTC({
   name: 'WorkSchedulecreateInput',

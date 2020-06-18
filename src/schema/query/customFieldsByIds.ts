@@ -1,6 +1,6 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { CustomFieldID } from 'app/schema/types/Scalars';
-import { CustomFieldTC } from '../entities/CustomFieldTC';
+import { CustomFieldTC } from 'app/schema/entities/CustomFieldTC';
 import { customFieldFindByIds } from 'app/vendor/customFields/customFieldFindByIds';
 
 export default {

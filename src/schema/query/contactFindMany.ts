@@ -1,7 +1,7 @@
 import { contactFindMany } from 'app/vendor/contact/contactFindMany';
 import { ContactTC } from 'app/schema/entities/ContactTC';
 import { FieldConfig } from 'app/schema/definitions';
-import { KeyValueInput } from '../types/inputs/KeyValueInput';
+import { KeyValueInput } from 'app/schema/types/inputs/KeyValueInput';
 
 export default {
   type: ContactTC.NonNull.List,

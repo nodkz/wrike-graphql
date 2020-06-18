@@ -2,7 +2,7 @@ import { UserTC } from 'app/schema/entities/UserTC';
 import { FieldConfig } from 'app/schema/definitions';
 import { ContactID, AccountID } from 'app/schema/types/Scalars';
 import { userUpdate, UserUpdateArgs } from 'app/vendor/user/userUpdate';
-import { UserRoleEnum } from '../types/Enums';
+import { UserRoleEnum } from 'app/schema/types/Enums';
 
 export default {
   type: UserTC,

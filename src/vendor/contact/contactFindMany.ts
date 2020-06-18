@@ -19,7 +19,7 @@ type FindManyOpts = {
 };
 
 // https://developers.wrike.com/api/v4/contacts/#query-contacts
-export async function _contactFindMany(opts: FindManyOpts, config: AxiosRequestConfig) {
+export async function _contactFindMany(opts: FindManyOpts, context: AxiosRequestConfig) {
   const { filter, projection } = opts || {};
 
   let params: Record<string, any> = {};
@@ -32,16 +32,16 @@ export async function _contactFindMany(opts: FindManyOpts, config: AxiosRequestC
     if (projection.length > 0) params.fields = projection;
   }
 
-  const res = await client.get('/contacts', { ...config, params });
+  const res = await client.get('/contacts', { ...context, params });
 
   return res?.data?.data;
 }
 
 export function contactFindMany(
   opts: Exclude<FindManyOpts, 'projection'> & { info: GraphQLResolveInfo },
-  config: AxiosRequestConfig
+  context: AxiosRequestConfig
 ) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _contactFindMany({ ...opts, projection }, config);
+  return _contactFindMany({ ...opts, projection }, context);
 }

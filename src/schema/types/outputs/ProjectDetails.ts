@@ -1,6 +1,6 @@
 import { schemaComposer } from 'graphql-compose';
-import { ProjectStatusEnum, ProjectContractTypeEnum } from '../Enums';
-import { ContactID, CustomStatusID } from '../Scalars';
+import { ProjectStatusEnum, ProjectContractTypeEnum } from 'app/schema/types/Enums';
+import { ContactID, CustomStatusID } from 'app/schema/types/Scalars';
 import { getRelationContactIds, getRelationContactId } from 'app/schema/relations/contact';
 
 export const ProjectDetails = schemaComposer.createObjectTC({

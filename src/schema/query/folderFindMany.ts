@@ -1,10 +1,10 @@
 import { folderFindMany } from 'app/vendor/folder/folderFindMany';
 import { FolderTC } from 'app/schema/entities/FolderTC';
 import { FieldConfig } from 'app/schema/definitions';
-import { KeyValueInput } from '../types/inputs/KeyValueInput';
-import { DateTimeRangeInput } from '../types/inputs/DateTimeRangeInput';
-import { ProjectContractTypeEnum } from '../types/Enums';
-import { CustomFieldFilterInput } from '../types/inputs/CustomFieldFilterInput';
+import { KeyValueInput } from 'app/schema/types/inputs/KeyValueInput';
+import { DateTimeRangeInput } from 'app/schema/types/inputs/DateTimeRangeInput';
+import { ProjectContractTypeEnum } from 'app/schema/types/Enums';
+import { CustomFieldFilterInput } from 'app/schema/types/inputs/CustomFieldFilterInput';
 
 const FolderFilterInput = FolderTC.schemaComposer.createInputTC({
   name: 'FolderFindManyFilter',

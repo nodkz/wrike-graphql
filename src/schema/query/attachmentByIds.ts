@@ -1,6 +1,6 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { AttachmentID } from 'app/schema/types/Scalars';
-import { AttachmentTC } from '../entities/AttachmentTC';
+import { AttachmentTC } from 'app/schema/entities/AttachmentTC';
 import { attachmentFindByIds, FindByIdsArgs } from 'app/vendor/attachment/attachmentFindByIds';
 
 export default {

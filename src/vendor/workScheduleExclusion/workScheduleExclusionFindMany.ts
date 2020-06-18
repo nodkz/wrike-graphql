@@ -15,12 +15,12 @@ export type FindManyOpts = {
 // https://developers.wrike.com/api/v4/work-schedule-exceptions/#query-work-schedule-exceptions
 export async function workScheduleExclusionFindMany(
   opts: FindManyOpts,
-  config: AxiosRequestConfig
+  context: AxiosRequestConfig
 ) {
   const { filter, workScheduleId } = opts || {};
   const params: Record<string, any> = filter || {};
   const res = await client.get(`/workschedules/${workScheduleId}/workschedule_exclusions`, {
-    ...config,
+    ...context,
     params,
   });
   return res?.data?.data;

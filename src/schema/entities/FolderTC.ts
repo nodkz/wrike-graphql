@@ -1,15 +1,15 @@
 import { FolderID, CustomFieldID } from 'app/schema/types/Scalars';
-import { ColorEnum, TreeScopeEnum, ProjectContractTypeEnum } from '../types/Enums';
+import { ColorEnum, TreeScopeEnum, ProjectContractTypeEnum } from 'app/schema/types/Enums';
 import { schemaComposer } from 'graphql-compose';
-import { ProjectDetails } from '../types/outputs/ProjectDetails';
-import { KeyValue } from '../types/outputs/KeyValue';
+import { ProjectDetails } from 'app/schema/types/outputs/ProjectDetails';
+import { KeyValue } from 'app/schema/types/outputs/KeyValue';
 import { CustomFieldTC } from './CustomFieldTC';
-import { getRelationFolderIds } from '../relations/folder';
-import { getRelationTasksByFolderId } from '../relations/task';
-import { getRelationCommentsByFolderId } from '../relations/comment';
-import { getRelationTimelogsByFolderId } from '../relations/timelog';
-import { getRelationAttachmentsByFolderId } from '../relations/attachment';
-import { getRelationApprovalsByFolderId } from '../relations/approval';
+import { getRelationFolderIds } from 'app/schema/relations/folder';
+import { getRelationTasksByFolderId } from 'app/schema/relations/task';
+import { getRelationCommentsByFolderId } from 'app/schema/relations/comment';
+import { getRelationTimelogsByFolderId } from 'app/schema/relations/timelog';
+import { getRelationAttachmentsByFolderId } from 'app/schema/relations/attachment';
+import { getRelationApprovalsByFolderId } from 'app/schema/relations/approval';
 
 export const FolderTC = schemaComposer.createObjectTC({
   name: 'Folder',

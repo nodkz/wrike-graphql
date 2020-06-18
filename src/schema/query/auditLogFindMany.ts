@@ -1,7 +1,7 @@
 import { FieldConfig } from 'app/schema/definitions';
-import { AuditLogTC } from '../entities/AuditLogTC';
-import { AuditLogOperationEnum } from '../types/Enums';
-import { DateTimeRangeInput } from '../types/inputs/DateTimeRangeInput';
+import { AuditLogTC } from 'app/schema/entities/AuditLogTC';
+import { AuditLogOperationEnum } from 'app/schema/types/Enums';
+import { DateTimeRangeInput } from 'app/schema/types/inputs/DateTimeRangeInput';
 import { auditLogFindMany, FindManyOpts } from 'app/vendor/auditLog/auditLogFindMany';
 
 export default {

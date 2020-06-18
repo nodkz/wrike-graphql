@@ -1,6 +1,6 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { workScheduleFindMany, FindManyOpts } from 'app/vendor/workSchedule/workScheduleFindMany';
-import { WorkScheduleTC } from '../entities/WorkScheduleTC';
+import { WorkScheduleTC } from 'app/schema/entities/WorkScheduleTC';
 
 export default {
   type: WorkScheduleTC.NonNull.List,

@@ -1,7 +1,7 @@
 import { ObjectTypeComposerFieldConfigDefinition } from 'graphql-compose';
-import { WorkScheduleExclusionTC } from '../entities/WorkScheduleExclusionTC';
+import { WorkScheduleExclusionTC } from 'app/schema/entities/WorkScheduleExclusionTC';
 import { userScheduleExclusionFindMany } from 'app/vendor/userScheduleExclusion/userScheduleExclusionFindMany';
-import { DateRangeEqualInput } from '../types/inputs/DateRangeEqualInput';
+import { DateRangeEqualInput } from 'app/schema/types/inputs/DateRangeEqualInput';
 
 const WorkScheduleExclusionFilterByRelation = WorkScheduleExclusionTC.schemaComposer.createInputTC({
   name: 'WorkScheduleExclusionFilterByRelation',

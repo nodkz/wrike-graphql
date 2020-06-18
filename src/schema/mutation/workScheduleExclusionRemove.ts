@@ -4,7 +4,7 @@ import {
   workScheduleExclusionRemove,
   RemoveArgs,
 } from 'app/vendor/workScheduleExclusion/workScheduleExclusionRemove';
-import { WorkScheduleExclusionTC } from '../entities/WorkScheduleExclusionTC';
+import { WorkScheduleExclusionTC } from 'app/schema/entities/WorkScheduleExclusionTC';
 
 export default {
   type: WorkScheduleExclusionTC,

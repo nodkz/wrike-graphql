@@ -1,6 +1,6 @@
 import { resolveManyViaDL, resolveOneViaDL } from 'app/schema/dataLoaders';
 import { ObjectTypeComposerFieldConfigDefinition } from 'graphql-compose';
-import { CommentTC } from '../entities/CommentTC';
+import { CommentTC } from 'app/schema/entities/CommentTC';
 import { commentFindByIds } from 'app/vendor/comment/commentFindByIds';
 import { commentFindMany } from 'app/vendor/comment/commentFindMany';
 

@@ -1,8 +1,8 @@
 import { FolderID, CommentID, ContactID, TaskID } from 'app/schema/types/Scalars';
 import { schemaComposer } from 'graphql-compose';
-import { getRelationContactId } from '../relations/contact';
-import { getRelationTaskId } from '../relations/task';
-import { getRelationFolderId } from '../relations/folder';
+import { getRelationContactId } from 'app/schema/relations/contact';
+import { getRelationTaskId } from 'app/schema/relations/task';
+import { getRelationFolderId } from 'app/schema/relations/folder';
 
 export const CommentTC = schemaComposer.createObjectTC({
   name: 'Comment',

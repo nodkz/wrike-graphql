@@ -1,8 +1,8 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { FolderID } from 'app/schema/types/Scalars';
 import { folderCopyAsync, Args } from 'app/vendor/folder/folderCopyAsync';
-import { AsyncJobTC } from '../entities/AsyncJobTC';
-import { FolderCopyOptsInput } from '../types/inputs/FolderCopyOptsInput';
+import { AsyncJobTC } from 'app/schema/entities/AsyncJobTC';
+import { FolderCopyOptsInput } from 'app/schema/types/inputs/FolderCopyOptsInput';
 
 export default {
   type: AsyncJobTC,

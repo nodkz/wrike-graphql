@@ -6,12 +6,12 @@ export interface CreateArgs {
 }
 
 // https://developers.wrike.com/api/v4/groups/#create-groups
-export async function groupCreate(opts: CreateArgs, config: AxiosRequestConfig) {
+export async function groupCreate(opts: CreateArgs, context: AxiosRequestConfig) {
   const { group } = opts || {};
 
   if (!group?.title) throw new Error('You should provide `title`');
 
-  const res = await client.post(`/groups`, group, config);
+  const res = await client.post(`/groups`, group, context);
 
   return res?.data?.data[0];
 }

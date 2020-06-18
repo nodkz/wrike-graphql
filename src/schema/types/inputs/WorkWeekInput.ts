@@ -1,5 +1,5 @@
 import { schemaComposer } from 'graphql-compose';
-import { WeekDayEnum } from '../Enums';
+import { WeekDayEnum } from 'app/schema/types/Enums';
 
 export const WorkWeekInput = schemaComposer.createInputTC({
   name: 'WorkWeekInput',

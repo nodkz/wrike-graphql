@@ -14,7 +14,7 @@ type FindByIdsOpts = {
 };
 
 // https://developers.wrike.com/api/v4/contacts/#query-contacts
-export async function _contactFindByIds(opts: FindByIdsOpts, config: AxiosRequestConfig) {
+export async function _contactFindByIds(opts: FindByIdsOpts, context: AxiosRequestConfig) {
   const { ids, projection } = opts || {};
 
   const params: Record<string, any> = {};
@@ -23,16 +23,16 @@ export async function _contactFindByIds(opts: FindByIdsOpts, config: AxiosReques
   }
 
   return splitRequestBy100(ids, async (preparedIds) => {
-    const res = await client.get(`/contacts/${preparedIds}`, { ...config, params });
+    const res = await client.get(`/contacts/${preparedIds}`, { ...context, params });
     return res?.data?.data;
   });
 }
 
 export function contactFindByIds(
   opts: Exclude<FindByIdsOpts, 'projection'> & { info: GraphQLResolveInfo },
-  config: AxiosRequestConfig
+  context: AxiosRequestConfig
 ) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _contactFindByIds({ ...opts, projection }, config);
+  return _contactFindByIds({ ...opts, projection }, context);
 }

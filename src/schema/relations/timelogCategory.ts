@@ -1,6 +1,6 @@
 import { resolveOneViaDL } from 'app/schema/dataLoaders';
 import { ObjectTypeComposerFieldConfigDefinition } from 'graphql-compose';
-import { TimelogCategoryTC } from '../entities/TimelogCategoryTC';
+import { TimelogCategoryTC } from 'app/schema/entities/TimelogCategoryTC';
 import { timelogCategoryFindMany } from 'app/vendor/timelogCategory/timelogCategoryFindMany';
 
 export function getRelationTimelogCategoryId(

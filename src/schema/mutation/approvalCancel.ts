@@ -1,6 +1,6 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { ApprovalID } from 'app/schema/types/Scalars';
-import { ApprovalTC } from '../entities/ApprovalTC';
+import { ApprovalTC } from 'app/schema/entities/ApprovalTC';
 import { approvalCancel, RemoveArgs } from 'app/vendor/approval/approvalCancel';
 
 export default {

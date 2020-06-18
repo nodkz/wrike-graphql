@@ -1,6 +1,6 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { DependencyID } from 'app/schema/types/Scalars';
-import { DependencyTC } from '../entities/DependencyTC';
+import { DependencyTC } from 'app/schema/entities/DependencyTC';
 import { dependencyFindByIds, FindByIdsArgs } from 'app/vendor/dependency/dependencyFindByIds';
 
 export default {

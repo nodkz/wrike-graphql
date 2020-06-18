@@ -7,11 +7,11 @@ export interface UpdateArgs {
 }
 
 // https://developers.wrike.com/api/v4/groups/#modify-groups
-export async function groupUpdate(opts: UpdateArgs, config: AxiosRequestConfig) {
+export async function groupUpdate(opts: UpdateArgs, context: AxiosRequestConfig) {
   const { id, group } = opts || {};
 
   if (!id) throw new Error('You should provide `id`');
-  const res = await client.put(`/groups/${id}`, group, config);
+  const res = await client.put(`/groups/${id}`, group, context);
 
   return res?.data?.data[0];
 }

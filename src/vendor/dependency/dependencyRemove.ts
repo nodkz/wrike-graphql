@@ -6,9 +6,9 @@ export interface RemoveArgs {
 }
 
 // https://developers.wrike.com/api/v4/dependencies/#delete-dependency
-export async function dependencyRemove(opts: RemoveArgs, config: AxiosRequestConfig) {
+export async function dependencyRemove(opts: RemoveArgs, context: AxiosRequestConfig) {
   const { id } = opts || {};
   if (!id) throw new Error('You should provide `id`');
-  const res = await client.delete(`/dependencies/${id}`, config);
+  const res = await client.delete(`/dependencies/${id}`, context);
   return res?.data?.data[0];
 }

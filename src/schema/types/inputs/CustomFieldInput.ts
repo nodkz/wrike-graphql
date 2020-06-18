@@ -1,6 +1,6 @@
 import { schemaComposer } from 'graphql-compose';
-import { ContactID } from '../Scalars';
-import { CustomFieldTypeEnum } from '../Enums';
+import { ContactID } from 'app/schema/types/Scalars';
+import { CustomFieldTypeEnum } from 'app/schema/types/Enums';
 import { CustomFieldSettingsInput } from './CustomFieldSettingsInput';
 
 export const CustomFieldInput = schemaComposer.createInputTC({

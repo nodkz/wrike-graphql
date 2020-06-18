@@ -15,7 +15,7 @@ type FindManyOpts = {
 };
 
 // https://developers.wrike.com/api/v4/groups/#query-groups
-export async function _groupFindMany(opts: FindManyOpts, config: AxiosRequestConfig) {
+export async function _groupFindMany(opts: FindManyOpts, context: AxiosRequestConfig) {
   const { filter, projection } = opts || {};
 
   const params: Record<string, any> = { ...filter };
@@ -24,16 +24,16 @@ export async function _groupFindMany(opts: FindManyOpts, config: AxiosRequestCon
     if (projection.length > 0) params.fields = projection;
   }
 
-  const res = await client.get('/groups', { ...config, params });
+  const res = await client.get('/groups', { ...context, params });
 
   return res?.data?.data;
 }
 
 export function groupFindMany(
   opts: Exclude<FindManyOpts, 'projection'> & { info: GraphQLResolveInfo },
-  config: AxiosRequestConfig
+  context: AxiosRequestConfig
 ) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _groupFindMany({ ...opts, projection }, config);
+  return _groupFindMany({ ...opts, projection }, context);
 }

@@ -6,8 +6,8 @@ export type FindManyOpts = {
 };
 
 // https://developers.wrike.com/api/v4/approvals/#get-approvals
-export async function approvalForTask(opts: FindManyOpts, config: AxiosRequestConfig) {
+export async function approvalForTask(opts: FindManyOpts, context: AxiosRequestConfig) {
   const { taskId } = opts || {};
-  const res = await client.get(`/tasks/${taskId}/approvals`, config);
+  const res = await client.get(`/tasks/${taskId}/approvals`, context);
   return res?.data?.data;
 }

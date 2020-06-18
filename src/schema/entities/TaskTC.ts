@@ -3,7 +3,7 @@ import {
   TaskImportanceEnum,
   TaskDatesTypeEnum,
   TreeScopeEnum,
-} from '../types/Enums';
+} from 'app/schema/types/Enums';
 import {
   TaskID,
   ContactID,
@@ -12,17 +12,20 @@ import {
   DependencyID,
   AccountID,
 } from 'app/schema/types/Scalars';
-import { getRelationFolderIds } from '../relations/folder';
-import { getRelationContactIds } from '../relations/contact';
-import { getRelationAccountId } from '../relations/account';
-import { getRelationCommentsByTaskId } from '../relations/comment';
-import { getRelationDependenciesByTaskId, getRelationDependencyIds } from '../relations/dependency';
-import { getRelationTimelogsByTaskId } from '../relations/timelog';
-import { getRelationAttachmentsByTaskId } from '../relations/attachment';
-import { getRelationApprovalsByTaskId } from '../relations/approval';
-import { KeyValue } from '../types/outputs/KeyValue';
-import { CustomFieldValue } from '../types/outputs/CustomFieldValue';
-import { getRelationTaskIds } from '../relations/task';
+import { getRelationFolderIds } from 'app/schema/relations/folder';
+import { getRelationContactIds } from 'app/schema/relations/contact';
+import { getRelationAccountId } from 'app/schema/relations/account';
+import { getRelationCommentsByTaskId } from 'app/schema/relations/comment';
+import {
+  getRelationDependenciesByTaskId,
+  getRelationDependencyIds,
+} from 'app/schema/relations/dependency';
+import { getRelationTimelogsByTaskId } from 'app/schema/relations/timelog';
+import { getRelationAttachmentsByTaskId } from 'app/schema/relations/attachment';
+import { getRelationApprovalsByTaskId } from 'app/schema/relations/approval';
+import { KeyValue } from 'app/schema/types/outputs/KeyValue';
+import { CustomFieldValue } from 'app/schema/types/outputs/CustomFieldValue';
+import { getRelationTaskIds } from 'app/schema/relations/task';
 import { schemaComposer } from 'graphql-compose';
 
 // https://developers.wrike.com/api/v4/tasks/

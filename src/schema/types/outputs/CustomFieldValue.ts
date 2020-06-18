@@ -1,5 +1,5 @@
 import { schemaComposer } from 'graphql-compose';
-import { CustomFieldID } from '../Scalars';
+import { CustomFieldID } from 'app/schema/types/Scalars';
 import { getCustomFieldId } from 'app/schema/relations/customField';
 
 export const CustomFieldValue = schemaComposer.createObjectTC({

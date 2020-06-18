@@ -1,8 +1,8 @@
 import { composeWithJson } from 'graphql-compose-json';
 import { GroupID, ContactID, AccountID } from 'app/schema/types/Scalars';
-import { KeyValue } from '../types/outputs/KeyValue';
-import { getRelationAccountId } from '../relations/account';
-import { getRelationContactIds } from '../relations/contact';
+import { KeyValue } from 'app/schema/types/outputs/KeyValue';
+import { getRelationAccountId } from 'app/schema/relations/account';
+import { getRelationContactIds } from 'app/schema/relations/contact';
 
 const restApiResponse = {
   id: GroupID.NonNull,

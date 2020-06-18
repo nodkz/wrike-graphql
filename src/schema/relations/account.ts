@@ -1,7 +1,7 @@
 import { ObjectTypeComposerFieldConfigDefinition } from 'graphql-compose';
-import { AccountTC } from '../entities/AccountTC';
+import { AccountTC } from 'app/schema/entities/AccountTC';
 import { accountFindOne } from 'app/vendor/account/accountFindOne';
-import { resolveOneViaDL } from '../dataLoaders';
+import { resolveOneViaDL } from 'app/schema/dataLoaders';
 
 export function getRelationAccountId(
   sourceFieldName: string

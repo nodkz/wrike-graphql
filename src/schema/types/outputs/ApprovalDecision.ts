@@ -1,6 +1,6 @@
 import { schemaComposer } from 'graphql-compose';
-import { ApprovalDecisionStatusEnum } from '../Enums';
-import { ContactID } from '../Scalars';
+import { ApprovalDecisionStatusEnum } from 'app/schema/types/Enums';
+import { ContactID } from 'app/schema/types/Scalars';
 import { getRelationContactIds } from 'app/schema/relations/contact';
 
 export const ApprovalDecision = schemaComposer.createObjectTC({

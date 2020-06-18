@@ -7,12 +7,12 @@ import {
   AttachmentID,
   ApprovalID,
 } from 'app/schema/types/Scalars';
-import { ApprovalTypeEnum } from '../types/Enums';
-import { ApprovalDecision } from '../types/outputs/ApprovalDecision';
-import { getRelationTaskId } from '../relations/task';
-import { getRelationFolderId } from '../relations/folder';
-import { getRelationContactId } from '../relations/contact';
-import { getRelationAttachmentIds } from '../relations/attachment';
+import { ApprovalTypeEnum } from 'app/schema/types/Enums';
+import { ApprovalDecision } from 'app/schema/types/outputs/ApprovalDecision';
+import { getRelationTaskId } from 'app/schema/relations/task';
+import { getRelationFolderId } from 'app/schema/relations/folder';
+import { getRelationContactId } from 'app/schema/relations/contact';
+import { getRelationAttachmentIds } from 'app/schema/relations/attachment';
 
 export const ApprovalTC = schemaComposer.createObjectTC({
   name: 'Approval',

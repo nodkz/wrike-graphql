@@ -1,9 +1,9 @@
 import { schemaComposer } from 'graphql-compose';
-import { CustomFieldTypeEnum } from '../types/Enums';
-import { CustomFieldID, AccountID, ContactID } from '../types/Scalars';
-import { CustomFieldSettings } from '../types/outputs/CustomFieldSettings';
-import { getRelationAccountId } from '../relations/account';
-import { getRelationContactIds } from '../relations/contact';
+import { CustomFieldTypeEnum } from 'app/schema/types/Enums';
+import { CustomFieldID, AccountID, ContactID } from 'app/schema/types/Scalars';
+import { CustomFieldSettings } from 'app/schema/types/outputs/CustomFieldSettings';
+import { getRelationAccountId } from 'app/schema/relations/account';
+import { getRelationContactIds } from 'app/schema/relations/contact';
 
 export const CustomFieldTC = schemaComposer.createObjectTC({
   name: 'CustomField',

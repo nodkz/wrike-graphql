@@ -1,7 +1,7 @@
 import { AccountTC } from 'app/schema/entities/AccountTC';
 import { FieldConfig } from 'app/schema/definitions';
 import { accountUpdate, UpdateArgs } from 'app/vendor/account/accountUpdate';
-import { KeyValueInput } from '../types/inputs/KeyValueInput';
+import { KeyValueInput } from 'app/schema/types/inputs/KeyValueInput';
 
 export default {
   type: AccountTC,

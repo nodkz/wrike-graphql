@@ -17,7 +17,7 @@ export type FindManyOpts = {
 };
 
 // https://developers.wrike.com/api/v4/comments/#get-comments
-export async function commentFindMany(opts: FindManyOpts, config: AxiosRequestConfig) {
+export async function commentFindMany(opts: FindManyOpts, context: AxiosRequestConfig) {
   const { filter, limit, plainText } = opts || {};
 
   let params: Record<string, any> = {};
@@ -39,7 +39,7 @@ export async function commentFindMany(opts: FindManyOpts, config: AxiosRequestCo
     url = `/tasks/${taskId}/comments`;
   }
 
-  const res = await client.get(url, { ...config, params });
+  const res = await client.get(url, { ...context, params });
 
   return res?.data?.data;
 }

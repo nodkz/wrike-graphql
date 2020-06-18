@@ -1,6 +1,6 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { ApprovalID, AttachmentID } from 'app/schema/types/Scalars';
-import { ApprovalTC } from '../entities/ApprovalTC';
+import { ApprovalTC } from 'app/schema/entities/ApprovalTC';
 import { approvalUpdate } from 'app/vendor/approval/approvalUpdate';
 
 export default {

@@ -1,6 +1,6 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { TimelogID } from 'app/schema/types/Scalars';
-import { TimelogTC } from '../entities/TimelogTC';
+import { TimelogTC } from 'app/schema/entities/TimelogTC';
 import { timelogRemove, RemoveArgs } from 'app/vendor/timelog/timelogRemove';
 
 export default {

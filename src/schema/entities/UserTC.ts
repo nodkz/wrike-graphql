@@ -1,14 +1,17 @@
 import { composeWithJson } from 'graphql-compose-json';
 import { ContactID, AccountID, WorkScheduleID } from 'app/schema/types/Scalars';
-import { UserRoleEnum } from '../types/Enums';
-import { getRelationAccountId } from '../relations/account';
-import { getRelationWorkScheduleId } from '../relations/workSchedule';
-import { getRelationTasksByAuthorId, getRelationTasksByResponsibleId } from '../relations/task';
-import { getRelationUserScheduleExclusionByUserId } from '../relations/userScheduleExclusion';
+import { UserRoleEnum } from 'app/schema/types/Enums';
+import { getRelationAccountId } from 'app/schema/relations/account';
+import { getRelationWorkScheduleId } from 'app/schema/relations/workSchedule';
+import {
+  getRelationTasksByAuthorId,
+  getRelationTasksByResponsibleId,
+} from 'app/schema/relations/task';
+import { getRelationUserScheduleExclusionByUserId } from 'app/schema/relations/userScheduleExclusion';
 import {
   getRelationApprovalsByApproverUserId,
   getRelationApprovalsByPendingApproverUserId,
-} from '../relations/approval';
+} from 'app/schema/relations/approval';
 
 const restApiResponse = {
   // id: 'KUAHMNRA',

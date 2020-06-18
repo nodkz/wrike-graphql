@@ -42,7 +42,7 @@ type FindManyOpts = {
 };
 
 // https://developers.wrike.com/api/v4/folders-projects/#get-folder-tree
-export async function _folderFindMany(opts: FindManyOpts, config: AxiosRequestConfig) {
+export async function _folderFindMany(opts: FindManyOpts, context: AxiosRequestConfig) {
   const { filter, projection } = opts || {};
 
   let params: Record<string, any> = {};
@@ -64,16 +64,16 @@ export async function _folderFindMany(opts: FindManyOpts, config: AxiosRequestCo
     url = `/spaces/${spaceId}/folders`;
   }
 
-  const res = await client.get(url, { ...config, params });
+  const res = await client.get(url, { ...context, params });
 
   return res?.data?.data;
 }
 
 export function folderFindMany(
   opts: Exclude<FindManyOpts, 'projection'> & { info: GraphQLResolveInfo },
-  config: AxiosRequestConfig
+  context: AxiosRequestConfig
 ) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _folderFindMany({ ...opts, projection }, config);
+  return _folderFindMany({ ...opts, projection }, context);
 }

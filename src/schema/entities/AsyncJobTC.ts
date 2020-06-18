@@ -1,6 +1,6 @@
 import { AsyncJobID } from 'app/schema/types/Scalars';
 import { schemaComposer } from 'graphql-compose';
-import { AsyncJobStatusEnum, AsyncJobTypeEnum } from '../types/Enums';
+import { AsyncJobStatusEnum, AsyncJobTypeEnum } from 'app/schema/types/Enums';
 
 export const AsyncJobTC = schemaComposer.createObjectTC({
   name: 'AsyncJob',

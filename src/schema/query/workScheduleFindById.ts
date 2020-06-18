@@ -1,7 +1,7 @@
 import { WorkScheduleID } from 'app/schema/types/Scalars';
-import { WorkScheduleTC } from '../entities/WorkScheduleTC';
+import { WorkScheduleTC } from 'app/schema/entities/WorkScheduleTC';
 import { workScheduleFindById, FindByIdOpts } from 'app/vendor/workSchedule/workScheduleFindById';
-import { FieldConfig } from '../definitions';
+import { FieldConfig } from 'app/schema/definitions';
 
 export default {
   type: WorkScheduleTC,

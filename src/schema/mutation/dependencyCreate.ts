@@ -1,8 +1,8 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { TaskID } from 'app/schema/types/Scalars';
 import { dependencyCreate, CreateArgs } from 'app/vendor/dependency/dependencyCreate';
-import { DependencyTC } from '../entities/DependencyTC';
-import { DependencyRelationEnum } from '../types/Enums';
+import { DependencyTC } from 'app/schema/entities/DependencyTC';
+import { DependencyRelationEnum } from 'app/schema/types/Enums';
 
 const DependencyCreateInput = DependencyTC.schemaComposer.createInputTC({
   name: 'DependencyCreateInput',

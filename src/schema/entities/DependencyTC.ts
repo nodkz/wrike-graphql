@@ -1,7 +1,7 @@
 import { DependencyID, TaskID } from 'app/schema/types/Scalars';
 import { schemaComposer } from 'graphql-compose';
-import { DependencyRelationEnum } from '../types/Enums';
-import { getRelationTaskId } from '../relations/task';
+import { DependencyRelationEnum } from 'app/schema/types/Enums';
+import { getRelationTaskId } from 'app/schema/relations/task';
 
 export const DependencyTC = schemaComposer.createObjectTC({
   name: 'Dependency',

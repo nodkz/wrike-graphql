@@ -15,7 +15,7 @@ type FindManyOpts = {
 };
 
 // https://developers.wrike.com/api/v4/account/#query-accounts
-export async function _accountFindOne(opts: FindManyOpts, config: AxiosRequestConfig) {
+export async function _accountFindOne(opts: FindManyOpts, context: AxiosRequestConfig) {
   const { filter, projection } = opts || {};
 
   const params: Record<string, any> = { ...filter };
@@ -24,16 +24,16 @@ export async function _accountFindOne(opts: FindManyOpts, config: AxiosRequestCo
     if (projection.length > 0) params.fields = projection;
   }
 
-  const res = await client.get('/account', { ...config, params });
+  const res = await client.get('/account', { ...context, params });
 
   return res?.data?.data?.[0];
 }
 
 export function accountFindOne(
   opts: Exclude<FindManyOpts, 'projection'> & { info: GraphQLResolveInfo },
-  config: AxiosRequestConfig
+  context: AxiosRequestConfig
 ) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _accountFindOne({ ...opts, projection }, config);
+  return _accountFindOne({ ...opts, projection }, context);
 }

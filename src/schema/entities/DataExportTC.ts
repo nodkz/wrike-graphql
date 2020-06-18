@@ -1,5 +1,5 @@
 import { DataExportID } from 'app/schema/types/Scalars';
-import { DataExportStatusEnum } from '../types/Enums';
+import { DataExportStatusEnum } from 'app/schema/types/Enums';
 import { schemaComposer } from 'graphql-compose';
 
 export const DataExportTC = schemaComposer.createObjectTC({

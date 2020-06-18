@@ -1,8 +1,8 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { TaskID } from 'app/schema/types/Scalars';
 import { commentCreateForFolder, CreateArgs } from 'app/vendor/comment/commentCreateForFolder';
-import { CommentTC } from '../entities/CommentTC';
-import { CommentInput } from '../types/inputs/CommentInput';
+import { CommentTC } from 'app/schema/entities/CommentTC';
+import { CommentInput } from 'app/schema/types/inputs/CommentInput';
 
 export default {
   type: CommentTC,

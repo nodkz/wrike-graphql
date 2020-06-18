@@ -19,7 +19,7 @@ type FindByIdsOpts = {
 };
 
 // https://developers.wrike.com/documentation/api/methods/query-tasks
-export async function _taskFindByIds(opts: FindByIdsOpts, config: AxiosRequestConfig) {
+export async function _taskFindByIds(opts: FindByIdsOpts, context: AxiosRequestConfig) {
   const { ids, projection } = opts || {};
   const params: Record<string, any> = {};
 
@@ -28,16 +28,16 @@ export async function _taskFindByIds(opts: FindByIdsOpts, config: AxiosRequestCo
   }
 
   return splitRequestBy100(ids, async (preparedIds) => {
-    const res = await client.get(`/tasks/${preparedIds}`, { ...config, params });
+    const res = await client.get(`/tasks/${preparedIds}`, { ...context, params });
     return res?.data?.data;
   });
 }
 
 export function taskFindByIds(
   opts: Exclude<FindByIdsOpts, 'projection'> & { info: GraphQLResolveInfo },
-  config: AxiosRequestConfig
+  context: AxiosRequestConfig
 ) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _taskFindByIds({ ...opts, projection }, config);
+  return _taskFindByIds({ ...opts, projection }, context);
 }

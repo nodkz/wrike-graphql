@@ -1,17 +1,20 @@
 import { composeWithJson } from 'graphql-compose-json';
 import { UserTypeEnum, UserRoleEnum } from 'app/schema/types/Enums';
 import { ContactID, WorkScheduleID, AccountID } from 'app/schema/types/Scalars';
-import { KeyValue } from '../types/outputs/KeyValue';
-import { getRelationAccountId } from '../relations/account';
-import { getRelationContactIds } from '../relations/contact';
-import { getRelationWorkScheduleId } from '../relations/workSchedule';
-import { getRelationTasksByAuthorId, getRelationTasksByResponsibleId } from '../relations/task';
-import { getRelationTimelogsByContactId } from '../relations/timelog';
-import { getRelationUserScheduleExclusionByUserId } from '../relations/userScheduleExclusion';
+import { KeyValue } from 'app/schema/types/outputs/KeyValue';
+import { getRelationAccountId } from 'app/schema/relations/account';
+import { getRelationContactIds } from 'app/schema/relations/contact';
+import { getRelationWorkScheduleId } from 'app/schema/relations/workSchedule';
+import {
+  getRelationTasksByAuthorId,
+  getRelationTasksByResponsibleId,
+} from 'app/schema/relations/task';
+import { getRelationTimelogsByContactId } from 'app/schema/relations/timelog';
+import { getRelationUserScheduleExclusionByUserId } from 'app/schema/relations/userScheduleExclusion';
 import {
   getRelationApprovalsByApproverUserId,
   getRelationApprovalsByPendingApproverUserId,
-} from '../relations/approval';
+} from 'app/schema/relations/approval';
 
 const restApiResponse = {
   // id: 'KUAHNM4I',

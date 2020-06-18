@@ -4,8 +4,8 @@ import {
   workScheduleExclusionUpdate,
   UpdateArgs,
 } from 'app/vendor/workScheduleExclusion/workScheduleExclusionUpdate';
-import { WorkScheduleExclusionTC } from '../entities/WorkScheduleExclusionTC';
-import { WorkScheduleExclusionEnum } from '../types/Enums';
+import { WorkScheduleExclusionTC } from 'app/schema/entities/WorkScheduleExclusionTC';
+import { WorkScheduleExclusionEnum } from 'app/schema/types/Enums';
 
 const WorkScheduleExclusionUpdateInput = WorkScheduleExclusionTC.schemaComposer.createInputTC({
   name: 'WorkScheduleExclusionUpdateInput',

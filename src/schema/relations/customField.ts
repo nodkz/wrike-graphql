@@ -1,7 +1,7 @@
 import { ObjectTypeComposerFieldConfigDefinition } from 'graphql-compose';
-import { CustomFieldTC } from '../entities/CustomFieldTC';
+import { CustomFieldTC } from 'app/schema/entities/CustomFieldTC';
 import { customFieldFindByIds } from 'app/vendor/customFields/customFieldFindByIds';
-import { resolveOneViaDL } from '../dataLoaders';
+import { resolveOneViaDL } from 'app/schema/dataLoaders';
 
 export function getCustomFieldId(
   sourceFieldName: string

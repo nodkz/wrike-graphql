@@ -7,13 +7,13 @@ export interface CreateArgs {
 }
 
 // https://developers.wrike.com/api/v4/comments/#create-comment
-export async function commentCreateForFolder(opts: CreateArgs, config: AxiosRequestConfig) {
+export async function commentCreateForFolder(opts: CreateArgs, context: AxiosRequestConfig) {
   const { folderId, comment } = opts || {};
 
   if (!folderId) throw new Error('You should provide `folderId`');
   if (!comment?.text) throw new Error('You should provide `text`');
 
-  const res = await client.post(`/folders/${folderId}/comments`, comment, config);
+  const res = await client.post(`/folders/${folderId}/comments`, comment, context);
 
   return res?.data?.data[0];
 }

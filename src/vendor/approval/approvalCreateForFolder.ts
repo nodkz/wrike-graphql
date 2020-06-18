@@ -7,12 +7,12 @@ export interface CreateArgs {
 }
 
 // https://developers.wrike.com/api/v4/approvals/#create-approval
-export async function approvalCreateForFolder(opts: CreateArgs, config: AxiosRequestConfig) {
+export async function approvalCreateForFolder(opts: CreateArgs, context: AxiosRequestConfig) {
   const { folderId, approval } = opts || {};
 
   if (!folderId) throw new Error('You should provide `folderId`');
 
-  const res = await client.post(`/folders/${folderId}/approvals`, approval, config);
+  const res = await client.post(`/folders/${folderId}/approvals`, approval, context);
 
   return res?.data?.data[0];
 }

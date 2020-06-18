@@ -1,4 +1,4 @@
-import { CustomFieldID, ContactID } from '../Scalars';
+import { CustomFieldID, ContactID } from 'app/schema/types/Scalars';
 import { schemaComposer } from 'graphql-compose';
 import { KeyValueInput } from './KeyValueInput';
 import { CustomFieldValueInput } from './CustomFieldValueInput';

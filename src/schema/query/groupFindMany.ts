@@ -1,7 +1,7 @@
 import { groupFindMany } from 'app/vendor/group/groupFindMany';
 import { GroupTC } from 'app/schema/entities/GroupTC';
 import { FieldConfig } from 'app/schema/definitions';
-import { KeyValueInput } from '../types/inputs/KeyValueInput';
+import { KeyValueInput } from 'app/schema/types/inputs/KeyValueInput';
 
 export default {
   type: GroupTC.NonNull.List,

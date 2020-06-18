@@ -1,7 +1,7 @@
 import { FieldConfig } from 'app/schema/definitions';
-import { WorkScheduleID } from '../types/Scalars';
-import { DateRangeEqualInput } from '../types/inputs/DateRangeEqualInput';
-import { WorkScheduleExclusionTC } from '../entities/WorkScheduleExclusionTC';
+import { WorkScheduleID } from 'app/schema/types/Scalars';
+import { DateRangeEqualInput } from 'app/schema/types/inputs/DateRangeEqualInput';
+import { WorkScheduleExclusionTC } from 'app/schema/entities/WorkScheduleExclusionTC';
 import {
   workScheduleExclusionFindMany,
   FindManyOpts,

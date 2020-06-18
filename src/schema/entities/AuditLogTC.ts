@@ -1,7 +1,7 @@
 import { AuditLogID, ContactID } from 'app/schema/types/Scalars';
 import { schemaComposer } from 'graphql-compose';
-import { AuditLogOperationEnum, AuditLogObjectTypeEnum } from '../types/Enums';
-import { getRelationContactId } from '../relations/contact';
+import { AuditLogOperationEnum, AuditLogObjectTypeEnum } from 'app/schema/types/Enums';
+import { getRelationContactId } from 'app/schema/relations/contact';
 
 export const AuditLogTC = schemaComposer.createObjectTC({
   name: 'AuditLog',

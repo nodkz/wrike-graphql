@@ -1,6 +1,6 @@
 import { schemaComposer } from 'graphql-compose';
-import { CustomFieldComparatorEnum } from '../Enums';
-import { CustomFieldID } from '../Scalars';
+import { CustomFieldComparatorEnum } from 'app/schema/types/Enums';
+import { CustomFieldID } from 'app/schema/types/Scalars';
 
 export const CustomFieldFilterInput = schemaComposer.createInputTC({
   name: 'CustomFieldFilterInput',

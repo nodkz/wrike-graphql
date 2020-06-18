@@ -1,6 +1,6 @@
 import { TimelogCategoryID } from 'app/schema/types/Scalars';
 import { schemaComposer } from 'graphql-compose';
-import { getRelationTimelogsByTimelogCategoryId } from '../relations/timelog';
+import { getRelationTimelogsByTimelogCategoryId } from 'app/schema/relations/timelog';
 
 export const TimelogCategoryTC = schemaComposer.createObjectTC({
   name: 'TimelogCategory',

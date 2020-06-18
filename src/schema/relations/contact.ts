@@ -1,6 +1,6 @@
 import { resolveManyViaDL, resolveOneViaDL } from 'app/schema/dataLoaders';
 import { ObjectTypeComposerFieldConfigDefinition } from 'graphql-compose';
-import { ContactTC } from '../entities/ContactTC';
+import { ContactTC } from 'app/schema/entities/ContactTC';
 import { contactFindByIds } from 'app/vendor/contact/contactFindByIds';
 
 export function getRelationContactIds(

@@ -1,5 +1,5 @@
 import { ApprovalTC } from 'app/schema/entities/ApprovalTC';
-import { DateYMD, ContactID, AttachmentID } from '../Scalars';
+import { DateYMD, ContactID, AttachmentID } from 'app/schema/types/Scalars';
 
 export const ApprovalCreateInput = ApprovalTC.schemaComposer.createInputTC({
   name: 'ApprovalCreateInput',

@@ -1,11 +1,11 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { DateYMD, WorkScheduleID } from 'app/schema/types/Scalars';
-import { WorkScheduleExclusionTC } from '../entities/WorkScheduleExclusionTC';
+import { WorkScheduleExclusionTC } from 'app/schema/entities/WorkScheduleExclusionTC';
 import {
   workScheduleExclusionCreate,
   CreateArgs,
 } from 'app/vendor/workScheduleExclusion/workScheduleExclusionCreate';
-import { WorkScheduleExclusionEnum } from '../types/Enums';
+import { WorkScheduleExclusionEnum } from 'app/schema/types/Enums';
 
 const WorkScheduleExclusionCreateInput = WorkScheduleExclusionTC.schemaComposer.createInputTC({
   name: 'WorkScheduleExclusionCreateInput',

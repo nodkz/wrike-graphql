@@ -1,6 +1,6 @@
 import { WorkflowID } from 'app/schema/types/Scalars';
 import { schemaComposer } from 'graphql-compose';
-import { CustomStatus } from '../types/outputs/CustomStatus';
+import { CustomStatus } from 'app/schema/types/outputs/CustomStatus';
 
 export const WorkflowTC = schemaComposer.createObjectTC({
   name: 'Workflow',

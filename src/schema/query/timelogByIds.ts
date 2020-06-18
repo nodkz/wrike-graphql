@@ -1,7 +1,7 @@
 import { FieldConfig } from 'app/schema/definitions';
-import { TimelogTC } from '../entities/TimelogTC';
+import { TimelogTC } from 'app/schema/entities/TimelogTC';
 import { timelogFindByIds, FindByIdsArgs } from 'app/vendor/timelog/timelogFindByIds';
-import { TimelogID } from '../types/Scalars';
+import { TimelogID } from 'app/schema/types/Scalars';
 
 export default {
   type: TimelogTC.NonNull.List,

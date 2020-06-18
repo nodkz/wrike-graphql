@@ -1,8 +1,8 @@
 import { FieldConfig } from 'app/schema/definitions';
-import { DateTimeRangeInput } from '../types/inputs/DateTimeRangeInput';
-import { ContactID } from '../types/Scalars';
-import { ApprovalFinalStatusEnum } from '../types/Enums';
-import { ApprovalTC } from '../entities/ApprovalTC';
+import { DateTimeRangeInput } from 'app/schema/types/inputs/DateTimeRangeInput';
+import { ContactID } from 'app/schema/types/Scalars';
+import { ApprovalFinalStatusEnum } from 'app/schema/types/Enums';
+import { ApprovalTC } from 'app/schema/entities/ApprovalTC';
 import { approvalFindMany, FindManyOpts } from 'app/vendor/approval/approvalFindMany';
 
 export default {

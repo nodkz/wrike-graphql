@@ -1,8 +1,8 @@
 import { ContactID, WorkScheduleID } from 'app/schema/types/Scalars';
 import { schemaComposer } from 'graphql-compose';
-import { WorkScheduleTypeEnum } from '../types/Enums';
-import { getRelationContactIds } from '../relations/contact';
-import { getRelationWorkScheduleExclusionByWorkScheduleId } from '../relations/workScheduleExclusion';
+import { WorkScheduleTypeEnum } from 'app/schema/types/Enums';
+import { getRelationContactIds } from 'app/schema/relations/contact';
+import { getRelationWorkScheduleExclusionByWorkScheduleId } from 'app/schema/relations/workScheduleExclusion';
 
 export const WorkScheduleTC = schemaComposer.createObjectTC({
   name: 'WorkSchedule',

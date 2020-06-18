@@ -1,5 +1,5 @@
 import { ObjectTypeComposerFieldConfigDefinition } from 'graphql-compose';
-import { WorkScheduleExclusionTC } from '../entities/WorkScheduleExclusionTC';
+import { WorkScheduleExclusionTC } from 'app/schema/entities/WorkScheduleExclusionTC';
 import { workScheduleExclusionFindMany } from 'app/vendor/workScheduleExclusion/workScheduleExclusionFindMany';
 
 export function getRelationWorkScheduleExclusionByWorkScheduleId(

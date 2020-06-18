@@ -7,11 +7,11 @@ export interface UserUpdateArgs {
 }
 
 // https://developers.wrike.com/api/v4/users/#modify-user
-export async function userUpdate(opts: UserUpdateArgs, config: AxiosRequestConfig) {
+export async function userUpdate(opts: UserUpdateArgs, context: AxiosRequestConfig) {
   const { id, profile } = opts || {};
 
   if (!id) throw new Error('You should provide `id`');
-  const res = await client.put(`/users/${id}`, { profile }, config);
+  const res = await client.put(`/users/${id}`, { profile }, context);
 
   return res?.data?.data[0];
 }

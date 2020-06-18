@@ -13,7 +13,7 @@ export type _FindByIdOpts = {
 export type FindByIdOpts = Exclude<_FindByIdOpts, 'projection'> & { info: GraphQLResolveInfo };
 
 // https://developers.wrike.com/api/v4/work-schedules/#query-work-schedules
-export async function _workScheduleFindById(opts: _FindByIdOpts, config: AxiosRequestConfig) {
+export async function _workScheduleFindById(opts: _FindByIdOpts, context: AxiosRequestConfig) {
   const { id, projection } = opts || {};
   const params: Record<string, any> = {};
 
@@ -21,12 +21,12 @@ export async function _workScheduleFindById(opts: _FindByIdOpts, config: AxiosRe
     if (projection.length > 0) params.fields = projection;
   }
 
-  const res = await client.get(`/workschedules/${id}`, { ...config, params });
+  const res = await client.get(`/workschedules/${id}`, { ...context, params });
   return res?.data?.data?.[0];
 }
 
-export function workScheduleFindById(opts: FindByIdOpts, config: AxiosRequestConfig) {
+export function workScheduleFindById(opts: FindByIdOpts, context: AxiosRequestConfig) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _workScheduleFindById({ ...opts, projection }, config);
+  return _workScheduleFindById({ ...opts, projection }, context);
 }

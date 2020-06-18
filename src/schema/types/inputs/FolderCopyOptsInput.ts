@@ -1,5 +1,5 @@
 import { AsyncJobTC } from 'app/schema/entities/AsyncJobTC';
-import { FolderID, ContactID, DateYMD } from '../Scalars';
+import { FolderID, ContactID, DateYMD } from 'app/schema/types/Scalars';
 
 export const FolderCopyOptsInput = AsyncJobTC.schemaComposer.createInputTC({
   name: 'FolderCopyOptsInput',

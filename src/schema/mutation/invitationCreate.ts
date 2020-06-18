@@ -2,7 +2,7 @@ import { InvitationTC } from 'app/schema/entities/InvitationTC';
 import { FieldConfig } from 'app/schema/definitions';
 import { groupCreate, CreateArgs } from 'app/vendor/group/groupCreate';
 import { schemaComposer } from 'graphql-compose';
-import { UserRoleEnum } from '../types/Enums';
+import { UserRoleEnum } from 'app/schema/types/Enums';
 
 export const InvitationCreateInput = schemaComposer.createInputTC({
   name: 'InvitationCreateInput',

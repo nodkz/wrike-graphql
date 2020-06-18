@@ -1,8 +1,8 @@
 import { FieldConfig } from 'app/schema/definitions';
-import { DateTimeRangeInput } from '../types/inputs/DateTimeRangeInput';
-import { TaskID, FolderID } from '../types/Scalars';
+import { DateTimeRangeInput } from 'app/schema/types/inputs/DateTimeRangeInput';
+import { TaskID, FolderID } from 'app/schema/types/Scalars';
 import { attachmentFindMany, FindManyOpts } from 'app/vendor/attachment/attachmentFindMany';
-import { AttachmentTC } from '../entities/AttachmentTC';
+import { AttachmentTC } from 'app/schema/entities/AttachmentTC';
 
 export default {
   type: AttachmentTC.NonNull.List,

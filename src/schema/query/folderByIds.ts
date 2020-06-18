@@ -1,7 +1,7 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { FolderID } from 'app/schema/types/Scalars';
 import { folderFindByIds } from 'app/vendor/folder/folderFindByIds';
-import { FolderTC } from '../entities/FolderTC';
+import { FolderTC } from 'app/schema/entities/FolderTC';
 
 export default {
   type: FolderTC.NonNull.List,

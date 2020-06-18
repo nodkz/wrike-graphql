@@ -1,6 +1,6 @@
 import { resolveOneViaDL } from 'app/schema/dataLoaders';
 import { ObjectTypeComposerFieldConfigDefinition } from 'graphql-compose';
-import { WorkScheduleTC } from '../entities/WorkScheduleTC';
+import { WorkScheduleTC } from 'app/schema/entities/WorkScheduleTC';
 import { workScheduleFindMany } from 'app/vendor/workSchedule/workScheduleFindMany';
 
 export function getRelationWorkScheduleId(

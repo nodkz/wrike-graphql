@@ -7,11 +7,11 @@ export interface UpdateArgs {
 }
 
 // https://developers.wrike.com/api/v4/comments/#update-comment
-export async function commentUpdate(opts: UpdateArgs, config: AxiosRequestConfig) {
+export async function commentUpdate(opts: UpdateArgs, context: AxiosRequestConfig) {
   const { id, comment } = opts || {};
 
   if (!id) throw new Error('You should provide `id`');
-  const res = await client.put(`/comments/${id}`, comment, config);
+  const res = await client.put(`/comments/${id}`, comment, context);
 
   return res?.data?.data[0];
 }

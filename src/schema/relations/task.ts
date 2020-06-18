@@ -1,20 +1,20 @@
 import { resolveManyViaDL, resolveOneViaDL } from 'app/schema/dataLoaders';
 import { ObjectTypeComposerFieldConfigDefinition } from 'graphql-compose';
 import { taskFindByIds } from 'app/vendor/task/taskFindByIds';
-import { TaskTC } from '../entities/TaskTC';
+import { TaskTC } from 'app/schema/entities/TaskTC';
 import { taskFindMany } from 'app/vendor/task/taskFindMany';
 import {
   TaskStatusEnum,
   TaskImportanceEnum,
   TaskDatesTypeEnum,
   TaskFindManySortEnum,
-} from '../types/Enums';
-import { DateTimeRangeEqualInput } from '../types/inputs/DateTimeRangeEqualInput';
-import { DateRangeEqualInput } from '../types/inputs/DateRangeEqualInput';
-import { DateTimeRangeInput } from '../types/inputs/DateTimeRangeInput';
-import { ContactID, CustomStatusID } from '../types/Scalars';
-import { KeyValueInput } from '../types/inputs/KeyValueInput';
-import { CustomFieldFilterInput } from '../types/inputs/CustomFieldFilterInput';
+} from 'app/schema/types/Enums';
+import { DateTimeRangeEqualInput } from 'app/schema/types/inputs/DateTimeRangeEqualInput';
+import { DateRangeEqualInput } from 'app/schema/types/inputs/DateRangeEqualInput';
+import { DateTimeRangeInput } from 'app/schema/types/inputs/DateTimeRangeInput';
+import { ContactID, CustomStatusID } from 'app/schema/types/Scalars';
+import { KeyValueInput } from 'app/schema/types/inputs/KeyValueInput';
+import { CustomFieldFilterInput } from 'app/schema/types/inputs/CustomFieldFilterInput';
 
 export function getRelationTaskIds(
   sourceFieldName: string

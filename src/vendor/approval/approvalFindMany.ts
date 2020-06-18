@@ -19,7 +19,7 @@ export type FindManyOpts = {
 };
 
 // https://developers.wrike.com/api/v4/approvals/#get-approvals
-export async function approvalFindMany(opts: FindManyOpts, config: AxiosRequestConfig) {
+export async function approvalFindMany(opts: FindManyOpts, context: AxiosRequestConfig) {
   const { filter, limit, pageSize, nextPageToken } = opts || {};
 
   const params: Record<string, any> = filter || {};
@@ -36,7 +36,7 @@ export async function approvalFindMany(opts: FindManyOpts, config: AxiosRequestC
     params.nextPageToken = nextPageToken;
   }
 
-  const res = await client.get('/approvals', { ...config, params });
+  const res = await client.get('/approvals', { ...context, params });
 
   return res?.data?.data;
 }

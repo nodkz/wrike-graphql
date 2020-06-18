@@ -7,12 +7,12 @@ export type FindByIdsOpts = {
 };
 
 // https://developers.wrike.com/api/v4/approvals/#get-approvals
-export async function approvalFindByIds(opts: FindByIdsOpts, config: AxiosRequestConfig) {
+export async function approvalFindByIds(opts: FindByIdsOpts, context: AxiosRequestConfig) {
   const { ids } = opts || {};
   const params: Record<string, any> = {};
 
   return splitRequestBy100(ids, async (preparedIds) => {
-    const res = await client.get(`/approvals/${preparedIds}`, { ...config, params });
+    const res = await client.get(`/approvals/${preparedIds}`, { ...context, params });
     return res?.data?.data;
   });
 }

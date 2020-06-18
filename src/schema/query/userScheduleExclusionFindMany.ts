@@ -3,9 +3,9 @@ import {
   userScheduleExclusionFindMany,
   FindManyOpts,
 } from 'app/vendor/userScheduleExclusion/userScheduleExclusionFindMany';
-import { UserScheduleExclusionTC } from '../entities/UserScheduleExclusionTC';
-import { ContactID } from '../types/Scalars';
-import { DateRangeEqualInput } from '../types/inputs/DateRangeEqualInput';
+import { UserScheduleExclusionTC } from 'app/schema/entities/UserScheduleExclusionTC';
+import { ContactID } from 'app/schema/types/Scalars';
+import { DateRangeEqualInput } from 'app/schema/types/inputs/DateRangeEqualInput';
 
 const UserScheduleExclusionFilter = UserScheduleExclusionTC.schemaComposer.createInputTC({
   name: 'UserScheduleExclusionFilter',

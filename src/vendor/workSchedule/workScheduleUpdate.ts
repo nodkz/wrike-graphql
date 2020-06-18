@@ -14,7 +14,7 @@ export type _UpdateArgs = {
 export type UpdateArgs = Exclude<_UpdateArgs, 'projection'> & { info: GraphQLResolveInfo };
 
 // https://developers.wrike.com/api/v4/work-schedules/#update-work-schedule
-export async function _workScheduleUpdate(opts: _UpdateArgs, config: AxiosRequestConfig) {
+export async function _workScheduleUpdate(opts: _UpdateArgs, context: AxiosRequestConfig) {
   const { id, workschedule, projection } = opts || {};
 
   const params: Record<string, any> = workschedule || {};
@@ -23,13 +23,13 @@ export async function _workScheduleUpdate(opts: _UpdateArgs, config: AxiosReques
   }
 
   if (!id) throw new Error('You should provide `id`');
-  const res = await client.put(`/workschedules/${id}`, params, config);
+  const res = await client.put(`/workschedules/${id}`, params, context);
 
   return res?.data?.data[0];
 }
 
-export function workScheduleUpdate(opts: UpdateArgs, config: AxiosRequestConfig) {
+export function workScheduleUpdate(opts: UpdateArgs, context: AxiosRequestConfig) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _workScheduleUpdate({ ...opts, projection }, config);
+  return _workScheduleUpdate({ ...opts, projection }, context);
 }

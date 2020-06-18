@@ -1,6 +1,6 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { TimelogID, DateYMD, TimelogCategoryID } from 'app/schema/types/Scalars';
-import { TimelogTC } from '../entities/TimelogTC';
+import { TimelogTC } from 'app/schema/entities/TimelogTC';
 import { timelogUpdate, UpdateArgs } from 'app/vendor/timelog/timelogUpdate';
 
 const TimelogUpdateInput = TimelogTC.schemaComposer.createInputTC({

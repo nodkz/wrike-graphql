@@ -1,6 +1,6 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { WorkflowID } from 'app/schema/types/Scalars';
-import { WorkflowTC } from '../entities/WorkflowTC';
+import { WorkflowTC } from 'app/schema/entities/WorkflowTC';
 import { workflowUpdate, UpdateArgs } from 'app/vendor/workflow/workflowUpdate';
 
 export const WorkflowUpdateInput = WorkflowTC.schemaComposer.createInputTC({

@@ -3,9 +3,9 @@ import { folderFindByIds } from 'app/vendor/folder/folderFindByIds';
 import { resolveManyViaDL, resolveOneViaDL } from 'app/schema/dataLoaders';
 import { ObjectTypeComposerFieldConfigDefinition } from 'graphql-compose';
 import { folderFindMany } from 'app/vendor/folder/folderFindMany';
-import { KeyValueInput } from '../types/inputs/KeyValueInput';
-import { CustomFieldFilterInput } from '../types/inputs/CustomFieldFilterInput';
-import { DateTimeRangeInput } from '../types/inputs/DateTimeRangeInput';
+import { KeyValueInput } from 'app/schema/types/inputs/KeyValueInput';
+import { CustomFieldFilterInput } from 'app/schema/types/inputs/CustomFieldFilterInput';
+import { DateTimeRangeInput } from 'app/schema/types/inputs/DateTimeRangeInput';
 
 export function getRelationFolderIds(
   sourceFieldName: string

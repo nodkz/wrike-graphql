@@ -13,7 +13,7 @@ type FindByIdOpts = {
 };
 
 // https://developers.wrike.com/api/v4/groups/#query-groups
-export async function _groupFindById(opts: FindByIdOpts, config: AxiosRequestConfig) {
+export async function _groupFindById(opts: FindByIdOpts, context: AxiosRequestConfig) {
   const { id, projection } = opts || {};
 
   const params: Record<string, any> = {};
@@ -23,7 +23,7 @@ export async function _groupFindById(opts: FindByIdOpts, config: AxiosRequestCon
   }
 
   const res = await client.get(`/groups/${id}`, {
-    ...config,
+    ...context,
     params,
   });
 
@@ -32,9 +32,9 @@ export async function _groupFindById(opts: FindByIdOpts, config: AxiosRequestCon
 
 export function groupFindById(
   opts: Exclude<FindByIdOpts, 'projection'> & { info: GraphQLResolveInfo },
-  config: AxiosRequestConfig
+  context: AxiosRequestConfig
 ) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _groupFindById({ ...opts, projection }, config);
+  return _groupFindById({ ...opts, projection }, context);
 }

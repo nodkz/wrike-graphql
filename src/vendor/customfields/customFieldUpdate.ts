@@ -7,11 +7,11 @@ export interface UpdateArgs {
 }
 
 // https://developers.wrike.com/api/v4/custom-fields/#modify-custom-field
-export async function customFieldUpdate(opts: UpdateArgs, config: AxiosRequestConfig) {
+export async function customFieldUpdate(opts: UpdateArgs, context: AxiosRequestConfig) {
   const { id, customField } = opts || {};
 
   if (!id) throw new Error('You should provide `id`');
-  const res = await client.put(`/customfields/${id}`, customField, config);
+  const res = await client.put(`/customfields/${id}`, customField, context);
 
   return res?.data?.data[0];
 }

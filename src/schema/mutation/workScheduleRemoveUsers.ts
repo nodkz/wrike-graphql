@@ -1,6 +1,6 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { WorkScheduleID, ContactID } from 'app/schema/types/Scalars';
-import { WorkScheduleTC } from '../entities/WorkScheduleTC';
+import { WorkScheduleTC } from 'app/schema/entities/WorkScheduleTC';
 import { workScheduleUpdate } from 'app/vendor/workSchedule/workScheduleUpdate';
 
 export default {

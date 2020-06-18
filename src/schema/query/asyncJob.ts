@@ -1,7 +1,7 @@
 import { FieldConfig } from 'app/schema/definitions';
-import { AsyncJobTC } from '../entities/AsyncJobTC';
+import { AsyncJobTC } from 'app/schema/entities/AsyncJobTC';
 import { asyncJobFindById, FindArgs } from 'app/vendor/asyncJob/asyncJobFindById';
-import { AsyncJobID } from '../types/Scalars';
+import { AsyncJobID } from 'app/schema/types/Scalars';
 
 export default {
   type: AsyncJobTC,

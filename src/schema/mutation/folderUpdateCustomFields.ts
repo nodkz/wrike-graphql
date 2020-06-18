@@ -2,7 +2,7 @@ import { FolderTC } from 'app/schema/entities/FolderTC';
 import { FieldConfig } from 'app/schema/definitions';
 import { FolderID } from 'app/schema/types/Scalars';
 import { folderUpdateMany } from 'app/vendor/folder/folderUpdateMany';
-import { CustomFieldValueInput } from '../types/inputs/CustomFieldValueInput';
+import { CustomFieldValueInput } from 'app/schema/types/inputs/CustomFieldValueInput';
 
 export default {
   type: FolderTC,

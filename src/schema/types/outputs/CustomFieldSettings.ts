@@ -1,6 +1,10 @@
 import { schemaComposer } from 'graphql-compose';
-import { CustomFieldInheritanceEnum, CurrencyEnum, CustomFieldAggregationEnum } from '../Enums';
-import { ContactID } from '../Scalars';
+import {
+  CustomFieldInheritanceEnum,
+  CurrencyEnum,
+  CustomFieldAggregationEnum,
+} from 'app/schema/types/Enums';
+import { ContactID } from 'app/schema/types/Scalars';
 import { getRelationContactIds } from 'app/schema/relations/contact';
 
 export const CustomFieldSettings = schemaComposer.createObjectTC({

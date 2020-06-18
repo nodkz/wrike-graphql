@@ -1,10 +1,10 @@
 import { FolderID, AccountID } from 'app/schema/types/Scalars';
-import { WeekDayEnum, FirstDayOfWeekEnum } from '../types/Enums';
+import { WeekDayEnum, FirstDayOfWeekEnum } from 'app/schema/types/Enums';
 import { schemaComposer } from 'graphql-compose';
-import { KeyValue } from '../types/outputs/KeyValue';
-import { AccountSubscription } from '../types/outputs/AccountSubscription';
+import { KeyValue } from 'app/schema/types/outputs/KeyValue';
+import { AccountSubscription } from 'app/schema/types/outputs/AccountSubscription';
 import { CustomFieldTC } from './CustomFieldTC';
-import { getRelationFolderId } from '../relations/folder';
+import { getRelationFolderId } from 'app/schema/relations/folder';
 
 export const AccountTC = schemaComposer.createObjectTC({
   name: 'Account',

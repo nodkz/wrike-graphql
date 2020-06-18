@@ -1,5 +1,5 @@
 import { FieldConfig } from 'app/schema/definitions';
-import { DataExportTC } from '../entities/DataExportTC';
+import { DataExportTC } from 'app/schema/entities/DataExportTC';
 import { dataExportRefresh } from 'app/vendor/dataExport/dataExportRefresh';
 
 export default {

@@ -1,6 +1,6 @@
 import { DateYMD, WorkScheduleExclusionID } from 'app/schema/types/Scalars';
 import { schemaComposer } from 'graphql-compose';
-import { WorkScheduleExclusionEnum } from '../types/Enums';
+import { WorkScheduleExclusionEnum } from 'app/schema/types/Enums';
 
 export const WorkScheduleExclusionTC = schemaComposer.createObjectTC({
   name: 'WorkScheduleExclusion',

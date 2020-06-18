@@ -7,12 +7,12 @@ export interface CreateArgs {
 }
 
 // https://developers.wrike.com/api/v4/dependencies/#create-dependency
-export async function dependencyCreate(opts: CreateArgs, config: AxiosRequestConfig) {
+export async function dependencyCreate(opts: CreateArgs, context: AxiosRequestConfig) {
   const { taskId, dependency } = opts || {};
 
   if (!taskId) throw new Error('You should provide `taskId`');
 
-  const res = await client.post(`/tasks/${taskId}/dependencies`, dependency, config);
+  const res = await client.post(`/tasks/${taskId}/dependencies`, dependency, context);
 
   return res?.data?.data[0];
 }

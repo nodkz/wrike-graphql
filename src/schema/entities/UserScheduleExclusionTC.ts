@@ -1,7 +1,7 @@
 import { DateYMD, UserScheduleExclusionID, ContactID } from 'app/schema/types/Scalars';
 import { schemaComposer } from 'graphql-compose';
-import { UserScheduleExclusionEnum } from '../types/Enums';
-import { getRelationContactId } from '../relations/contact';
+import { UserScheduleExclusionEnum } from 'app/schema/types/Enums';
+import { getRelationContactId } from 'app/schema/relations/contact';
 
 export const UserScheduleExclusionTC = schemaComposer.createObjectTC({
   name: 'UserScheduleExclusion',

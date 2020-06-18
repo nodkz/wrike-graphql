@@ -1,6 +1,6 @@
 import { FieldConfig } from 'app/schema/definitions';
-import { DataExportID } from '../types/Scalars';
-import { DataExportTC } from '../entities/DataExportTC';
+import { DataExportID } from 'app/schema/types/Scalars';
+import { DataExportTC } from 'app/schema/entities/DataExportTC';
 import { dataExportById, FindArgs } from 'app/vendor/dataExport/dataExportById';
 
 export default {

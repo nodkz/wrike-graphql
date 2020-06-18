@@ -1,6 +1,6 @@
 import { FieldConfig } from 'app/schema/definitions';
-import { TaskID } from '../types/Scalars';
-import { ApprovalTC } from '../entities/ApprovalTC';
+import { TaskID } from 'app/schema/types/Scalars';
+import { ApprovalTC } from 'app/schema/entities/ApprovalTC';
 import { approvalForTask, FindManyOpts } from 'app/vendor/approval/approvalForTask';
 
 export default {

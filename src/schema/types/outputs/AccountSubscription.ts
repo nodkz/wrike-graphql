@@ -1,5 +1,5 @@
 import { schemaComposer } from 'graphql-compose';
-import { SubscriptionTypeEnum } from '../Enums';
+import { SubscriptionTypeEnum } from 'app/schema/types/Enums';
 
 export const AccountSubscription = schemaComposer.createObjectTC({
   name: 'AccountSubscription',

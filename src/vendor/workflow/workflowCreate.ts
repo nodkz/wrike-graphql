@@ -6,12 +6,12 @@ export interface CreateArgs {
 }
 
 // https://developers.wrike.com/api/v4/workflows/#create-workflow
-export async function workflowCreate(opts: CreateArgs, config: AxiosRequestConfig) {
+export async function workflowCreate(opts: CreateArgs, context: AxiosRequestConfig) {
   const { workflow } = opts || {};
 
   if (!workflow?.name) throw new Error('You should provide `name`');
 
-  const res = await client.post(`/workflows`, workflow, config);
+  const res = await client.post(`/workflows`, workflow, context);
 
   return res?.data?.data[0];
 }

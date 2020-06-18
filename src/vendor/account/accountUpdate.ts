@@ -6,10 +6,10 @@ export interface UpdateArgs {
 }
 
 // https://developers.wrike.com/api/v4/account/#modify-account
-export async function accountUpdate(opts: UpdateArgs, config: AxiosRequestConfig) {
+export async function accountUpdate(opts: UpdateArgs, context: AxiosRequestConfig) {
   const { metadata } = opts || {};
 
-  const res = await client.put(`/account`, { metadata }, config);
+  const res = await client.put(`/account`, { metadata }, context);
 
   return res?.data?.data[0];
 }

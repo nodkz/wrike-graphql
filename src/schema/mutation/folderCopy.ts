@@ -1,8 +1,8 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { FolderID } from 'app/schema/types/Scalars';
-import { FolderCopyOptsInput } from '../types/inputs/FolderCopyOptsInput';
+import { FolderCopyOptsInput } from 'app/schema/types/inputs/FolderCopyOptsInput';
 import { folderCopy, Args } from 'app/vendor/folder/folderCopy';
-import { FolderTC } from '../entities/FolderTC';
+import { FolderTC } from 'app/schema/entities/FolderTC';
 
 export default {
   type: FolderTC,

@@ -1,8 +1,8 @@
 import { FieldConfig } from 'app/schema/definitions';
-import { DateTimeRangeInput } from '../types/inputs/DateTimeRangeInput';
-import { TaskID, FolderID, TimelogCategoryID, ContactID } from '../types/Scalars';
+import { DateTimeRangeInput } from 'app/schema/types/inputs/DateTimeRangeInput';
+import { TaskID, FolderID, TimelogCategoryID, ContactID } from 'app/schema/types/Scalars';
 import { timelogFindMany, FindManyOpts } from 'app/vendor/timelog/timelogFindMany';
-import { TimelogTC } from '../entities/TimelogTC';
+import { TimelogTC } from 'app/schema/entities/TimelogTC';
 
 const TimelogFindManyFilter = TimelogTC.schemaComposer.createInputTC({
   name: 'TimelogFindManyFilter',

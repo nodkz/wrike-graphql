@@ -1,7 +1,7 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { DependencyID } from 'app/schema/types/Scalars';
 import { dependencyRemove, RemoveArgs } from 'app/vendor/dependency/dependencyRemove';
-import { DependencyTC } from '../entities/DependencyTC';
+import { DependencyTC } from 'app/schema/entities/DependencyTC';
 
 export default {
   type: DependencyTC,

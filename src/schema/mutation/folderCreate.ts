@@ -2,7 +2,7 @@ import { FolderTC } from 'app/schema/entities/FolderTC';
 import { FieldConfig } from 'app/schema/definitions';
 import { FolderID } from 'app/schema/types/Scalars';
 import { folderCreate, CreateArgs } from 'app/vendor/folder/folderCreate';
-import { FolderInput } from '../types/inputs/FolderInput';
+import { FolderInput } from 'app/schema/types/inputs/FolderInput';
 
 export const FolderCreateInput = FolderInput.clone('FolderCreateInput').makeRequired('title');
 

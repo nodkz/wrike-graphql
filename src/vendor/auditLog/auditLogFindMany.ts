@@ -16,7 +16,7 @@ export type FindManyOpts = {
 };
 
 // https://developers.wrike.com/api/v4/audit-log/
-export async function auditLogFindMany(opts: FindManyOpts, config: AxiosRequestConfig) {
+export async function auditLogFindMany(opts: FindManyOpts, context: AxiosRequestConfig) {
   const { filter, pageSize, nextPageToken } = opts || {};
 
   const params: Record<string, any> = filter || {};
@@ -29,7 +29,7 @@ export async function auditLogFindMany(opts: FindManyOpts, config: AxiosRequestC
     params.nextPageToken = nextPageToken;
   }
 
-  const res = await client.get('/audit_log', { ...config, params });
+  const res = await client.get('/audit_log', { ...context, params });
 
   return res?.data?.data;
 }

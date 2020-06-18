@@ -25,7 +25,7 @@ type FindByIdsOpts = {
 };
 
 // https://developers.wrike.com/api/v4/folders-projects/#get-folder
-export async function _folderFindByIds(opts: FindByIdsOpts, config: AxiosRequestConfig) {
+export async function _folderFindByIds(opts: FindByIdsOpts, context: AxiosRequestConfig) {
   const { ids, projection } = opts || {};
 
   const params: Record<string, any> = {};
@@ -34,16 +34,16 @@ export async function _folderFindByIds(opts: FindByIdsOpts, config: AxiosRequest
   }
 
   return splitRequestBy100(ids, async (preparedIds) => {
-    const res = await client.get(`/folders/${preparedIds}`, { ...config, params });
+    const res = await client.get(`/folders/${preparedIds}`, { ...context, params });
     return res?.data?.data;
   });
 }
 
 export function folderFindByIds(
   opts: Exclude<FindByIdsOpts, 'projection'> & { info: GraphQLResolveInfo },
-  config: AxiosRequestConfig
+  context: AxiosRequestConfig
 ) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _folderFindByIds({ ...opts, projection }, config);
+  return _folderFindByIds({ ...opts, projection }, context);
 }

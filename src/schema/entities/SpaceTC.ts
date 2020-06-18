@@ -1,8 +1,8 @@
 import { composeWithJson } from 'graphql-compose-json';
 import { SpaceID } from 'app/schema/types/Scalars';
-import { SpaceAccessTypeEnum } from '../types/Enums';
-import { getRelationTasksBySpaceId } from '../relations/task';
-import { getRelationFoldersBySpaceId } from '../relations/folder';
+import { SpaceAccessTypeEnum } from 'app/schema/types/Enums';
+import { getRelationTasksBySpaceId } from 'app/schema/relations/task';
+import { getRelationFoldersBySpaceId } from 'app/schema/relations/folder';
 
 const restApiResponse = {
   // id: 'IEADMUW4I4OE37IV',

@@ -7,12 +7,12 @@ export interface UpdateArgs {
 }
 
 // https://developers.wrike.com/api/v4/folders-projects/#modify-folder
-export async function folderUpdate(opts: UpdateArgs, config: AxiosRequestConfig) {
+export async function folderUpdate(opts: UpdateArgs, context: AxiosRequestConfig) {
   const { folderId, folder } = opts || {};
 
   if (!folderId) throw new Error('You should provide `folderId`');
 
-  const res = await client.put(`/folders/${folderId}`, folder, config);
+  const res = await client.put(`/folders/${folderId}`, folder, context);
 
   return res?.data?.data[0];
 }

@@ -4,7 +4,7 @@ import {
   userScheduleExclusionRemove,
   RemoveArgs,
 } from 'app/vendor/userScheduleExclusion/userScheduleExclusionRemove';
-import { UserScheduleExclusionTC } from '../entities/UserScheduleExclusionTC';
+import { UserScheduleExclusionTC } from 'app/schema/entities/UserScheduleExclusionTC';
 
 export default {
   type: UserScheduleExclusionTC,

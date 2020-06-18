@@ -7,11 +7,11 @@ export interface UpdateArgs {
 }
 
 // https://developers.wrike.com/api/v4/dependencies/#modify-dependency
-export async function dependencyUpdate(opts: UpdateArgs, config: AxiosRequestConfig) {
+export async function dependencyUpdate(opts: UpdateArgs, context: AxiosRequestConfig) {
   const { id, dependency } = opts || {};
 
   if (!id) throw new Error('You should provide `id`');
-  const res = await client.put(`/dependencies/${id}`, dependency, config);
+  const res = await client.put(`/dependencies/${id}`, dependency, context);
 
   return res?.data?.data[0];
 }

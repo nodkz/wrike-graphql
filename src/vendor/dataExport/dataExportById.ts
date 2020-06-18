@@ -6,8 +6,8 @@ export type FindArgs = {
 };
 
 // https://developers.wrike.com/api/v4/data-export/#get-data-export
-export async function dataExportById(opts: FindArgs, config: AxiosRequestConfig) {
+export async function dataExportById(opts: FindArgs, context: AxiosRequestConfig) {
   const { id } = opts || {};
-  const res = await client.get(`/data_export${id ? `/${id}` : ''}`, config);
+  const res = await client.get(`/data_export${id ? `/${id}` : ''}`, context);
   return res?.data?.data?.[0];
 }

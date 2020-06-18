@@ -1,6 +1,6 @@
 import { FieldConfig } from 'app/schema/definitions';
-import { UserScheduleExclusionTC } from '../entities/UserScheduleExclusionTC';
-import { UserScheduleExclusionID } from '../types/Scalars';
+import { UserScheduleExclusionTC } from 'app/schema/entities/UserScheduleExclusionTC';
+import { UserScheduleExclusionID } from 'app/schema/types/Scalars';
 import {
   userScheduleExclusionFindById,
   FindByIdOpts,

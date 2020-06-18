@@ -13,14 +13,14 @@ export type _CreateArgs = {
 export type CreateArgs = Exclude<_CreateArgs, 'projection'> & { info: GraphQLResolveInfo };
 
 // https://developers.wrike.com/api/v4/work-schedules/#create-work-schedule
-export async function _workScheduleCreate(opts: _CreateArgs, config: AxiosRequestConfig) {
+export async function _workScheduleCreate(opts: _CreateArgs, context: AxiosRequestConfig) {
   const { workschedule } = opts || {};
-  const res = await client.post(`/workschedules`, workschedule, config);
+  const res = await client.post(`/workschedules`, workschedule, context);
   return res?.data?.data[0];
 }
 
-export function workScheduleCreate(opts: CreateArgs, config: AxiosRequestConfig) {
+export function workScheduleCreate(opts: CreateArgs, context: AxiosRequestConfig) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const projection = projectionFields.filter((n) => requestedFields.includes(n));
-  return _workScheduleCreate({ ...opts, projection }, config);
+  return _workScheduleCreate({ ...opts, projection }, context);
 }

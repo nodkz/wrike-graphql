@@ -3,9 +3,9 @@ import { FieldConfig } from 'app/schema/definitions';
 import { FolderID, ContactID, TaskID, CustomStatusID } from 'app/schema/types/Scalars';
 import { taskCreate, CreateArgs } from 'app/vendor/task/taskCreate';
 import { schemaComposer } from 'graphql-compose';
-import { TaskStatusEnum, TaskImportanceEnum, TaskDatesTypeEnum } from '../types/Enums';
-import { KeyValueInput } from '../types/inputs/KeyValueInput';
-import { CustomFieldValueInput } from '../types/inputs/CustomFieldValueInput';
+import { TaskStatusEnum, TaskImportanceEnum, TaskDatesTypeEnum } from 'app/schema/types/Enums';
+import { KeyValueInput } from 'app/schema/types/inputs/KeyValueInput';
+import { CustomFieldValueInput } from 'app/schema/types/inputs/CustomFieldValueInput';
 
 export const TaskCreateInput = schemaComposer.createInputTC({
   name: 'TaskCreateInput',

@@ -6,8 +6,8 @@ export type Args = {
 };
 
 // https://developers.wrike.com/api/v4/data-export/#get-data-export-schema
-export async function dataExportSchema(opts: Args, config: AxiosRequestConfig) {
+export async function dataExportSchema(opts: Args, context: AxiosRequestConfig) {
   const { version } = opts || {};
-  const res = await client.get(`/data_export_schema`, { ...config, params: { version } });
+  const res = await client.get(`/data_export_schema`, { ...context, params: { version } });
   return res?.data?.data;
 }

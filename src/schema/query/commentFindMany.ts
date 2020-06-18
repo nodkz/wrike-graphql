@@ -1,9 +1,9 @@
 import { TaskTC } from 'app/schema/entities/TaskTC';
 import { FieldConfig } from 'app/schema/definitions';
-import { DateTimeRangeInput } from '../types/inputs/DateTimeRangeInput';
-import { CommentTC } from '../entities/CommentTC';
+import { DateTimeRangeInput } from 'app/schema/types/inputs/DateTimeRangeInput';
+import { CommentTC } from 'app/schema/entities/CommentTC';
 import { commentFindMany, FindManyOpts } from 'app/vendor/comment/commentFindMany';
-import { TaskID, FolderID } from '../types/Scalars';
+import { TaskID, FolderID } from 'app/schema/types/Scalars';
 
 export default {
   type: CommentTC.NonNull.List,

@@ -1,6 +1,6 @@
 import { schemaComposer } from 'graphql-compose';
-import { StatusColorEnum, TaskStatusEnum } from '../Enums';
-import { CustomStatusID } from '../Scalars';
+import { StatusColorEnum, TaskStatusEnum } from 'app/schema/types/Enums';
+import { CustomStatusID } from 'app/schema/types/Scalars';
 
 export const CustomStatus = schemaComposer.createObjectTC({
   name: 'CustomStatus',

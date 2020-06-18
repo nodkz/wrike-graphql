@@ -1,7 +1,7 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { DateYMD, UserScheduleExclusionID } from 'app/schema/types/Scalars';
-import { UserScheduleExclusionTC } from '../entities/UserScheduleExclusionTC';
-import { UserScheduleExclusionEnum } from '../types/Enums';
+import { UserScheduleExclusionTC } from 'app/schema/entities/UserScheduleExclusionTC';
+import { UserScheduleExclusionEnum } from 'app/schema/types/Enums';
 import {
   userScheduleExclusionUpdate,
   UpdateArgs,

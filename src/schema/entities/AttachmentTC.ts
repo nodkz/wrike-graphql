@@ -7,12 +7,12 @@ import {
   ReviewID,
 } from 'app/schema/types/Scalars';
 import { schemaComposer } from 'graphql-compose';
-import { AttachmentTypeEnum } from '../types/Enums';
+import { AttachmentTypeEnum } from 'app/schema/types/Enums';
 import { attachmentAccessUrl } from 'app/vendor/attachment/attachmentAccessUrl';
-import { getRelationContactId } from '../relations/contact';
-import { getRelationTaskId } from '../relations/task';
-import { getRelationFolderId } from '../relations/folder';
-import { getRelationCommentId } from '../relations/comment';
+import { getRelationContactId } from 'app/schema/relations/contact';
+import { getRelationTaskId } from 'app/schema/relations/task';
+import { getRelationFolderId } from 'app/schema/relations/folder';
+import { getRelationCommentId } from 'app/schema/relations/comment';
 
 export const AttachmentTC = schemaComposer.createObjectTC({
   name: 'Attachment',

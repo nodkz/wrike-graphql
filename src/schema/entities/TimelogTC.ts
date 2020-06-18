@@ -1,9 +1,9 @@
 import { TimelogID, TaskID, ContactID, TimelogCategoryID, DateYMD } from 'app/schema/types/Scalars';
 import { schemaComposer } from 'graphql-compose';
-import { BillingTypeEnum } from '../types/Enums';
-import { getRelationTaskId } from '../relations/task';
-import { getRelationContactId } from '../relations/contact';
-import { getRelationTimelogCategoryId } from '../relations/timelogCategory';
+import { BillingTypeEnum } from 'app/schema/types/Enums';
+import { getRelationTaskId } from 'app/schema/relations/task';
+import { getRelationContactId } from 'app/schema/relations/contact';
+import { getRelationTimelogCategoryId } from 'app/schema/relations/timelogCategory';
 
 export const TimelogTC = schemaComposer.createObjectTC({
   name: 'Timelog',

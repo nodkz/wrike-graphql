@@ -1,8 +1,8 @@
 import { FieldConfig } from 'app/schema/definitions';
 import { CommentID } from 'app/schema/types/Scalars';
 import { commentUpdate, UpdateArgs } from 'app/vendor/comment/commentUpdate';
-import { CommentInput } from '../types/inputs/CommentInput';
-import { CommentTC } from '../entities/CommentTC';
+import { CommentInput } from 'app/schema/types/inputs/CommentInput';
+import { CommentTC } from 'app/schema/entities/CommentTC';
 
 export default {
   type: CommentTC,

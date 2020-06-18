@@ -1,6 +1,6 @@
 import { FieldConfig } from 'app/schema/definitions';
-import { WorkScheduleExclusionID } from '../types/Scalars';
-import { WorkScheduleExclusionTC } from '../entities/WorkScheduleExclusionTC';
+import { WorkScheduleExclusionID } from 'app/schema/types/Scalars';
+import { WorkScheduleExclusionTC } from 'app/schema/entities/WorkScheduleExclusionTC';
 import {
   workScheduleExclusionFindById,
   FindByIdOpts,

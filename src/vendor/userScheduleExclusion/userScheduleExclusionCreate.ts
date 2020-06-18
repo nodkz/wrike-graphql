@@ -6,8 +6,8 @@ export interface CreateArgs {
 }
 
 // https://developers.wrike.com/api/v4/user-schedule-exceptions/#create-user-schedule-exception
-export async function userScheduleExclusionCreate(opts: CreateArgs, config: AxiosRequestConfig) {
+export async function userScheduleExclusionCreate(opts: CreateArgs, context: AxiosRequestConfig) {
   const { exclusion } = opts || {};
-  const res = await client.post(`/user_schedule_exclusions`, exclusion, config);
+  const res = await client.post(`/user_schedule_exclusions`, exclusion, context);
   return res?.data?.data[0];
 }

@@ -1,5 +1,5 @@
 import client from 'app/vendor/client';
-import { FieldConfig } from '../definitions';
+import { FieldConfig } from 'app/schema/definitions';
 import { schemaComposer } from 'graphql-compose';
 
 export default {

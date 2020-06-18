@@ -1,11 +1,11 @@
 import { ObjectTypeComposerFieldConfigDefinition } from 'graphql-compose';
-import { ApprovalTC } from '../entities/ApprovalTC';
+import { ApprovalTC } from 'app/schema/entities/ApprovalTC';
 import { approvalFindMany } from 'app/vendor/approval/approvalFindMany';
 import { approvalForTask } from 'app/vendor/approval/approvalForTask';
 import { approvalForFolder } from 'app/vendor/approval/approvalForFolder';
-import { DateTimeRangeInput } from '../types/inputs/DateTimeRangeInput';
-import { ContactID } from '../types/Scalars';
-import { ApprovalFinalStatusEnum } from '../types/Enums';
+import { DateTimeRangeInput } from 'app/schema/types/inputs/DateTimeRangeInput';
+import { ContactID } from 'app/schema/types/Scalars';
+import { ApprovalFinalStatusEnum } from 'app/schema/types/Enums';
 
 export function getRelationApprovalsByFolderId(
   sourceFieldName: string

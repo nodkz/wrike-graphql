@@ -1,8 +1,8 @@
 import { ObjectTypeComposerFieldConfigDefinition } from 'graphql-compose';
 import { timelogFindMany } from 'app/vendor/timelog/timelogFindMany';
-import { TimelogTC } from '../entities/TimelogTC';
-import { DateTimeRangeEqualInput } from '../types/inputs/DateTimeRangeEqualInput';
-import { TimelogCategoryID } from '../types/Scalars';
+import { TimelogTC } from 'app/schema/entities/TimelogTC';
+import { DateTimeRangeEqualInput } from 'app/schema/types/inputs/DateTimeRangeEqualInput';
+import { TimelogCategoryID } from 'app/schema/types/Scalars';
 
 const TimelogFilterByRelation = TimelogTC.schemaComposer.createInputTC({
   name: 'TimelogFilterByRelation',

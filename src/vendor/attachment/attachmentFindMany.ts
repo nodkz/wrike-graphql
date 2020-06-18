@@ -19,7 +19,7 @@ export type FindManyOpts = {
 };
 
 // https://developers.wrike.com/api/v4/attachments/#get-attachments
-export async function _attachmentFindMany(opts: FindManyOpts, config: AxiosRequestConfig) {
+export async function _attachmentFindMany(opts: FindManyOpts, context: AxiosRequestConfig) {
   const { filter, withUrls, versions } = opts || {};
 
   let params: Record<string, any> = {};
@@ -37,16 +37,16 @@ export async function _attachmentFindMany(opts: FindManyOpts, config: AxiosReque
     url = `/tasks/${taskId}/attachments`;
   }
 
-  const res = await client.get(url, { ...config, params });
+  const res = await client.get(url, { ...context, params });
 
   return res?.data?.data;
 }
 
 export function attachmentFindMany(
   opts: Exclude<FindManyOpts, 'withUrls'> & { info: GraphQLResolveInfo },
-  config: AxiosRequestConfig
+  context: AxiosRequestConfig
 ) {
   const requestedFields = Object.keys(getFlatProjectionFromAST(opts.info));
   const withUrls = requestedFields.includes('url');
-  return _attachmentFindMany({ ...opts, withUrls }, config);
+  return _attachmentFindMany({ ...opts, withUrls }, context);
 }

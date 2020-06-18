@@ -7,10 +7,10 @@ export type FindByIdsArgs = {
 };
 
 // https://developers.wrike.com/api/v4/dependencies/#query-dependencies
-export async function dependencyFindByIds(opts: FindByIdsArgs, config: AxiosRequestConfig) {
+export async function dependencyFindByIds(opts: FindByIdsArgs, context: AxiosRequestConfig) {
   const { ids } = opts || {};
   return splitRequestBy100(ids, async (preparedIds) => {
-    const res = await client.get(`/dependencies/${preparedIds}`, config);
+    const res = await client.get(`/dependencies/${preparedIds}`, context);
     return res?.data?.data;
   });
 }

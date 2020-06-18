@@ -1,9 +1,9 @@
 import { resolveManyViaDL, resolveOneViaDL } from 'app/schema/dataLoaders';
 import { ObjectTypeComposerFieldConfigDefinition } from 'graphql-compose';
-import { AttachmentTC } from '../entities/AttachmentTC';
+import { AttachmentTC } from 'app/schema/entities/AttachmentTC';
 import { attachmentFindByIds } from 'app/vendor/attachment/attachmentFindByIds';
 import { attachmentFindMany } from 'app/vendor/attachment/attachmentFindMany';
-import { DateTimeRangeInput } from '../types/inputs/DateTimeRangeInput';
+import { DateTimeRangeInput } from 'app/schema/types/inputs/DateTimeRangeInput';
 
 const AttachmentFilterByRelation = AttachmentTC.schemaComposer.createInputTC({
   name: 'AttachmentFilterByRelation',

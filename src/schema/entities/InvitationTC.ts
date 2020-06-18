@@ -1,8 +1,8 @@
 import { composeWithJson } from 'graphql-compose-json';
 import { InvitationID, AccountID, ContactID } from 'app/schema/types/Scalars';
-import { InvitationStatusEnum, UserRoleEnum } from '../types/Enums';
-import { getRelationAccountId } from '../relations/account';
-import { getRelationContactId } from '../relations/contact';
+import { InvitationStatusEnum, UserRoleEnum } from 'app/schema/types/Enums';
+import { getRelationAccountId } from 'app/schema/relations/account';
+import { getRelationContactId } from 'app/schema/relations/contact';
 
 const restApiResponse = {
   id: InvitationID.NonNull,
