@@ -9,12 +9,18 @@ import { separateOperations, GraphQLSchema } from 'graphql';
 
 export function queryCostPlugin(opts: {
   schema: GraphQLSchema;
-  maxComplexity: number;
+  maxComplexity: number | string;
 }): ApolloServerPlugin {
   return {
-    requestDidStart: () => {
+    requestDidStart: ({ context }) => {
       let complexity = 0;
-      const maxComplexity = opts.maxComplexity || 1000;
+
+      // also you may get user from `context` and
+      // provide custom `maxComplexity` for him.
+      const maxComplexity =
+        (typeof opts.maxComplexity === 'string'
+          ? parseInt(opts.maxComplexity)
+          : opts.maxComplexity) || 100000;
       return {
         didResolveOperation({ request, document }) {
           /**

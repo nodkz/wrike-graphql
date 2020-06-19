@@ -1,4 +1,4 @@
-schema: ./bonus/schema.graphql
+schema: ./schema.graphql
 documents: './bonus/demo_operations.graphql'
 generates:
   ./bonus/wrikeSdk.ts:

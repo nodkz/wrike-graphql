@@ -27,7 +27,12 @@ const apolloServer = new ApolloServer({
   },
   plugins: process.env.DISABLE_QUERY_COST
     ? []
-    : [queryCostPlugin({ schema, maxComplexity: 10000 })],
+    : [
+        queryCostPlugin({
+          schema,
+          maxComplexity: process.env.MAX_QUERY_COMPLEXITY || 100000,
+        }),
+      ],
 });
 
 app.use(

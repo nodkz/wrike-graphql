@@ -45,6 +45,18 @@
       "outFiles": [
           "${workspaceFolder}/dist/**/*.js"
       ]
+    },
+    {
+      "type": "browser-preview",
+      "request": "launch",
+      "name": "Browser: Local",
+      "url": "http://localhost:4444"
+    },
+    {
+      "type": "browser-preview",
+      "request": "launch",
+      "name": "Browser: Remote",
+      "url": "https://graphql-wrike.herokuapp.com/"
     }
   ]
 }

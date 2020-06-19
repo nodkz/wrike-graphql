@@ -64,7 +64,6 @@ export type Query = {
   groupFindMany?: Maybe<Array<Group>>;
   invitations?: Maybe<Array<Invitation>>;
   me: Contact;
-  noop?: Maybe<Scalars['String']>;
   spaceFindMany?: Maybe<Array<Space>>;
   taskByIds?: Maybe<Array<Task>>;
   taskDependencies?: Maybe<Array<Dependency>>;

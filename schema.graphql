@@ -68,7 +68,6 @@ type Query {
   groupFindMany(filter: GroupFindManyFilter): [Group!]
   invitations: [Invitation!]
   me: Contact!
-  noop: String
   spaceFindMany(filter: SpaceFindManyFilter): [Space!]
   taskByIds(ids: [TaskID!]!): [Task!]
   taskDependencies(taskId: TaskID!): [Dependency!]

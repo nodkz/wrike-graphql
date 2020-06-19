@@ -9,4 +9,4 @@ import fs from 'fs';
 
 // generate schema.graphql file
 const sdl = printSchema(schema, { commentDescriptions: true });
-fs.writeFileSync(path.resolve(__dirname, '../bonus/schema.graphql'), sdl);
+fs.writeFileSync(path.resolve(__dirname, '../schema.graphql'), sdl);
