@@ -1,0 +1,19 @@
+query UsersTasksWithComments {
+  contactFindMany {
+    firstName
+    lastName
+    tasksResponsible(limit:2, sort:CREATED_DATE_ASC) {
+      title
+      status
+      createdDate
+      comments { # REST API does not support filtering & sorting for comments
+        text
+        createdDate
+        author {
+          firstName
+          lastName
+        }
+      }
+    }
+  }
+}

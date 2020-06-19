@@ -31,9 +31,11 @@
     "test": "jest --env node",
     "build": "tsc -p ./tsconfig.build.json",
     "docker-build": "rimraf ./dist && yarn build && docker build -t nodkz/wrike-graphql . && docker push nodkz/wrike-graphql:latest",
+    "deploy-heroku": "heroku container:push web -a graphql-wrike && heroku container:release web -a graphql-wrike",
     "gen-schema": "ts-node ./bonus/generateSchema",
     "gen-sdk": "yarn gen-schema && yarn graphql-codegen -c ./bonus/codegen.yml",
     "start": "ts-node -T src/server.ts",
+    "start-no-dl": "DISABLE_DATALOADERS=1 ts-node -T src/server.ts",
     "start-restql": "DISABLE_RELATIONS=1 DISABLE_BACK_RELATIONS=1 ts-node -T src/server.ts"
   },
   "dependencies": {

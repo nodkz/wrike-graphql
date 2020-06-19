@@ -50,7 +50,7 @@
       "type": "browser-preview",
       "request": "launch",
       "name": "Browser: Local",
-      "url": "http://localhost:4444"
+      "url": "http://localhost:4444/?query=query%20UsersTasksWithComments%20%7B%0A%20%20contactFindMany%20%7B%0A%20%20%20%20firstName%0A%20%20%20%20lastName%0A%20%20%20%20tasksResponsible%28limit%3A2%2C%20sort%3ACREATED_DATE_ASC%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20status%0A%20%20%20%20%20%20createdDate%0A%20%20%20%20%20%20comments%20%7B%20%23%20REST%20API%20does%20not%20support%20filtering%20%26%20sorting%20for%20comments%0A%20%20%20%20%20%20%20%20text%0A%20%20%20%20%20%20%20%20createdDate%0A%20%20%20%20%20%20%20%20author%20%7B%0A%20%20%20%20%20%20%20%20%20%20firstName%0A%20%20%20%20%20%20%20%20%20%20lastName%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D"
     },
     {
       "type": "browser-preview",
