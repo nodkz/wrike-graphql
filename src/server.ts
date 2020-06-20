@@ -31,13 +31,13 @@ const apolloServer = new ApolloServer({
   // tracing: true,
   plugins: [
     process.env.DISABLE_QUERY_COST
-      ? queryCostPlugin({
+      ? null
+      : queryCostPlugin({
           schema,
           maxComplexity: process.env.MAX_QUERY_COMPLEXITY || 100000,
-        })
-      : null,
-    process.env.DISABLE_TRACING ? durationPlugin() : null,
-    process.env.DISABLE_TRACING ? customTracingPlugin() : null,
+        }),
+    process.env.DISABLE_TRACING ? null : durationPlugin(),
+    process.env.DISABLE_TRACING ? null : customTracingPlugin(),
   ].filter(Boolean) as any,
 });
 
