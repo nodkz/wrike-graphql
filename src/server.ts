@@ -6,7 +6,9 @@ import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { express as voyagerMiddleware } from 'graphql-voyager/middleware';
 import { schema } from 'app/schema/entrypoints';
-import { queryCostPlugin } from './queryCostPlugin';
+import { queryCostPlugin } from './plugins/queryCostPlugin';
+import { durationPlugin } from './plugins/durationPlugin';
+import { customTracingPlugin } from './plugins/customTracingPlugin';
 
 const PORT = parseInt(process.env.PORT || '3000');
 const app = express();
@@ -23,16 +25,20 @@ const apolloServer = new ApolloServer({
     if (req?.headers?.cookie) {
       ctx.headers = { ...ctx.headers, cookie: req?.headers?.cookie };
     }
+    ctx.vendorRequests = [];
     return ctx;
   },
-  plugins: process.env.DISABLE_QUERY_COST
-    ? []
-    : [
-        queryCostPlugin({
+  // tracing: true,
+  plugins: [
+    process.env.DISABLE_QUERY_COST
+      ? queryCostPlugin({
           schema,
           maxComplexity: process.env.MAX_QUERY_COMPLEXITY || 100000,
-        }),
-      ],
+        })
+      : null,
+    process.env.DISABLE_TRACING ? durationPlugin() : null,
+    process.env.DISABLE_TRACING ? customTracingPlugin() : null,
+  ].filter(Boolean) as any,
 });
 
 app.use(
