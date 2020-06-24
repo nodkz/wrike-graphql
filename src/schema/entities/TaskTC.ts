@@ -176,6 +176,35 @@ export const TaskTC = schemaComposer.createObjectTC({
 
 if (!process.env.DISABLE_RELATIONS) {
   TaskTC.addFields({
+    // Demo M5
+    // author: {
+    //   type: () => ContactTC,
+    //   resolve: async (source, args, context) => {
+    //     return contactFindById(source?.authorId, context);
+    //   },
+    // },
+
+    // Demo M6
+    // author: {
+    //   type: () => ContactTC,
+    //   resolve: async (source, args, context, info) => {
+    //     // For more details about current DataLoader implementation:
+    //     // @see https://github.com/nodkz/conf-talks/tree/master/articles/graphql/dataloader
+    //     const { dataloaders } = context;
+    //     let dl = dataloaders.get(info.fieldNodes);
+    //     if (!dl) {
+    //       dl = new DataLoader(async (ids: any) => {
+    //         const rows = await contactFindByIds(ids, context);
+    //         const sortedInIdsOrder = ids.map(id => rows.find(x => x.id === id));
+    //         return sortedInIdsOrder;
+    //       });
+    //       dataloaders.set(info.fieldNodes, dl);
+    //     }
+    //     return dl.load(source.authorId);
+    //   },
+    // },
+
+    // Refactored after M7
     account: () => getRelationAccountId('accountId'),
     parents: () => getRelationFolderIds('parentIds'),
     superParents: () => getRelationFolderIds('superParentIds'),

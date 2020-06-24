@@ -57,12 +57,6 @@ export function queryCostPlugin(opts: {
               `Sorry, too complicated query! ${complexity} is over ${maxComplexity} that is the max allowed complexity.`
             );
           }
-          // And here we can e.g. subtract the complexity point from hourly API calls limit.
-          if (request.operationName !== 'IntrospectionQuery') {
-            console.log(
-              `Used query ${request.operationName || ''} complexity points: ${complexity}`
-            );
-          }
         },
         willSendResponse({ response }) {
           response.extensions = response.extensions || {};
