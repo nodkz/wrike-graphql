@@ -41,7 +41,7 @@
     "start-restql": "DISABLE_RELATIONS=1 DISABLE_BACK_RELATIONS=1 ts-node -T src/server.ts"
   },
   "dependencies": {
-    "apollo-server-express": "2.14.1",
+    "apollo-server-express": "2.14.2",
     "axios": "^0.19.2",
     "dataloader": "^2.0.0",
     "debug": "^4.1.1",
